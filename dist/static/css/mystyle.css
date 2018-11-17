@@ -1,0 +1,101 @@
+﻿.alert-wrap {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    height: 100%;
+    z-index: 1030;
+  }
+  .alert-wrap .alert-box {
+    background: #454f60;
+    padding: 30px 50px 50px 50px;
+    width: 50%;
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -moz-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  .alert-wrap .alert-box .alert-title {
+    font-size: 20px;
+    color: #ffffff;
+  }
+  .alert-wrap .alert-box .line-wrap {
+    margin-top: 50px;
+    margin-bottom: 50px;
+  }
+  .alert-wrap .alert-box .line-wrap .line-msg {
+    margin-bottom: 20px;
+  }
+  .alert-wrap .alert-box .line-wrap .line-box input {
+    width: 70%;
+    height: 56px;
+    background: none;
+    border: 1px solid #b2b2b2;
+    border-radius: 5px;
+    vertical-align: middle;
+    margin-bottom: 0;
+    margin-right: 10px;
+    color: #c5c5c5;
+  }
+  .alert-wrap .alert-box .line-wrap .line-box input.readonly-input {
+    background: #6d7480;
+  }
+  .alert-wrap .alert-box .line-wrap .line-box input::-webkit-input-placeholder {
+    font-size: 14px;
+    color: #c5c5c5;
+    line-height: 14px;
+  }
+  .alert-wrap .alert-box .line-wrap .line-box button {
+    vertical-align: middle;
+    margin-left: 0;
+  }
+  .alert-wrap .alert-box .line-wrap .line-box button.btn-disable {
+    background: #77bcf6;
+    opacity: 1;
+  }
+  .alert-wrap .alert-box .line-wrap .line-box .input-getall {
+    width: 70%;
+    height: 56px;
+    display: inline-block;
+    margin-right: 10px;
+    position: relative;
+  }
+  .alert-wrap .alert-box .line-wrap .line-box .input-getall input {
+    width: 100%;
+  }
+  .alert-wrap .alert-box .line-wrap .line-box .input-getall .getall-msg {
+    display: inline-block;
+    height: 24px;
+    line-height: 24px;
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    padding-left: 20px;
+    border-left: 1px solid #fff;
+    cursor: pointer;
+  }
+  .alert-wrap .alert-box .line-wrap .err-msg {
+    font-size: 12px;
+    margin-top: 10px;
+    color:#FF5053;
+  }
+  .alert-wrap .alert-box .alert-tips {
+    font-size: 14px;
+    color: #c5c5c5;
+  }
+  .alert-wrap .alert-box .alert-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 30px;
+    height: 30px;
+    font-size: 30px;
+  }
+  
