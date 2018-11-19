@@ -576,4 +576,36 @@ export class WWW
 
         }
     }
+
+    static async getContractCodeByHash(hash: string)
+    {
+        var postdata = WWW.makeRpcPostBody("getContractCodeByHash", hash);
+        var result = await fetch(WWW.apicontract, { "method": "post", "body": JSON.stringify(postdata) });
+        var json = await result.json();
+        if (json[ "result" ])
+        {
+            var r = json[ "result" ][ 0 ];
+            return r;
+        } else
+        {
+            throw "not data";
+        }
+    }
+
+    /**编译合约代码 */
+    static async compileContractFile(address: string, code: string)
+    {
+        var postdata = WWW.makeRpcPostBody("compileContractFile", address, code);
+        var result = await fetch(WWW.apicontract, { "method": "post", "body": JSON.stringify(postdata) });
+        var json = await result.json();
+        if (json[ "result" ])
+        {
+            var r = json[ "result" ][ 0 ];
+            return r;
+        } else
+        {
+            throw "not data";
+
+        }
+    }
 }

@@ -29,8 +29,35 @@
                     <p-title :title="'编译结果'">
                         <!-- <v-btn :type="'primary'" @onclick="test">操作记录</v-btn> -->
                     </p-title>
-                    <div style="height:200px"></div>
+                    <div class="panel-content">
+                        <div class="compile-result"></div>
+                    </div>
                 </panel>
+                <div v-if="conactHash||true">
+                <panel>
+                    <div class="panel-content">
+                        <input type="text" id="hash-input" v-model="conactHash">
+                        <div>
+                            <v-btn> <a :download="download_name" :href="download_href" > 下载 AVM</a></v-btn>
+                            <v-btn @onclick="copyHash">复制合约hash</v-btn>
+                        </div>
+                    </div>
+                </panel>
+                
+                <panel>
+                    <p-title :title="'部署当前合约'">
+                    </p-title>
+                    <div class="panel-content">
+                        <div class="panel-form">
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <p-foot :title="'花费GAS：'">
+                        <v-btn :type="'primary'" @onclick="compile">确认部署</v-btn>
+                    </p-foot>
+                </panel>
+                </div>
             </div>
         </div>
     </div>
@@ -68,6 +95,20 @@
   .result {
     width: 520px;
     max-width: 520px;
+    .panel-content {
+      margin-left: 20px;
+      margin-right: 20px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      input {
+        background: #292a30;
+        border: 1px solid #b5b5b5;
+        box-shadow: 0 2px 4px 0 #023169;
+        border-radius: 3px 0px 3px 3px 3px;
+        height: 30px;
+        color: #fff;
+      }
+    }
   }
 }
 </style>
@@ -75,12 +116,20 @@
 /// <reference path="../../tools/CodeMirror.d.ts"/>
 import Component from "vue-class-component";
 import Vue from "vue";
+import { tools } from "../../tools/importpack";
+import { LoginInfo } from "../../tools/entity";
 @Component({
   components: {}
 })
 export default class Deploy extends Vue {
   cEditor: any;
+  result: string = "";
+  conactHash: string = "";
+  download_name: string = "";
+  download_href: string = "";
   mounted() {
+    this.result = "";
+    this.conactHash = "";
     var codeContent = document.getElementById("code-content") as HTMLDivElement;
     var width = codeContent.offsetWidth;
     var height = codeContent.offsetHeight;
@@ -93,9 +142,38 @@ export default class Deploy extends Vue {
       }
     );
     this.cEditor.setSize("auto", height);
+    // this.cEditor.on("change", function() {
+    //事件触发后执行事件
+    //   alert("change");
+    // });
   }
-  compile() {
-    console.log(this.cEditor.getValue());
+  async compile() {
+    console.log("进入了 compile 方法");
+
+    const code = this.cEditor.getValue();
+    console.log(code);
+
+    const result = await tools.wwwtool.compileContractFile(
+      LoginInfo.getCurrentAddress(),
+      code
+    );
+    this.result = "执行成功";
+    this.conactHash = result.hash;
+
+    const coderesult = await tools.wwwtool.getContractCodeByHash(result.hash);
+    const avm: string = coderesult.avm;
+
+    var blob = new Blob([avm.hexToBytes()]);
+    this.download_href = URL.createObjectURL(blob);
+    this.download_name = this.conactHash + ".avm";
+  }
+
+  copyHash() {
+    // 复制剪切板
+    var target = document.getElementById("hash-input") as HTMLInputElement;
+    target.select();
+    document.execCommand("copy");
+    console.log();
   }
 }
 </script>
