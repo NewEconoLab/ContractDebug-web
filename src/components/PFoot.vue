@@ -33,6 +33,7 @@ export default class Valert extends Vue {
   height: 60px;
   .title {
     padding-left: 25px;
+    line-height: 55px;
     font-family: NotoSansHans-Regular;
     font-size: 14px;
     color: #b5b5b5;
