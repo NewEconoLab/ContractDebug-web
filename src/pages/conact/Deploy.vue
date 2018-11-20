@@ -79,17 +79,26 @@
                             </div>
                         </div>
                         <div class="panel-form">
-                            <label for="">
-                                动态调用
-                                <input type="radio" name="" id="">
+                            <label for="" class="checked-input">
+                                <span>
+                                    <span class="select-img" ><img src="../../assets/selected.png" alt=""/></span>
+                                    <span>动态调用</span>
+                                </span>
+                                <input type="radio" name="type1" id="">
                             </label>
                             <label for="">
-                                创建存储区
-                                <input type="radio" name="" id="">
+                                <span>
+                                    <span class="select-img"><img src="../../assets/selected.png" alt=""/></span>
+                                    <span>创建存储区</span>
+                                </span>                            
+                                <input type="radio" name="type1" id="">
                             </label>
                             <label for="">
-                                可接受付款
-                                <input type="radio" name="" id="">
+                                <span>
+                                    <span class="select-img"><img src="../../assets/selected.png" alt=""/></span>
+                                    <span>可接受付款</span>
+                                </span>
+                                <input type="radio" name="type1" id="">
                             </label>
                         </div>
                     </div>
@@ -180,18 +189,35 @@
       box-sizing: border-box;
       display: inline-block;
       // width: 75px;
-      min-width: 69px;
-      height: 30px;
+      //   min-width: 69px;
+      //   height: 30px;
       padding: 0 10px;
       margin-bottom: 10px;
       text-align: center;
-      line-height: 30px;
       margin-right: 15px;
-      font-size: 12px;
-      color: #b2b2b2;
-      border: 1px solid #b2b2b2;
+      font-size: 14px;
+      color: #ffffff;
+      font-weight: 400;
       border-radius: 3px;
       position: relative;
+      .select-img {
+        display: inline-block;
+        width: 22px;
+        height: 22px;
+        margin-right: 6px;
+        vertical-align: middle;
+        border: 1px solid #fff;
+        border-radius: 50%;
+        img {
+          display: none;
+          width: 22px;
+          height: 22px;
+        }
+      }
+
+      span {
+        vertical-align: middle;
+      }
       input {
         visibility: hidden;
         width: 100%;
@@ -204,8 +230,12 @@
         margin-right: 0;
       }
       &.checked-input {
-        background: #22a4ff;
-        color: #ffffff;
+        .select-img {
+          border: none;
+          img {
+            display: block;
+          }
+        }
       }
     }
   }

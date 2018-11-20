@@ -91,10 +91,10 @@ export default class login extends Vue
   {
     if (!this.filename)
     {
-      mui.alert("" + this.$t("toast.msg3"));
+      // mui.alert("" + this.$t("toast.msg3"));
       return;
     }
-    mui.toast("" + this.$t("toast.msg1"));
+    // mui.toast("" + this.$t("toast.msg1"));
     if (!!this.wallet.accounts)
     {
       try
@@ -111,11 +111,11 @@ export default class login extends Vue
         sessionStorage.setItem('login-info-arr', JSON.stringify(data));
         LoginInfo.setCurrentAddress(this.wallet.accounts[ 0 ].address);
 
-        mui.toast("" + this.$t("toast.msg2"), { duration: 'long', type: 'div' })
+        // mui.toast("" + this.$t("toast.msg2"), { duration: 'long', type: 'div' })
         this.$router.push("balance");
       } catch (error)
       {
-        mui.alert("" + this.$t("toast.msg3"));
+        // mui.alert("" + this.$t("toast.msg3"));
       }
     }
     if (!!this.otcgo.address)
