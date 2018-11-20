@@ -2,7 +2,6 @@ import { sessionStoreTool } from "./storagetool";
 import { Task, TaskType, TaskState, TaskFunction, ConfirmType, LoginInfo } from "./entity";
 import { tools } from "./importpack";
 import Store from "./StorageMap";
-import { services } from "../services/index";
 /**
  * 任务管理器
  */

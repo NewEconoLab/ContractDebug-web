@@ -770,6 +770,7 @@ declare namespace ThinNeo
     {
         hash: Uint8Array;
         index: number;
+        addr: string;
     }
     class Witness
     {

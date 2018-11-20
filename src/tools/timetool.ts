@@ -1,5 +1,3 @@
-import { tools } from "./importpack";
-
 export default class DateTool
 {
     /**************************************时间格式化处理************************************/

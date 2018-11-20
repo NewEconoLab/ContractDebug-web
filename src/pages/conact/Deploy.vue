@@ -79,31 +79,29 @@
                             </div>
                         </div>
                         <div class="panel-form">
-                            <label for="" class="checked-input">
-                                <span>
+                            <label for="" :class="isCall?'checked-input':''">
+                                <span @click="isCall=!isCall">
                                     <span class="select-img" ><img src="../../assets/selected.png" alt=""/></span>
                                     <span>动态调用</span>
                                 </span>
-                                <input type="radio" name="type1" id="">
                             </label>
-                            <label for="">
-                                <span>
+                            <label for="" :class="isStore?'checked-input':''">
+                                <span @click="isStore=!isStore">
                                     <span class="select-img"><img src="../../assets/selected.png" alt=""/></span>
                                     <span>创建存储区</span>
                                 </span>                            
-                                <input type="radio" name="type1" id="">
                             </label>
-                            <label for="">
-                                <span>
+                            <label for="" :class="feePay?'checked-input':''">
+                                <span @click="feePay=!feePay">
                                     <span class="select-img"><img src="../../assets/selected.png" alt=""/></span>
                                     <span>可接受付款</span>
                                 </span>
-                                <input type="radio" name="type1" id="">
                             </label>
                         </div>
                     </div>
-                    <p-foot :title="'花费GAS：'">
-                        <v-btn :type="'primary'" @onclick="compile">确认部署</v-btn>
+                    <p-foot :title="'花费GAS：'+(90+(isCall*500+isStore*400))">
+
+                        <v-btn :type="'primary'" @onclick="deploy">确认部署</v-btn>
                     </p-foot>
                 </panel>
                 </div>
@@ -251,11 +249,16 @@ import { LoginInfo } from "../../tools/entity";
   components: {}
 })
 export default class Deploy extends Vue {
+  checked: any[] = [];
   cEditor: any;
   result: string = "";
   conactHash: string = "";
   download_name: string = "";
   download_href: string = "";
+  isCall = false;
+  isStore = false;
+  feePay = false;
+  amount: number;
   mounted() {
     this.result = "";
     this.conactHash = "";
@@ -297,6 +300,14 @@ export default class Deploy extends Vue {
     this.download_name = this.conactHash + ".avm";
   }
 
+  /**
+   * 发布合约
+   */
+  async deploy() {}
+
+  /**
+   * 复制hash
+   */
   copyHash() {
     // 复制剪切板
     var target = document.getElementById("hash-input") as HTMLInputElement;

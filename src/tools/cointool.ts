@@ -1,7 +1,6 @@
 import { tools } from "./importpack";
-import { RootDomainInfo, Consts, LoginInfo, DomainInfo, DomainStatus, Result, UTXO, OldUTXO, Claim, currentInfo, alert, LoginType, WalletOtcgo } from "./entity";
+import { LoginInfo, Result, UTXO, OldUTXO, Claim } from "./entity";
 
-declare const mui;
 export class CoinTool
 {
     static readonly id_GAS: string = "0x602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7";
@@ -499,7 +498,5 @@ export class CoinTool
 
         return assets;
     }
-
-
-
 }
+

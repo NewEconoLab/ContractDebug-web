@@ -1,6 +1,7 @@
 import { tools } from "./importpack";
 import { LoginInfo, Result, OldUTXO } from "./entity";
 import { CoinTool } from "./cointool";
+import { Transaction } from "./transaction";
 export default class Contract
 {
     constructor() { }
@@ -182,7 +183,7 @@ export default class Contract
         tran.extdata = new ThinNeo.InvokeTransData();
         //塞入脚本
         (tran.extdata as ThinNeo.InvokeTransData).script = script;
-        (tran.extdata as ThinNeo.InvokeTransData).gas = Neo.Fixed8.fromNumber(0);
+        (tran.extdata as ThinNeo.InvokeTransData).gas = Neo.Fixed8.Zero;
         try
         {
             let data = await CoinTool.signData(tran);
@@ -197,7 +198,6 @@ export default class Contract
             } else
             {
                 throw "Transaction send failure";
-
             }
 
         } catch (error)
@@ -206,11 +206,31 @@ export default class Contract
         }
     }
 
+    static async deployContract(description: string, email: string, author: string, version: string, name: string, count: number, script: Uint8Array)
+    {
+        const sb = new ThinNeo.ScriptBuilder();
+        sb.EmitPushString(description);
+        sb.EmitPushString(email);
+        sb.EmitPushString(author);
+        sb.EmitPushString(version);
+        sb.EmitPushString(name);
+        sb.EmitPushNumber(new Neo.BigInteger(count));
+        sb.EmitPushBytes("05".hexToBytes());
+        sb.EmitPushBytes("0710".hexToBytes());
+        sb.EmitPushBytes(script);
+        sb.EmitSysCall("Neo.Contract.Create");
+
+        const tran = new Transaction()
+        tran.setScript(sb.ToArray());
+
+
+    }
+
     /**
      * 获得notify通知出去的名称
      * @param txid 交易id
      */
-    static async  getNotifyNames(txid: string): Promise<string[]>
+    static async getNotifyNames(txid: string): Promise<string[]>
     {
         let res = await tools.wwwtool.getNotify(txid);
         let notifications = res[ "notifications" ] as Array<{ contract: string, state: { type: string, value: Array<{ type: string, value: string }> } }>;

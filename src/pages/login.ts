@@ -5,7 +5,7 @@ import { WalletOtcgo, LoginInfo, currentInfo, LoginType } from "../tools/entity"
 import { tools } from "../tools/importpack";
 /// <reference path="../tools/number.ts"/>
 
-declare const mui;
+// declare const mui;
 
 @Component({
   components:
@@ -91,10 +91,10 @@ export default class login extends Vue
   {
     if (!this.filename)
     {
-      // mui.alert("" + this.$t("toast.msg3"));
+      // // mui.alert("" + this.$t("toast.msg3"));
       return;
     }
-    // mui.toast("" + this.$t("toast.msg1"));
+    // // mui.toast("" + this.$t("toast.msg1"));
     if (!!this.wallet.accounts)
     {
       try
@@ -111,11 +111,11 @@ export default class login extends Vue
         sessionStorage.setItem('login-info-arr', JSON.stringify(data));
         LoginInfo.setCurrentAddress(this.wallet.accounts[ 0 ].address);
 
-        // mui.toast("" + this.$t("toast.msg2"), { duration: 'long', type: 'div' })
-        this.$router.push("balance");
+        // // mui.toast("" + this.$t("toast.msg2"), { duration: 'long', type: 'div' })
+        this.$router.push("deploy");;
       } catch (error)
       {
-        // mui.alert("" + this.$t("toast.msg3"));
+        // // mui.alert("" + this.$t("toast.msg3"));
       }
     }
     if (!!this.otcgo.address)
@@ -137,15 +137,15 @@ export default class login extends Vue
           LoginInfo.info = info;
           LoginInfo.setCurrentAddress(info.address)
           sessionStorage.setItem('login-info-arr', JSON.stringify(data));
-          mui.toast("" + this.$t("toast.msg2"), { duration: 'long', type: 'div' })
-          this.$router.push("balance");
+          // mui.toast("" + this.$t("toast.msg2"), { duration: 'long', type: 'div' })
+          this.$router.push("deploy");
         } else
         {
-          mui.alert("" + this.$t("toast.msg3"));
+          // mui.alert("" + this.$t("toast.msg3"));
         }
       } catch (error)
       {
-        mui.alert("" + this.$t("toast.msg3"));
+        // mui.alert("" + this.$t("toast.msg3"));
       }
 
     }
@@ -153,11 +153,11 @@ export default class login extends Vue
 
   async loginWif()
   {
-    mui.toast("" + this.$t("toast.msg1"));
+    // mui.toast("" + this.$t("toast.msg1"));
     var res = tools.neotool.wifDecode(this.wif);
     if (res.err)
     {
-      mui.toast("" + this.$t("toast.msg4"))
+      // mui.toast("" + this.$t("toast.msg4"))
     } else
     {
       // var loginarray: LoginInfo[] = new Array<LoginInfo>();
@@ -168,18 +168,18 @@ export default class login extends Vue
       data.msg = { wif: this.wif };
       sessionStorage.setItem('login-info-arr', JSON.stringify(data));
       LoginInfo.setCurrentAddress(login.address);
-      mui.toast("" + this.$t("toast.msg2"), { duration: 'long', type: 'div' })
-      this.$router.push("balance");
+      // mui.toast("" + this.$t("toast.msg2"), { duration: 'long', type: 'div' })
+      this.$router.push("deploy");
     }
   }
 
   async loginNep2()
   {
-    mui.toast("" + this.$t("toast.msg1"));
+    // mui.toast("" + this.$t("toast.msg1"));
     var res = await tools.neotool.nep2ToWif(this.nep2, this.nep2pwd);
     if (res.err)
     {
-      mui.toast("" + this.$t("toast.msg4"))
+      // mui.toast("" + this.$t("toast.msg4"))
     } else
     {
       LoginInfo.info = res.info;
@@ -190,8 +190,8 @@ export default class login extends Vue
       data.msg[ login.address ] = this.nep2;
       sessionStorage.setItem('login-info-arr', JSON.stringify(data));
       LoginInfo.setCurrentAddress(login.address);
-      mui.toast("" + this.$t("toast.msg2"), { duration: 'long', type: 'div' })
-      this.$router.push("balance");
+      // mui.toast("" + this.$t("toast.msg2"), { duration: 'long', type: 'div' })
+      this.$router.push("deploy");;
     }
   }
 
