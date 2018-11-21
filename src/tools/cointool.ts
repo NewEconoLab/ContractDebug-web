@@ -253,9 +253,8 @@ export class CoinTool
     {
         try
         {
-            let info = await LoginInfo.deblocking();
+            let current = await LoginInfo.deblocking();
             let addr = LoginInfo.getCurrentAddress();
-            let current = LoginInfo.info
             var msg = tran.GetMessage().clone();
             var pubkey = current.pubkey.clone();
             var prekey = current.prikey.clone();

@@ -2,6 +2,7 @@ import { tools } from "./importpack";
 import { LoginInfo, Result, OldUTXO } from "./entity";
 import { CoinTool } from "./cointool";
 import { Transaction } from "./transaction";
+import { HASH } from "../config/hash";
 export default class Contract
 {
     constructor() { }
@@ -206,7 +207,7 @@ export default class Contract
         }
     }
 
-    static async deployContract(description: string, email: string, author: string, version: string, name: string, count: number, script: Uint8Array)
+    static async deployContract(description: string, email: string, author: string, version: string, name: string, num: Neo.BigInteger, script: Uint8Array, amount: number)
     {
         const sb = new ThinNeo.ScriptBuilder();
         sb.EmitPushString(description);
@@ -214,15 +215,22 @@ export default class Contract
         sb.EmitPushString(author);
         sb.EmitPushString(version);
         sb.EmitPushString(name);
-        sb.EmitPushNumber(new Neo.BigInteger(count));
+        sb.EmitPushNumber(num);
         sb.EmitPushBytes("05".hexToBytes());
         sb.EmitPushBytes("0710".hexToBytes());
         sb.EmitPushBytes(script);
         sb.EmitSysCall("Neo.Contract.Create");
 
-        const tran = new Transaction()
-        tran.setScript(sb.ToArray());
+        const assets = await tools.coinTool.getassets();
+        const gass = assets[ HASH.ID_GAS ];
+        const consume = Neo.Fixed8.fromNumber(amount);
 
+        const tran = new Transaction()
+        tran.setScript(sb.ToArray(), consume);
+        tran.creatInuptAndOutup(gass, consume);
+        const data = await tran.signData();
+        const result = await tools.wwwtool.api_postRawTransaction(data);
+        return result;
 
     }
 

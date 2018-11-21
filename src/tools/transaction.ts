@@ -24,11 +24,15 @@ export class Transaction extends ThinNeo.Transaction
     /**
      * setScript 往交易中塞入脚本 修改交易类型为 InvokeTransaction
      */
-    public setScript(script: Uint8Array) 
+    public setScript(script: Uint8Array, gas?: Neo.Fixed8) 
     {
         this.type = ThinNeo.TransactionType.InvocationTransaction;
         this.extdata = new ThinNeo.InvokeTransData();
         (this.extdata as ThinNeo.InvokeTransData).script = script;
+        if (gas)
+        {
+            (this.extdata as ThinNeo.InvokeTransData).gas = gas;
+        }
         this.attributes = new Array<ThinNeo.Attribute>(1);
         this.attributes[ 0 ] = new ThinNeo.Attribute();
         this.attributes[ 0 ].usage = ThinNeo.TransactionAttributeUsage.Script;
@@ -89,6 +93,31 @@ export class Transaction extends ThinNeo.Transaction
         {
             throw new Error("You don't have enough utxo;");
         }
+    }
+
+    /**
+     * 构造并发送交易
+     * @param {ThinNeo.Transaction} tran 
+     * @param {string} randomStr
+     */
+    async signData(): Promise<Uint8Array>
+    {
+        try
+        {
+            let current = await LoginInfo.deblocking();
+            let addr = LoginInfo.getCurrentAddress();
+            var msg = this.GetMessage().clone();
+            var pubkey = current.pubkey.clone();
+            var prekey = current.prikey.clone();
+            var signdata = ThinNeo.Helper.Sign(msg, prekey);
+            this.AddWitness(signdata, pubkey, addr);
+            var data: Uint8Array = this.GetRawData();
+            return data;
+        } catch (error)
+        {
+            throw "Signature interrupt";
+        }
+
     }
 }
 

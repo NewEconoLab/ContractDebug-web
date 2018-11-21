@@ -16,8 +16,8 @@
                         </div>
                     </div>
                     <div class="code-content" id="code-content">
-                        <textarea id="csharp-code"  rows="25" cols="20" >
-                        </textarea>
+                        <!-- <textarea id="csharp-code"  rows="25" cols="20" >
+                        </textarea> -->
                     </div>
                     <p-foot>
                         <v-btn :type="'primary'" @onclick="compile">编译代码</v-btn>
@@ -33,7 +33,7 @@
                         <div class="compile-result"></div>
                     </div>
                 </panel>
-                <div v-if="conactHash||true">
+                <div v-if="conactHash && download_href">
                 <panel>
                     <div class="panel-content">
                         <input type="text" id="hash-input" v-model="conactHash">
@@ -51,31 +51,31 @@
                         <div class="panel-form">
                             <div class="form-lable">合约名称（必填）</div>
                             <div class="form-content">
-                                <input type="text" name="" id="">
+                                <input type="text" name="" id="" v-model="name">
                             </div>
                         </div>
                         <div class="panel-form">
                             <div class="form-lable">版本</div>
                             <div class="form-content">
-                                <input type="text" name="" id="">
+                                <input type="text" name="" id="" v-model="version">
                             </div>
                         </div>
                         <div class="panel-form">
                             <div class="form-lable">作者</div>
                             <div class="form-content">
-                                <input type="text" name="" id="">
+                                <input type="text" name="" id="" v-model="author">
                             </div>
                         </div>
                         <div class="panel-form">
                             <div class="form-lable">邮件</div>
                             <div class="form-content">
-                                <input type="text" name="" id="">
+                                <input type="text" name="" id="" v-model="email">
                             </div>
                         </div>
                         <div class="panel-form">
                             <div class="form-lable">合约描述</div>
                             <div class="form-content">
-                                <input type="text" name="" id="">
+                                <input type="text" name="" id="" v-model="description">
                             </div>
                         </div>
                         <div class="panel-form">
@@ -239,81 +239,5 @@
   }
 }
 </style>
-<script lang="ts">
-/// <reference path="../../tools/CodeMirror.d.ts"/>
-import Component from "vue-class-component";
-import Vue from "vue";
-import { tools } from "../../tools/importpack";
-import { LoginInfo } from "../../tools/entity";
-@Component({
-  components: {}
-})
-export default class Deploy extends Vue {
-  checked: any[] = [];
-  cEditor: any;
-  result: string = "";
-  conactHash: string = "";
-  download_name: string = "";
-  download_href: string = "";
-  isCall = false;
-  isStore = false;
-  feePay = false;
-  amount: number;
-  mounted() {
-    this.result = "";
-    this.conactHash = "";
-    var codeContent = document.getElementById("code-content") as HTMLDivElement;
-    var width = codeContent.offsetWidth;
-    var height = codeContent.offsetHeight;
-    this.cEditor = CodeMirror.fromTextArea(
-      document.getElementById("csharp-code"),
-      {
-        lineNumbers: true,
-        matchBrackets: true,
-        mode: "text/x-csharp"
-      }
-    );
-    this.cEditor.setSize("auto", height);
-    // this.cEditor.on("change", function() {
-    //事件触发后执行事件
-    //   alert("change");
-    // });
-  }
-  async compile() {
-    console.log("进入了 compile 方法");
-
-    const code = this.cEditor.getValue();
-    console.log(code);
-
-    const result = await tools.wwwtool.compileContractFile(
-      LoginInfo.getCurrentAddress(),
-      code
-    );
-    this.result = "执行成功";
-    this.conactHash = result.hash;
-
-    const coderesult = await tools.wwwtool.getContractCodeByHash(result.hash);
-    const avm: string = coderesult.avm;
-
-    var blob = new Blob([avm.hexToBytes()]);
-    this.download_href = URL.createObjectURL(blob);
-    this.download_name = this.conactHash + ".avm";
-  }
-
-  /**
-   * 发布合约
-   */
-  async deploy() {}
-
-  /**
-   * 复制hash
-   */
-  copyHash() {
-    // 复制剪切板
-    var target = document.getElementById("hash-input") as HTMLInputElement;
-    target.select();
-    document.execCommand("copy");
-    console.log();
-  }
-}
+<script lang="ts" src = "./Deploy.ts">
 </script>

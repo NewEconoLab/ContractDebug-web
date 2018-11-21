@@ -25,7 +25,7 @@
               <a>NEL开发者论坛</a>
             </li>
             <li>
-              <a href="https://scan.nel.group/#testnet" target="_blank">{{$t('navbar.explorer')}}</a>
+              <a href="https://scan.nel.group/testnet" target="_blank">{{$t('navbar.explorer')}}</a>
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">

@@ -577,9 +577,9 @@ export class WWW
         }
     }
 
-    static async getContractCodeByHash(hash: string)
+    static async getContractCodeByHash(hash: string, address: string)
     {
-        var postdata = WWW.makeRpcPostBody("getContractCodeByHash", hash);
+        var postdata = WWW.makeRpcPostBody("getContractCodeByHash", address, hash);
         var result = await fetch(WWW.apicontract, { "method": "post", "body": JSON.stringify(postdata) });
         var json = await result.json();
         if (json[ "result" ])
@@ -596,6 +596,22 @@ export class WWW
     static async compileContractFile(address: string, code: string)
     {
         var postdata = WWW.makeRpcPostBody("compileContractFile", address, code);
+        var result = await fetch(WWW.apicontract, { "method": "post", "body": JSON.stringify(postdata) });
+        var json = await result.json();
+        if (json[ "result" ])
+        {
+            var r = json[ "result" ][ 0 ];
+            return r;
+        } else
+        {
+            throw "not data";
+
+        }
+    }
+
+    static async saveContract(...params)
+    {
+        var postdata = WWW.makeRpcPostBody("saveContract", ...params);
         var result = await fetch(WWW.apicontract, { "method": "post", "body": JSON.stringify(postdata) });
         var json = await result.json();
         if (json[ "result" ])
