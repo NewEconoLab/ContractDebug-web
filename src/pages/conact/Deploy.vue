@@ -16,17 +16,19 @@
                         </div>
                     </div>
                     <div class="code-content" id="code-content">
-                        <!-- <textarea id="csharp-code"  rows="25" cols="20" >
-                        </textarea> -->
+                        <textarea id="csharp-code"  rows="25" cols="20" >
+                        </textarea>
                     </div>
                     <p-foot>
                         <v-btn :type="'primary'" @onclick="compile">编译代码</v-btn>
+                        <v-btn @onclick="test">test</v-btn>
                     </p-foot>
                 </panel>
             </div>
             <div class="result">
                 <panel>
                     <p-title :title="'编译结果'">
+      <!-- <v-selected :list="selectList" @selected="onSelect"></v-selected> -->
                         <!-- <v-btn :type="'primary'" @onclick="test">操作记录</v-btn> -->
                     </p-title>
                     <div class="panel-content">

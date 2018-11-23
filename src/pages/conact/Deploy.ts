@@ -1,6 +1,8 @@
-
-/// <reference path="../../tools/CodeMirror.d.ts"/>
 /// <reference path="../../tools/editor.api.d.ts"/>
+import * as CodeMirror from 'codemirror'
+import 'codemirror/mode/clike/clike'
+import 'codemirror/addon/hint/show-hint'
+import 'codemirror/addon/hint/sql-hint'
 import Component from "vue-class-component";
 import Vue from "vue";
 import { tools } from "../../tools/importpack";
@@ -16,7 +18,7 @@ export default class Deploy extends Vue
     version: string = "";
     name: string = "";
     checked: any[] = [];
-    cEditor: any;
+    cEditor: CodeMirror.EditorFromTextArea;
     result: string = "";
     conactHash: string = "";
     download_name: string = "";
@@ -33,21 +35,15 @@ export default class Deploy extends Vue
         var codeContent = document.getElementById("code-content") as HTMLDivElement;
         var width = codeContent.offsetWidth;
         var height = codeContent.offsetHeight;
-
-        const editorcca = monaco.editor.create(document.getElementById('code-content'), {
-            language: 'html',
-            theme: 'vs-dark',
-            automaticLayout: true,
-        });
-
-        // this.cEditor = CodeMirror.fromTextArea(
-        //     document.getElementById("csharp-code"),
-        //     {
-        //         lineNumbers: true,
-        //         matchBrackets: true,
-        //         mode: "text/x-csharp"
-        //     }
-        // );
+        const host = document.getElementById("csharp-code") as HTMLTextAreaElement;
+        const option: CodeMirror.EditorConfiguration = {}
+        option.lineNumbers = true;
+        option.mode = "text/x-csharp";
+        option.dragDrop = true;
+        option.theme = "monokai";
+        // option.readOnly = true;
+        this.cEditor = CodeMirror.fromTextArea(host, option);
+        // this.cEditor.setValue("test(){\n log()}ddddd\t\t\tdddddddddddddd");
         // this.cEditor.setSize("auto", height);
         // this.cEditor.on("change", function() {
         //事件触发后执行事件
@@ -61,14 +57,14 @@ export default class Deploy extends Vue
         const code = this.cEditor.getValue();
         console.log(code);
 
-        const result = await tools.wwwtool.compileContractFile(
-            LoginInfo.getCurrentAddress(),
-            code
-        );
-        this.result = "执行成功";
-        this.conactHash = result.hash;
+        // const result = await tools.wwwtool.compileContractFile(
+        //     LoginInfo.getCurrentAddress(),
+        //     code
+        // );
+        // this.result = "执行成功";
+        this.conactHash = "0xbc3813de19b9cd036dc3d059613c90616060fff1";
 
-        const coderesult = await tools.wwwtool.getContractCodeByHash(result.hash, LoginInfo.getCurrentAddress());
+        const coderesult = await tools.wwwtool.getContractCodeByHash(this.conactHash, LoginInfo.getCurrentAddress());
         const avm: string = coderesult.avm;
         this.avmhex = avm.hexToBytes();
         var blob = new Blob([ avm.hexToBytes() ]);
@@ -109,5 +105,19 @@ export default class Deploy extends Vue
         target.select();
         document.execCommand("copy");
         console.log();
+    }
+
+    async test()
+    {
+        // let appcall = Neo.Uint160.parse(this.conactHash.replace('0x', ''));
+
+        let appcall = Neo.Uint160.parse("9a0ff804e22dcfcd98d586c269a34eb78c7dad8e");
+        // let sb = tools.contract.buildScript_random(appcall, "test", []);
+        let sb = new ThinNeo.ScriptBuilder()
+
+        sb.EmitAppCall("0xbc3813de19b9cd036dc3d059613c90616060fff1".hexToBytes());
+        let res = await tools.contract.contractInvokeTrans_attributes(sb.ToArray());
+        console.log(res);
+
     }
 }

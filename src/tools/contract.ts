@@ -228,6 +228,7 @@ export default class Contract
         const tran = new Transaction()
         tran.setScript(sb.ToArray(), consume);
         tran.creatInuptAndOutup(gass, consume);
+        tran.version = 1;
         const data = await tran.signData();
         const result = await tools.wwwtool.api_postRawTransaction(data);
         return result;

@@ -14,6 +14,7 @@
     "Math": "0.0.1-security",
     "axios": "^0.17.1",
     "buffer": "^5.1.0",
+    "codemirror": "^5.42.0",
     "jsrsasign": "^7.2.2",
     "less": "^3.0.2",
     "less-loader": "^4.1.0",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
+    "@types/codemirror": "0.0.69",
     "@types/vue-i18n": "^7.0.0",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",
