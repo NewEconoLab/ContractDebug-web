@@ -57,12 +57,12 @@ export default class Deploy extends Vue
         const code = this.cEditor.getValue();
         console.log(code);
 
-        // const result = await tools.wwwtool.compileContractFile(
-        //     LoginInfo.getCurrentAddress(),
-        //     code
-        // );
-        // this.result = "执行成功";
-        this.conactHash = "0xbc3813de19b9cd036dc3d059613c90616060fff1";
+        const result = await tools.wwwtool.compileContractFile(
+            LoginInfo.getCurrentAddress(),
+            code
+        );
+        this.result = "执行成功";
+        this.conactHash = result.hash;
 
         const coderesult = await tools.wwwtool.getContractCodeByHash(this.conactHash, LoginInfo.getCurrentAddress());
         const avm: string = coderesult.avm;
@@ -92,6 +92,21 @@ export default class Deploy extends Vue
             this.avmhex,
             amount
         );
+        if (result.sendrawtransactionresult)
+        {
+            const res = await tools.wwwtool.storageContractFile(
+                LoginInfo.getCurrentAddress(),
+                this.conactHash,
+                this.name,
+                this.version,
+                this.author,
+                this.email,
+                this.description,
+                this.feePay ? 1 : 0,
+                this.isStore ? 1 : 0,
+                this.isCall ? 1 : 0
+            )
+        }
         console.log(result);
     }
 
@@ -109,14 +124,10 @@ export default class Deploy extends Vue
 
     async test()
     {
-        // let appcall = Neo.Uint160.parse(this.conactHash.replace('0x', ''));
+        let appcall = Neo.Uint160.parse(this.conactHash);
+        let data = tools.contract.buildScript_random(appcall, "test", []);
+        let res = await tools.contract.contractInvokeTrans_attributes(data);
 
-        let appcall = Neo.Uint160.parse("9a0ff804e22dcfcd98d586c269a34eb78c7dad8e");
-        // let sb = tools.contract.buildScript_random(appcall, "test", []);
-        let sb = new ThinNeo.ScriptBuilder()
-
-        sb.EmitAppCall("0xbc3813de19b9cd036dc3d059613c90616060fff1".hexToBytes());
-        let res = await tools.contract.contractInvokeTrans_attributes(sb.ToArray());
         console.log(res);
 
     }

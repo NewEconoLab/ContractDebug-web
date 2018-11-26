@@ -144,6 +144,9 @@ export default class Contract
         if (tran.witnesses == null)
             tran.witnesses = [];
         let data = await CoinTool.signData(tran);
+        console.log("===========================交易体 data");
+        console.log(data.toHexString());
+
 
         var res: Result = new Result();
         var result = await tools.wwwtool.api_postRawTransaction(data);

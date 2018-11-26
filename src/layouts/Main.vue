@@ -19,7 +19,7 @@
               <router-link to="invoke" >调用合约</router-link>
             </li>
             <li>
-              <router-link to="debug" >合约部署</router-link>
+              <router-link to="debug" >合约调试</router-link>
             </li>
             <li>
               <a>NEL开发者论坛</a>

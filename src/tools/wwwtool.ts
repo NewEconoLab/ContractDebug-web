@@ -609,9 +609,9 @@ export class WWW
         }
     }
 
-    static async saveContract(...params)
+    static async storageContractFile(...params)
     {
-        var postdata = WWW.makeRpcPostBody("saveContract", ...params);
+        var postdata = WWW.makeRpcPostBody("storageContractFile", ...params);
         var result = await fetch(WWW.apicontract, { "method": "post", "body": JSON.stringify(postdata) });
         var json = await result.json();
         if (json[ "result" ])
