@@ -104,10 +104,11 @@ export default class Deploy extends Vue
                 this.description,
                 this.feePay ? 1 : 0,
                 this.isStore ? 1 : 0,
-                this.isCall ? 1 : 0
+                this.isCall ? 1 : 0,
+                result.txid
             )
+            console.log(res);
         }
-        console.log(result);
     }
 
     /**
@@ -124,11 +125,12 @@ export default class Deploy extends Vue
 
     async test()
     {
-        let appcall = Neo.Uint160.parse(this.conactHash);
+        // let appcall = Neo.Uint160.parse(this.conactHash);
+        let appcall = Neo.Uint160.parse("0xb2d5df69977b0e0948b81aef1b77cac9de699681");
         let data = tools.contract.buildScript_random(appcall, "test", []);
-        let res = await tools.contract.contractInvokeTrans_attributes(data);
-
-        console.log(res);
+        let txhex = await tools.contract.buildInvokeTransData_attributes(data);
+        let result = await tools.wwwtool.setTxCallContract(LoginInfo.getCurrentAddress(), txhex.toHexString());
+        console.log(result);
 
     }
 }

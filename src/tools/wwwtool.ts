@@ -621,7 +621,63 @@ export class WWW
         } else
         {
             throw "not data";
+        }
+    }
 
+    /**
+     * 调用合约并提交
+     * @param {string} address 地址
+     * @param {string} txhex 交易体
+     */
+    static async setTxCallContract(address: string, txhex: string)
+    {
+        var postdata = WWW.makeRpcPostBody("txCallContract", address, txhex);
+        var result = await fetch(WWW.apicontract, { "method": "post", "body": JSON.stringify(postdata) });
+        var json = await result.json();
+        if (json[ "result" ])
+        {
+            var r = json[ "result" ][ 0 ];
+            return r;
+        } else
+        {
+            throw "not data";
+        }
+    }
+
+    /**
+     * 用地址查询合约调用的交易记录
+     * @param {string} address 地址
+     */
+    static async getTxCallContract(address: string)
+    {
+        var postdata = WWW.makeRpcPostBody("getTxCallContract", address);
+        var result = await fetch(WWW.apicontract, { "method": "post", "body": JSON.stringify(postdata) });
+        var json = await result.json();
+        if (json[ "result" ])
+        {
+            var r = json[ "result" ];
+            return r;
+        } else
+        {
+            throw "not data";
+        }
+    }
+    /**
+     * 用地址查询合约调用的交易记录
+     * @param {string} address 地址
+     */
+    static async getDumpInfoByTxid(txid: string)
+    {
+        var postdata = WWW.makeRpcPostBody("getDumpInfoByTxid", txid);
+        var result = await fetch(WWW.apicontract, { "method": "post", "body": JSON.stringify(postdata) });
+        var json = await result.json();
+        if (json[ "result" ])
+        {
+            var r = json[ "result" ][ 0 ];
+            return r;
+        } else
+        {
+            throw "not data";
         }
     }
 }

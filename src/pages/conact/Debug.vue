@@ -1,62 +1,69 @@
 <template>
-    <div>
-            <div class="buttoon-list"></div>
-        <div class="debug-panel">
-            <div class="debug-info">
-                <panel>
-                    <p-title :title="'Info'">
-                    </p-title>
-                    <div class="panel-content">
-                        <div class="compile-result"></div>
-                    </div>
-                </panel>
-                <panel>
-                    <p-title :title="'Calcstack up, altstack down'">
-                    </p-title>
-                    <div class="panel-content">
-                        <div class="compile-result"></div>
-                    </div>
-                </panel>
-                <panel>
-                    <p-title :title="'Value tool'">
-                    </p-title>
-                    <div class="panel-content">
-                        <div class="compile-result"></div>
-                    </div>
-                </panel>
+  <div>
+    <div class="debug-title">
+      <div style=":auto;padding:5px; width:362px;">
+        <select style="width:100%;height:26px;" v-model="txid">
+          <option v-for="tx in txlist" :key="tx.id" :value="tx.txid">0x00...ba77</option>
+        </select>
+        <input
+          type="text"
+          style="width:90%;height:26px;position: relative;top: -26px"
+          v-model="txid"
+        >
+      </div>
+      <v-btn @onclick="initDebugInfo">查询</v-btn>
+      <v-btn :type="'warn'">帮助</v-btn>
+    </div>
+    <div class="debug-panel">
+      <div class="debug-info">
+        <panel>
+          <p-title :title="'Info'"></p-title>
+          <div class="panel-content">{{CalcStack}}</div>
+        </panel>
+        <panel>
+          <p-title :title="'Calcstack up, altstack down'"></p-title>
+          <div class="panel-content"></div>
+        </panel>
+        <panel>
+          <p-title :title="'Value tool'"></p-title>
+          <div class="panel-content">
+            <div class="compile-result"></div>
+          </div>
+        </panel>
+      </div>
+      <div class="avm">
+        <panel>
+          <p-title :title="'AVM'"></p-title>
+          <div class="avm-content">
+            <textarea id="avm-code"></textarea>
+          </div>
+        </panel>
+      </div>
+      <div class="code">
+        <panel>
+          <div class="p-title">
+            <div class="title">
+              <div>
+                <div>文件</div>
+              </div>
             </div>
-            <div class="avm">
-                <panel>
-                    <p-title :title="'AVM'">
-                    </p-title>
-                    <div class="panel-content">
-                        <div class="compile-result"></div>
-                    </div>
-                </panel>
-            </div>
-            <div class="code">
-                <panel>
-                    <div class="p-title">
-                        <div class="title">
-                            <div>
-                                <div>文件</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="code-content" id="code-content">
-                        <textarea id="csharp-code"  rows="25" cols="20" >
-                        </textarea>
-                    </div>
-                    <!-- <p-foot>
+          </div>
+          <div class="code-content" id="code-content">
+            <textarea id="csharp-code"></textarea>
+          </div>
+          <!-- <p-foot>
                         <v-btn :type="'primary'" @onclick="compile">编译代码</v-btn>
                         <v-btn @onclick="test">test</v-btn>
-                    </p-foot> -->
-                </panel>
-            </div>
-        </div>
+          </p-foot>-->
+        </panel>
+      </div>
     </div>
+  </div>
 </template>
 <style lang="less" scoped>
+  .debug-title{
+    display: flex;
+  }
 .debug-panel {
   display: flex;
   .code {
@@ -119,6 +126,9 @@
       margin-right: 20px;
       margin-top: 20px;
       margin-bottom: 20px;
+      .avm-content{
+        
+      }
       .content-btns {
         padding-top: 20px;
         justify-content: flex-end;
@@ -211,5 +221,5 @@
   }
 }
 </style>
-<script lang="ts" src = "./Deploy.ts">
+<script lang="ts" src = "./Debug.ts">
 </script>
