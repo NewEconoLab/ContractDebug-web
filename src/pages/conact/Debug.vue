@@ -17,11 +17,11 @@
     <div class="debug-panel">
       <div class="debug-info">
         <panel>
-          <p-title :title="'Info'"></p-title>
+          <p-title :title="'Calcstack'"></p-title>
           <div class="panel-content">{{CalcStack}}</div>
         </panel>
         <panel>
-          <p-title :title="'Calcstack up, altstack down'"></p-title>
+          <p-title :title="'altstack'"></p-title>
           <div class="panel-content"></div>
         </panel>
         <panel>
@@ -61,9 +61,9 @@
   </div>
 </template>
 <style lang="less" scoped>
-  .debug-title{
-    display: flex;
-  }
+.debug-title {
+  display: flex;
+}
 .debug-panel {
   display: flex;
   .code {
@@ -126,8 +126,7 @@
       margin-right: 20px;
       margin-top: 20px;
       margin-bottom: 20px;
-      .avm-content{
-        
+      .avm-content {
       }
       .content-btns {
         padding-top: 20px;

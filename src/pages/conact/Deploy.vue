@@ -123,7 +123,7 @@
     <div class="usehash-wrapper" v-if="inputLoadHash">
       <div class="usehash-content">
         <p-title :title="'使用hash载入'">
-          <img src="../../assets/close.png" alt>
+          <img src="../../assets/close.png" alt @click="inputLoadHash=false">
         </p-title>
         <div class="usehash-input">
           <input type="text" placeholder="请输入hash" v-model="inputhash">
