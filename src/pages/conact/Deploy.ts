@@ -7,6 +7,7 @@ import Component from "vue-class-component";
 import Vue from "vue";
 import { tools } from "../../tools/importpack";
 import { LoginInfo } from "../../tools/entity";
+import { ContractDeployInfo } from 'entity/ContractEntitys';
 @Component({
     components: {}
 })
@@ -23,15 +24,33 @@ export default class Deploy extends Vue
     conactHash: string = "";
     download_name: string = "";
     download_href: string = "";
+    hashList: string[] = [];
     avmhex: Uint8Array;
     isCall = false;
     isStore = false;
     feePay = false;
     amount: number;
+    inputhash = "";
+    inputLoadHash = false;
     mounted()
     {
-        this.result = "";
-        this.conactHash = "";
+        this.initConactInfo();
+        this.initCodeEditor();
+    }
+
+    initConactInfo()
+    {
+        let hashstore = sessionStorage.getItem("neo-contract-hash");
+        if (hashstore)
+        {
+            // this.conactHash=hashstore;
+            this.selectedHash(hashstore);
+        }
+    }
+
+    initCodeEditor()
+    {
+        let codestore = sessionStorage.getItem("neo-contract-code");
         var codeContent = document.getElementById("code-content") as HTMLDivElement;
         var width = codeContent.offsetWidth;
         var height = codeContent.offsetHeight;
@@ -43,13 +62,16 @@ export default class Deploy extends Vue
         option.theme = "monokai";
         // option.readOnly = true;
         this.cEditor = CodeMirror.fromTextArea(host, option);
-        // this.cEditor.setValue("test(){\n log()}ddddd\t\t\tdddddddddddddd");
-        // this.cEditor.setSize("auto", height);
-        // this.cEditor.on("change", function() {
-        //事件触发后执行事件
-        //   alert("change");
-        // });
+        this.loadHashList();
+        this.cEditor.setValue(codestore ? codestore : "");
+        this.cEditor.setSize("auto", height);
+        this.cEditor.on("change", function (Editor, change)
+        {
+            // 事件触发后执行事件
+            sessionStorage.setItem("neo-contract-code", Editor.getValue())
+        });
     }
+
     async compile()
     {
         console.log("进入了 compile 方法");
@@ -133,4 +155,47 @@ export default class Deploy extends Vue
         console.log(result);
 
     }
+
+    async loadHashList()
+    {
+        this.hashList = await tools.wwwtool.getContractRemarkByAddress(LoginInfo.getCurrentAddress())
+    }
+
+    async selectedHash(scripthash: string)
+    {
+        if (this.inputLoadHash || this.inputhash)
+        {
+            this.inputLoadHash = false;
+            this.inputhash = "";
+        }
+        this.conactHash = scripthash;
+        const coderesult = await tools.wwwtool.getContractCodeByHash(this.conactHash, LoginInfo.getCurrentAddress());
+        const conactinfo: ContractDeployInfo = await tools.wwwtool.getContractDeployInfoByHash(this.conactHash);
+        if (coderesult)
+        {
+            const avm: string = coderesult.avm;
+            this.avmhex = avm.hexToBytes();
+            var blob = new Blob([ avm.hexToBytes() ]);
+            this.download_href = URL.createObjectURL(blob);
+            this.download_name = this.conactHash + ".avm";
+            this.cEditor.setValue(coderesult.cs);
+        }
+
+        if (conactinfo)
+        {
+            this.name = conactinfo.name;
+            this.description = conactinfo.desc
+            this.author = conactinfo.author;
+            this.email = conactinfo.email;
+            this.version = conactinfo.version;
+            this.isCall = conactinfo.dynamicCall == 0 ? false : true;
+            this.isStore = conactinfo.createStorage == 0 ? false : true;
+            this.feePay = conactinfo.acceptablePayment == 0 ? false : true;
+
+        }
+
+
+        // this.cEditor= 
+    }
+
 }

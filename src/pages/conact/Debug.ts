@@ -24,6 +24,7 @@ export default class Deploy extends Vue
     avmhex: Uint8Array;
     cscode: string = "";
     CalcStack: string = "";
+    AltStack: string = "";
     //需要使用simVM来模拟执行一下，得到详细的情报
     simVM: ThinNeo.Debug.SimVM;//
     stackarr:
@@ -119,7 +120,7 @@ export default class Deploy extends Vue
         let stateid = this.simVM.mapState[ op.guid ];
         let state = this.simVM.stateClone[ stateid ];
         this.CalcStack = JSON.stringify(state.CalcStack);
-
+        this.AltStack = JSON.stringify(state.AltStack);
     }
     async initCode(hash: string): Promise<void>
     {

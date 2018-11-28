@@ -80,7 +80,7 @@ jumbotron {
     color: #FFFFFF;
     letter-spacing: 0;
     text-align: left;
-    background: #151A1E;
+    background: #222222;
     border-top: 4px solid #454F60;
 }
 .navbar-wallet .blockheight .fright{
@@ -438,10 +438,6 @@ table>tbody>tr {
 }
 
 .list-head .title-content, .list-head .line .title-nel, .list-body .line .title-nel, .list-body .line .content-nel {
-    color: #fff;
-}
-
-.amount {
     color: #fff;
 }
 

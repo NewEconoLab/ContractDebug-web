@@ -1,115 +1,139 @@
 <template>
-    <div>
-        <div class="deploy-panel">
-            <div class="code">
-                <panel>
-                    <div class="p-title">
-                        <div class="title">
-                            <div>
-                                <div>文件</div>
-                                <!-- <div>
-                                    <ul>
-                                        <li></li>
-                                    </ul>
-                                </div> -->
-                            </div>
-                        </div>
-                    </div>
-                    <div class="code-content" id="code-content">
-                        <textarea id="csharp-code"  rows="25" cols="20" >
-                        </textarea>
-                    </div>
-                    <p-foot>
-                        <v-btn :type="'primary'" @onclick="compile">编译代码</v-btn>
-                        <v-btn @onclick="test">test</v-btn>
-                    </p-foot>
-                </panel>
-            </div>
-            <div class="result">
-                <panel>
-                    <p-title :title="'编译结果'">
-      <!-- <v-selected :list="selectList" @selected="onSelect"></v-selected> -->
-                        <!-- <v-btn :type="'primary'" @onclick="test">操作记录</v-btn> -->
-                    </p-title>
-                    <div class="panel-content">
-                        <div class="compile-result"></div>
-                    </div>
-                </panel>
-                <div v-if="conactHash && download_href">
-                <panel>
-                    <div class="panel-content">
-                        <input type="text" id="hash-input" v-model="conactHash">
-                        <div class="content-btns">
-                            <v-btn> <a :download="download_name" :href="download_href" > 下载 AVM</a></v-btn>
-                            <v-btn @onclick="copyHash">复制合约hash</v-btn>
-                        </div>
-                    </div>
-                </panel>
-                
-                <panel>
-                    <p-title :title="'部署当前合约'">
-                    </p-title>
-                    <div class="panel-content">
-                        <div class="panel-form">
-                            <div class="form-lable">合约名称（必填）</div>
-                            <div class="form-content">
-                                <input type="text" name="" id="" v-model="name">
-                            </div>
-                        </div>
-                        <div class="panel-form">
-                            <div class="form-lable">版本</div>
-                            <div class="form-content">
-                                <input type="text" name="" id="" v-model="version">
-                            </div>
-                        </div>
-                        <div class="panel-form">
-                            <div class="form-lable">作者</div>
-                            <div class="form-content">
-                                <input type="text" name="" id="" v-model="author">
-                            </div>
-                        </div>
-                        <div class="panel-form">
-                            <div class="form-lable">邮件</div>
-                            <div class="form-content">
-                                <input type="text" name="" id="" v-model="email">
-                            </div>
-                        </div>
-                        <div class="panel-form">
-                            <div class="form-lable">合约描述</div>
-                            <div class="form-content">
-                                <input type="text" name="" id="" v-model="description">
-                            </div>
-                        </div>
-                        <div class="panel-form">
-                            <label for="" :class="isCall?'checked-input':''">
-                                <span @click="isCall=!isCall">
-                                    <span class="select-img" ><img src="../../assets/selected.png" alt=""/></span>
-                                    <span>动态调用</span>
-                                </span>
-                            </label>
-                            <label for="" :class="isStore?'checked-input':''">
-                                <span @click="isStore=!isStore">
-                                    <span class="select-img"><img src="../../assets/selected.png" alt=""/></span>
-                                    <span>创建存储区</span>
-                                </span>                            
-                            </label>
-                            <label for="" :class="feePay?'checked-input':''">
-                                <span @click="feePay=!feePay">
-                                    <span class="select-img"><img src="../../assets/selected.png" alt=""/></span>
-                                    <span>可接受付款</span>
-                                </span>
-                            </label>
-                        </div>
-                    </div>
-                    <p-foot :title="'花费GAS：'+(90+(isCall*500+isStore*400))">
-
-                        <v-btn :type="'primary'" @onclick="deploy">确认部署</v-btn>
-                    </p-foot>
-                </panel>
+  <div>
+    <div class="deploy-panel">
+      <div class="code">
+        <panel>
+          <div class="p-title">
+            <div class="title">
+              <div class="title-menu">
+                <span class="title-active">文件</span>
+                <div class="titlemenu-list-wrap">
+                  <ul class="titlemenu-list">
+                    <li>新建</li>
+                    <li class="active" @click="inputLoadHash=true">使用hash载入</li>
+                    <li
+                      v-for="hash in hashList"
+                      :key="hash.scripthash"
+                      @click="selectedHash(hash.scripthash)"
+                    >{{hash.name}}</li>
+                  </ul>
                 </div>
+              </div>
             </div>
+          </div>
+          <div class="code-content" id="code-content">
+            <textarea id="csharp-code" rows="25" cols="20"></textarea>
+          </div>
+          <p-foot>
+            <v-btn :type="'primary'" @onclick="compile">编译代码</v-btn>
+            <v-btn @onclick="test">调用合约的测试不要乱点</v-btn>
+          </p-foot>
+        </panel>
+      </div>
+      <div class="result">
+        <panel>
+          <p-title :title="'编译结果'">
+            <!-- <v-selected :list="selectList" @selected="onSelect"></v-selected> -->
+            <!-- <v-btn :type="'primary'" @onclick="test">操作记录</v-btn> -->
+          </p-title>
+          <div class="panel-content">
+            <div class="compile-result"></div>
+          </div>
+        </panel>
+        <div v-if="conactHash && download_href">
+          <panel>
+            <div class="panel-content">
+              <input type="text" id="hash-input" v-model="conactHash">
+              <div class="content-btns">
+                <v-btn>
+                  <a :download="download_name" :href="download_href">下载 AVM</a>
+                </v-btn>
+                <v-btn @onclick="copyHash">复制合约hash</v-btn>
+              </div>
+            </div>
+          </panel>
+
+          <panel>
+            <p-title :title="'部署当前合约'"></p-title>
+            <div class="panel-content">
+              <div class="panel-form">
+                <div class="form-lable">合约名称（必填）</div>
+                <div class="form-content">
+                  <input type="text" name id v-model="name">
+                </div>
+              </div>
+              <div class="panel-form">
+                <div class="form-lable">版本</div>
+                <div class="form-content">
+                  <input type="text" name id v-model="version">
+                </div>
+              </div>
+              <div class="panel-form">
+                <div class="form-lable">作者</div>
+                <div class="form-content">
+                  <input type="text" name id v-model="author">
+                </div>
+              </div>
+              <div class="panel-form">
+                <div class="form-lable">邮件</div>
+                <div class="form-content">
+                  <input type="text" name id v-model="email">
+                </div>
+              </div>
+              <div class="panel-form">
+                <div class="form-lable">合约描述</div>
+                <div class="form-content">
+                  <input type="text" name id v-model="description">
+                </div>
+              </div>
+              <div class="panel-form">
+                <label for :class="isCall?'checked-input':''">
+                  <span @click="isCall=!isCall">
+                    <span class="select-img">
+                      <img src="../../assets/selected.png" alt>
+                    </span>
+                    <span>动态调用</span>
+                  </span>
+                </label>
+                <label for :class="isStore?'checked-input':''">
+                  <span @click="isStore=!isStore">
+                    <span class="select-img">
+                      <img src="../../assets/selected.png" alt>
+                    </span>
+                    <span>创建存储区</span>
+                  </span>
+                </label>
+                <label for :class="feePay?'checked-input':''">
+                  <span @click="feePay=!feePay">
+                    <span class="select-img">
+                      <img src="../../assets/selected.png" alt>
+                    </span>
+                    <span>可接受付款</span>
+                  </span>
+                </label>
+              </div>
+            </div>
+            <p-foot :title="'花费GAS：'+(90+(isCall*500+isStore*400))">
+              <v-btn :type="'primary'" @onclick="deploy">确认部署</v-btn>
+            </p-foot>
+          </panel>
         </div>
+      </div>
     </div>
+    <div class="usehash-wrapper" v-if="inputLoadHash">
+      <div class="usehash-content">
+        <p-title :title="'使用hash载入'">
+          <img src="../../assets/close.png" alt>
+        </p-title>
+        <div class="usehash-input">
+          <input type="text" placeholder="请输入hash" v-model="inputhash">
+        </div>
+        <div class="usehash-btn">
+          <v-btn @onclick="selectedHash(inputhash)">确认</v-btn>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 <style lang="less" scoped>
 .deploy-panel {
@@ -133,6 +157,55 @@
         font-size: 14px;
         color: #b5b5b5;
         display: inline-block;
+        .title-menu {
+          cursor: pointer;
+          position: relative;
+          &:hover {
+            .title-active {
+              color: #3791ff;
+
+              cursor: pointer;
+            }
+            .titlemenu-list-wrap {
+              display: block;
+            }
+          }
+          .titlemenu-list-wrap {
+            display: none;
+            border: 1px solid #4e4e4e;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
+            padding: 15px;
+            min-width: 110px;
+            background: #222222;
+            position: absolute;
+            top: 39px;
+            left: 0;
+            z-index: 4;
+            .titlemenu-list {
+              display: block;
+              list-style-type: disc;
+              margin-block-start: 0;
+              margin-block-end: 0;
+              margin-inline-start: 0px;
+              margin-inline-end: 0px;
+              padding-inline-start: 0;
+              li {
+                list-style: none;
+                margin-bottom: 15px;
+                line-height: 14px;
+                font-size: 12px;
+                &:last-child {
+                  margin-bottom: 0;
+                }
+                &:hover {
+                  color: #3791ff;
+                  cursor: pointer;
+                }
+              }
+            }
+          }
+        }
       }
       .btn-list {
         float: right;
@@ -237,6 +310,59 @@
           }
         }
       }
+    }
+  }
+}
+.usehash-wrapper {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1031;
+  .usehash-content {
+    background: #151a1e;
+    box-shadow: -2px 0 5px 0 rgba(0, 0, 0, 0.5);
+    width: 800px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    .btn-list {
+      img {
+        width: 22px;
+        height: 22px;
+      }
+    }
+    .usehash-input {
+      width: 700px;
+      height: 32px;
+      margin: 0 auto;
+      margin-top: 50px;
+      margin-bottom: 50px;
+      background: #292a30;
+      border: 1px solid #ffffff;
+      border-radius: 3px;
+      input {
+        border: none;
+        background: none;
+        width: 100%;
+        line-height: 30px;
+        text-indent: 20px;
+        color: #fff;
+        &::placeholder {
+          font-size: 14px;
+          color: #b5b5b5;
+        }
+      }
+    }
+    .usehash-btn {
+      text-align: center;
+      margin-bottom: 60px;
     }
   }
 }

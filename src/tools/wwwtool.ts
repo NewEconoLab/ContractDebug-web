@@ -592,6 +592,21 @@ export class WWW
         }
     }
 
+    static async getContractDeployInfoByHash(hash: string)
+    {
+        var postdata = WWW.makeRpcPostBody("getContractDeployInfoByHash", hash);
+        var result = await fetch(WWW.apicontract, { "method": "post", "body": JSON.stringify(postdata) });
+        var json = await result.json();
+        if (json[ "result" ])
+        {
+            var r = json[ "result" ][ 0 ];
+            return r;
+        } else
+        {
+            throw "not data";
+        }
+    }
+
     /**编译合约代码 */
     static async compileContractFile(address: string, code: string)
     {
@@ -674,6 +689,21 @@ export class WWW
         if (json[ "result" ])
         {
             var r = json[ "result" ][ 0 ];
+            return r;
+        } else
+        {
+            throw "not data";
+        }
+    }
+
+    static async getContractRemarkByAddress(address: string)
+    {
+        var postdata = WWW.makeRpcPostBody("getContractRemarkByAddress", address);
+        var result = await fetch(WWW.apicontract, { "method": "post", "body": JSON.stringify(postdata) });
+        var json = await result.json();
+        if (json[ "result" ])
+        {
+            var r = json[ "result" ];
             return r;
         } else
         {
