@@ -163,6 +163,13 @@ export default class Deploy extends Vue
 
     async selectedHash(scripthash: string)
     {
+        if (scripthash === 'new')
+        {
+            this.cEditor.setValue("");
+            this.conactHash = "";
+            sessionStorage.setItem("neo-contract-hash", "")
+            return;
+        }
         if (this.inputLoadHash || this.inputhash)
         {
             this.inputLoadHash = false;

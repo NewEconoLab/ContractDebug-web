@@ -9,7 +9,7 @@
                 <span class="title-active">文件</span>
                 <div class="titlemenu-list-wrap">
                   <ul class="titlemenu-list">
-                    <li>新建</li>
+                    <li @click="selectedHash('new')">新建</li>
                     <li class="active" @click="inputLoadHash=true">使用hash载入</li>
                     <li
                       v-for="hash in hashList"
