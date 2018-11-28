@@ -17,17 +17,25 @@
     <div class="debug-panel">
       <div class="debug-info">
         <panel>
-          <p-title :title="'Calcstack'"></p-title>
-          <div class="panel-content">{{CalcStack}}</div>
+          <p-title :title="'CalcStack'"></p-title>
+          <div class="panel-content">
+            <ul>
+              <li
+                v-if="ClacStack"
+                v-for="stack in ClacStack"
+                :key="stack"
+              >{{stack.type}}:{{stack.strvalue}}</li>
+            </ul>
+          </div>
         </panel>
         <panel>
-          <p-title :title="'altstack'"></p-title>
+          <p-title :title="'AltStack'"></p-title>
           <div class="panel-content"></div>
         </panel>
         <panel>
           <p-title :title="'Value tool'"></p-title>
           <div class="panel-content">
-            <div class="compile-result"></div>
+            <div id="valuetool"></div>
           </div>
         </panel>
       </div>
@@ -98,6 +106,7 @@
     max-width: 250px;
     padding-right: 30px;
     .panel-content {
+      color: #fff;
       margin-left: 20px;
       margin-right: 20px;
       margin-top: 20px;
@@ -126,8 +135,7 @@
       margin-right: 20px;
       margin-top: 20px;
       margin-bottom: 20px;
-      .avm-content {
-      }
+      color: #fff;
       .content-btns {
         padding-top: 20px;
         justify-content: flex-end;

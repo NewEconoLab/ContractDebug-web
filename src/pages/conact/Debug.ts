@@ -6,10 +6,11 @@ import Component from "vue-class-component";
 import Vue from "vue";
 import { tools } from "../../tools/importpack";
 import { LoginInfo } from "../../tools/entity";
+import { TreeView, TreeViewItems } from '../TreeViewItem';
 @Component({
     components: {}
 })
-export default class Deploy extends Vue
+export default class Debug extends Vue
 {
     txlist: { txid: string, createTime: number }[] = [];
     txid: string = "";
@@ -23,8 +24,8 @@ export default class Deploy extends Vue
     conactHash: string = "";
     avmhex: Uint8Array;
     cscode: string = "";
-    CalcStack: string = "";
-    AltStack: string = "";
+    CalcStack = {};
+    AltStack = {};
     //需要使用simVM来模拟执行一下，得到详细的情报
     simVM: ThinNeo.Debug.SimVM;//
     stackarr:
@@ -45,6 +46,17 @@ export default class Deploy extends Vue
         this.cEditor = CodeMirror.fromTextArea(host, option);
         this.fulllogEditor = CodeMirror.fromTextArea(avm, option);
         this.initHashList();
+
+        let div = document.getElementById("valuetool") as HTMLDivElement;
+        let tree = new TreeViewItems(div)
+        let view = new TreeView("test")
+        let view1 = new TreeView("test1")
+        let view2 = new TreeView("test2")
+        let view3 = new TreeView("test3")
+        view.addChildren(view1)
+        view1.addChildren(view2)
+        view.addChildren(view3);
+        tree.showTree(tree.ul, view);
     }
 
     async initHashList()
@@ -91,6 +103,7 @@ export default class Deploy extends Vue
             }
             this.dumpstr = "";
             this.dumpScript(fulllog.script, 1);
+
             this.fulllogEditor.on("cursorActivity", (res) =>
             {
                 this.debug()
@@ -119,9 +132,24 @@ export default class Deploy extends Vue
     {
         let stateid = this.simVM.mapState[ op.guid ];
         let state = this.simVM.stateClone[ stateid ];
-        this.CalcStack = JSON.stringify(state.CalcStack);
-        this.AltStack = JSON.stringify(state.AltStack);
+        this.CalcStack = state.CalcStack[ 'list' ];
+        this.AltStack = state.AltStack[ 'list' ];
+        console.log(this.CalcStack);
+        console.log(this.AltStack);
     }
+
+    calcStackShow(obj)
+    {
+        if (obj[ "type" ] === "Array")
+        {
+
+        }
+        else
+        {
+            this.CalcStack[ obj[ "type" ] ] = obj[ "strvalue" ]
+        }
+    }
+
     async initCode(hash: string): Promise<void>
     {
         try
@@ -169,6 +197,10 @@ export default class Deploy extends Vue
                 console.log(script.ops[ i ]);
                 console.log(script.ops[ i ].param);
                 console.log(script.ops[ i ].param.toHexString());
+                let arr = [];
+                //预先获得所有需要加载的 avm等信息
+                console.log(script.ops[ i ].subScript.GetAllScriptName(arr));
+                console.log(arr);
             }
             this.stackarr.push({ script: script, op: script.ops[ i ] });
             if (script.ops[ i ].subScript != null)
