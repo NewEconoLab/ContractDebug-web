@@ -86,7 +86,7 @@ export default class Deploy extends Vue
         this.result = "执行成功";
         this.conactHash = result.hash;
 
-        const coderesult = await tools.wwwtool.getContractCodeByHash(this.conactHash, LoginInfo.getCurrentAddress());
+        const coderesult = await tools.wwwtool.getContractCodeByHash(this.conactHash, "");
         const avm: string = coderesult.avm;
         this.avmhex = avm.hexToBytes();
         var blob = new Blob([ avm.hexToBytes() ]);
@@ -169,7 +169,7 @@ export default class Deploy extends Vue
             this.inputhash = "";
         }
         this.conactHash = scripthash;
-        const coderesult = await tools.wwwtool.getContractCodeByHash(this.conactHash, LoginInfo.getCurrentAddress());
+        const coderesult = await tools.wwwtool.getContractCodeByHash(this.conactHash, "");
         const conactinfo: ContractDeployInfo = await tools.wwwtool.getContractDeployInfoByHash(this.conactHash);
         if (coderesult)
         {
