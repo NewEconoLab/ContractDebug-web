@@ -88,7 +88,7 @@ export default class Deploy extends Vue
         this.result = result.message;
         this.conactHash = result.hash;
 
-        const coderesult = await tools.wwwtool.getContractCodeByHash(this.conactHash, "");
+        const coderesult = await tools.wwwtool.getContractCodeByHash(this.conactHash, LoginInfo.getCurrentAddress());
         const avm: string = coderesult.avm;
         this.avmhex = avm.hexToBytes();
         var blob = new Blob([ avm.hexToBytes() ]);

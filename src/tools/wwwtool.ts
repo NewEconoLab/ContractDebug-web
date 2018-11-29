@@ -578,6 +578,12 @@ export class WWW
         }
     }
 
+    /**
+     * 
+     * @param hash 
+     * @param address 
+     * @param {string} type cs|avm|abi|map
+     */
     static async getContractCodeByHash(hash: string, address: string)
     {
         var postdata = WWW.makeRpcPostBody("getContractCodeByHash", address, hash);

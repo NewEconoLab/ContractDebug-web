@@ -1244,6 +1244,12 @@ var WWW = /** @class */ (function () {
             });
         });
     };
+    /**
+     *
+     * @param hash
+     * @param address
+     * @param {string} type cs|avm|abi|map
+     */
     WWW.getContractCodeByHash = function (hash, address) {
         return __awaiter(this, void 0, void 0, function () {
             var postdata, result, json, r;

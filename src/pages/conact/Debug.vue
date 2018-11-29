@@ -119,6 +119,9 @@
         height: 30px;
         color: #fff;
       }
+      ul {
+        padding-inline-start: 0px;
+      }
     }
   }
   .avm {

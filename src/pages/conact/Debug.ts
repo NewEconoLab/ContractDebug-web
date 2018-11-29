@@ -134,7 +134,7 @@ export default class Debug extends Vue
         let state = this.simVM.stateClone[ stateid ];
         this.CalcStack = state.CalcStack[ 'list' ];
         this.AltStack = state.AltStack[ 'list' ];
-        let tree = new TreeView("calcstack");
+        let tree = new TreeView("");
         let div = document.getElementById("calcstack-content") as HTMLDivElement;
 
         while (div.hasChildNodes()) //当div下还存在子节点时 循环继续
@@ -169,7 +169,7 @@ export default class Debug extends Vue
             }
             else
             {
-                let view = new TreeView(obj[ "type" ] + " : " + obj[ "strvalue" ])
+                let view = new TreeView(obj[ "type" ] + ":" + obj[ "strvalue" ])
                 tree.addChildren(view);
             }
         }
