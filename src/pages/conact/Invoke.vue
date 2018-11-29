@@ -3,8 +3,8 @@
     <div class="invoke-panel">
       <div class="code-top">
         <panel>
-          <p-title :title="'合约名称、Hash'">
-            <v-btn>更换合约</v-btn>
+          <p-title :title="currentContract.name+'  '+currentContract.scripthash">
+            <v-btn @onclick="openSelect=true">更换合约</v-btn>
             <v-btn :type="'warn'">帮助</v-btn>
           </p-title>
           <div class="code-content" id="code-content">
@@ -21,25 +21,25 @@
             <div class="panel-form">
               <div class="form-lable">参数Script hash</div>
               <div class="form-content">
-                <input type="text" name id v-model="name">
+                <input type="text">
               </div>
             </div>
             <div class="panel-form">
               <div class="form-lable">执行结果</div>
               <div class="form-content">
-                <input type="text" name id v-model="version">
+                <input type="text">
               </div>
             </div>
             <div class="panel-form">
               <div class="form-lable">方法返回</div>
               <div class="form-content">
-                <input type="text" name id v-model="author">
+                <input type="text">
               </div>
             </div>
             <div class="panel-form">
               <div class="form-lable">GAS消耗</div>
               <div class="form-content">
-                <input type="text" name id v-model="email">
+                <input type="text">
               </div>
             </div>
           </div>
@@ -52,20 +52,24 @@
         </div>
       </div>
       <!-- 更换合约的弹筐 -->
-      <div class="changehash-dialog">
+      <div class="changehash-dialog" v-if="openSelect">
         <div class="changhash-wrapper">
           <p-title :title="'更换合约'">
             <img src="../../assets/close.png" alt>
           </p-title>
           <div class="changehash-content">
             <div class="change-box">
-              <select class="change-select">
-                <option value="1">合约1</option>
+              <select class="change-select" v-model="inputContract">
+                <option
+                  v-for="contract in contractList"
+                  :key="contract.scripthash"
+                  :value="contract.scripthash"
+                >{{contract.name}}</option>
               </select>
-              <input type="text" placeholder="选择合约" class="change-input">
+              <input type="text" placeholder="选择合约" class="change-input" v-model="inputContract">
             </div>
             <div class="changehash-btn">
-              <v-btn>更换合约</v-btn>
+              <v-btn @onclick="changeContract">更换合约</v-btn>
             </div>
           </div>
         </div>
@@ -287,5 +291,5 @@
   }
 }
 </style>
-<script lang="ts" src = "./Deploy.ts">
+<script lang="ts" src = "./Invoke.ts">
 </script>
