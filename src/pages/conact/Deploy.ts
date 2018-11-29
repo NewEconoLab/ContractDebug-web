@@ -133,6 +133,9 @@ export default class Deploy extends Vue
             )
             console.log(res);
             this.opneToast('success', "合约发布成功", 4000);
+        } else
+        {
+            this.opneToast('error', "合约发布失败", 4000);
         }
     }
 
