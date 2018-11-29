@@ -248,7 +248,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var WWW = /** @class */ (function () {
     function WWW() {
     }
-    // static apicontract: string = "https://apidebug.nel.group/api/testnet";
     WWW.makeRpcUrl = function (url, method) {
         var _params = [];
         for (var _i = 2; _i < arguments.length; _i++) {
@@ -1465,7 +1464,8 @@ var WWW = /** @class */ (function () {
     };
     WWW.api = "https://api.nel.group/api/testnet";
     WWW.apiaggr = "https://apiwallet.nel.group/api/testnet";
-    WWW.apicontract = "http://121.43.170.160:1189/api/testnet";
+    // static apicontract: string = "http://121.43.170.160:1189/api/testnet";
+    WWW.apicontract = "https://apidebug.nel.group/api/testnet";
     return WWW;
 }());
 exports.WWW = WWW;
