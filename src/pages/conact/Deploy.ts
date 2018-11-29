@@ -32,10 +32,12 @@ export default class Deploy extends Vue
     amount: number;
     inputhash = "";
     inputLoadHash = false;
+    opneToast: Function;
     mounted()
     {
         this.initConactInfo();
         this.initCodeEditor();
+        this.opneToast = this.$refs[ "toast" ][ "opneToast" ];
     }
 
     initConactInfo()
@@ -130,6 +132,7 @@ export default class Deploy extends Vue
                 result.txid
             )
             console.log(res);
+            this.opneToast('success', "合约发布成功", 4000);
         }
     }
 

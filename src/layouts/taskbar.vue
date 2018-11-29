@@ -1,43 +1,43 @@
 <template>
-    <div class="navbar navbar-wallet">
-      <div class="blockheight">
-        <div class="main">
-          <div class="balance">
-            <span class="asset">GAS</span>
-            <span class="amount">{{balance.toString()}}</span>
-            <v-btn v-if="claimState==='3010'" @onclick="claimGas">索取500 GAS</v-btn> 
-            <v-btn v-else-if="claimState==='3011'" :type="'disable'">排队中</v-btn>
-            <v-btn :type="'disable'" v-else-if="claimState==='3012'" >已发放 GAS</v-btn>
-            <v-btn :type="'disable'" v-else>Gas待补充</v-btn>                          
-            <v-hint>
-              <div class="hint-img">
-                <img src="../assets/explain.png" alt="" >                         
-              </div>
-              <div class="hint-content">  
-                  <p>单个钱包每日索取上限为2000 GAS，自动发放每日至多20000 GAS，无法申请时，请在论坛上留言索取。</p>
-              </div>
-            </v-hint>
-          </div>
-          <div class="task-btn">
-            <span class="task-tab">
-              <img src="../assets/address.png" alt="">
-              {{$t('transfer.title2')+"："}}
-              <a :href="href" target="_blank">{{showaddr}}</a>
-            </span>
-            <span class="task-tab">
-              <img src="../assets/height.png" alt="">
-              {{[$t('navbar.blockheight'),blockheight].join("：")}}
-            </span>
-            <span class="task-tab">
-              <img src="../assets/Timing.png" alt="">
-              计时器：{{taskNumber}}
-            </span>
-            <v-btn >操作记录</v-btn>
-          </div>
+  <div class="navbar navbar-wallet">
+    <div class="blockheight">
+      <div class="main">
+        <div class="balance">
+          <span class="asset">GAS</span>
+          <span class="amount">{{balance.toString()}}</span>
+          <v-btn v-if="claimState==='3010'" @onclick="claimGas">索取500 GAS</v-btn>
+          <v-btn v-else-if="claimState==='3011'" :type="'disable'">排队中</v-btn>
+          <v-btn :type="'disable'" v-else-if="claimState==='3012'">已发放 GAS</v-btn>
+          <v-btn :type="'disable'" v-else>Gas不足</v-btn>
+          <v-hint>
+            <div class="hint-img">
+              <img src="../assets/explain.png" alt>
+            </div>
+            <div class="hint-content">
+              <p>每个钱包每日可索取一次500gas，需要更多请在论坛留言索取。</p>
+            </div>
+          </v-hint>
+        </div>
+        <div class="task-btn">
+          <span class="task-tab">
+            <img src="../assets/address.png" alt>
+            {{$t('transfer.title2')+"："}}
+            <a :href="href" target="_blank">{{showaddr}}</a>
+          </span>
+          <span class="task-tab">
+            <img src="../assets/height.png" alt>
+            {{[$t('navbar.blockheight'),blockheight].join("：")}}
+          </span>
+          <span class="task-tab">
+            <img src="../assets/Timing.png" alt>
+            计时器：{{taskNumber}}
+          </span>
+          <v-btn>操作记录</v-btn>
         </div>
       </div>
-      <v-toast ref="toast"></v-toast>
     </div>
+    <v-toast ref="toast"></v-toast>
+  </div>
 </template>
 <style lang="less" scoped>
 .main {
@@ -148,7 +148,7 @@ export default class TaskBar extends Vue {
   }
 
   async claimGas() {
-    let openToast: any = this.$refs["toast"];
+    let openToast: any = this.$refs["toast"]["openToast"];
     try {
       const result = await tools.wwwtool.claimGas(this.currentAddress, 10);
       if (result ? result[0] : false) {
