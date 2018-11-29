@@ -22,7 +22,7 @@
         </panel>
         <panel>
           <p-title :title="'AltStack'"></p-title>
-          <div class="panel-content"></div>
+          <div class="panel-content" id="altstack-content"></div>
         </panel>
         <panel>
           <p-title :title="'Value tool'"></p-title>

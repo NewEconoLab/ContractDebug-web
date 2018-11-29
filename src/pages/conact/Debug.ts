@@ -1,7 +1,8 @@
-import * as CodeMirror from 'codemirror'
-import 'codemirror/mode/clike/clike'
-import 'codemirror/addon/hint/show-hint'
-import 'codemirror/addon/hint/sql-hint'
+// import * as CodeMirror from 'codemirror'
+/// <reference path="../../tools/codemirror.d.ts" />
+// import 'codemirror/mode/clike/clike'
+// import 'codemirror/addon/hint/show-hint'
+// import 'codemirror/addon/hint/sql-hint'
 import Component from "vue-class-component";
 import Vue from "vue";
 import { tools } from "../../tools/importpack";
@@ -135,17 +136,26 @@ export default class Debug extends Vue
         this.CalcStack = state.CalcStack[ 'list' ];
         this.AltStack = state.AltStack[ 'list' ];
         let tree = new TreeView("");
+        let tree1 = new TreeView("");
         let div = document.getElementById("calcstack-content") as HTMLDivElement;
+        let div1 = document.getElementById("altstack-content") as HTMLDivElement;
 
         while (div.hasChildNodes()) //当div下还存在子节点时 循环继续
         {
             div.removeChild(div.firstChild);
         }
+        while (div1.hasChildNodes())
+        {
+            div1.removeChild(div1.firstChild);
+        }
         let view = new TreeViewItems(div)
+        let view1 = new TreeViewItems(div1)
         console.log(tree);
 
         this.calcStackShow(state.CalcStack[ 'list' ], tree);
+        this.calcStackShow(state.AltStack[ "list" ], tree1)
         view.showTree(view.ul, tree);
+        view1.showTree(view1.ul, tree1);
         console.log(this.CalcStack);
         console.log(this.AltStack);
     }
@@ -179,7 +189,7 @@ export default class Debug extends Vue
     {
         try
         {
-            const coderesult = await tools.wwwtool.getContractCodeByHash(hash, LoginInfo.getCurrentAddress());
+            const coderesult = await tools.wwwtool.getContractCodeByHash(hash, "");
             if (coderesult)
             {
                 this.oplist = ThinNeo.Compiler.Avm2Asm.Trans(coderesult.avm.hexToBytes());
