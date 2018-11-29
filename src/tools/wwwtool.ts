@@ -3,11 +3,12 @@ export class WWW
 {
     static api: string = "https://api.nel.group/api/testnet";
     static apiaggr: string = "https://apiwallet.nel.group/api/testnet";
-    static apicontract: string = "http://121.43.170.160:1189/api/testnet";
+    // static apicontract: string = "http://121.43.170.160:1189/api/testnet";
+    static apicontract: string = "https://apidebug.nel.group/api/testnet";
     static makeRpcUrl(url: string, method: string, ..._params: any[])
     {
-        if (url[ url.length - 1 ] != '/')
-            url = url + "/";
+        // if (url[ url.length - 1 ] != '/')
+        //     url = url + "/";
         var urlout = url + "?jsonrpc=2.0&id=1&method=" + method + "&params=[";
         for (var i = 0; i < _params.length; i++)
         {

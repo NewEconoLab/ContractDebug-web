@@ -18,15 +18,7 @@
       <div class="debug-info">
         <panel>
           <p-title :title="'CalcStack'"></p-title>
-          <div class="panel-content">
-            <ul>
-              <li
-                v-if="ClacStack"
-                v-for="stack in ClacStack"
-                :key="stack"
-              >{{stack.type}}:{{stack.strvalue}}</li>
-            </ul>
-          </div>
+          <div class="panel-content" id="calcstack-content"></div>
         </panel>
         <panel>
           <p-title :title="'AltStack'"></p-title>
@@ -106,6 +98,7 @@
     max-width: 250px;
     padding-right: 30px;
     .panel-content {
+      overflow: scroll;
       color: #fff;
       margin-left: 20px;
       margin-right: 20px;

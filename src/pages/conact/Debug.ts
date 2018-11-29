@@ -134,19 +134,38 @@ export default class Debug extends Vue
         let state = this.simVM.stateClone[ stateid ];
         this.CalcStack = state.CalcStack[ 'list' ];
         this.AltStack = state.AltStack[ 'list' ];
+        let tree = new TreeView("calcstack");
+        let view = new TreeViewItems(document.getElementById("calcstack-content") as HTMLDivElement)
+        console.log(tree);
+
+        this.calcStackShow(state.CalcStack[ 'list' ], tree);
+        view.showTree(view.ul, tree);
         console.log(this.CalcStack);
         console.log(this.AltStack);
     }
 
-    calcStackShow(obj)
+    calcStackShow(item, tree: TreeView)
     {
-        if (obj[ "type" ] === "Array")
+        for (const obj of item)
         {
 
-        }
-        else
-        {
-            this.CalcStack[ obj[ "type" ] ] = obj[ "strvalue" ]
+            if (obj[ "type" ] === "Array")
+            {
+                let view = new TreeView("Array");
+                tree.addChildren(view);
+                if (obj[ "subItems" ].length > 0)
+                {
+                    this.calcStackShow(obj[ "subItems" ], view)
+                } else
+                {
+                    view.title = "Array : []"
+                }
+            }
+            else
+            {
+                let view = new TreeView(obj[ "type" ] + " : " + obj[ "strvalue" ])
+                tree.addChildren(view);
+            }
         }
     }
 
