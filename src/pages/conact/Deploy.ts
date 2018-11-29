@@ -83,7 +83,7 @@ export default class Deploy extends Vue
             LoginInfo.getCurrentAddress(),
             code
         );
-        this.result = "执行成功";
+        this.result = result.message;
         this.conactHash = result.hash;
 
         const coderesult = await tools.wwwtool.getContractCodeByHash(this.conactHash, "");

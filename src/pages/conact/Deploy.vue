@@ -37,7 +37,7 @@
             <!-- <v-btn :type="'primary'" @onclick="test">操作记录</v-btn> -->
           </p-title>
           <div class="panel-content">
-            <div class="compile-result"></div>
+            <div class="compile-result">{{result}}</div>
           </div>
         </panel>
         <div v-if="conactHash && download_href">
@@ -222,6 +222,9 @@
       margin-right: 20px;
       margin-top: 20px;
       margin-bottom: 20px;
+      .compile-result {
+        color: #fff;
+      }
       .content-btns {
         padding-top: 20px;
         justify-content: flex-end;

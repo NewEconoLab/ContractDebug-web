@@ -98,7 +98,9 @@
     max-width: 250px;
     padding-right: 30px;
     .panel-content {
-      overflow: scroll;
+      overflow: auto;
+      max-width: 250px;
+      max-height: 300px;
       color: #fff;
       margin-left: 20px;
       margin-right: 20px;

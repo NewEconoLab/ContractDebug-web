@@ -135,7 +135,13 @@ export default class Debug extends Vue
         this.CalcStack = state.CalcStack[ 'list' ];
         this.AltStack = state.AltStack[ 'list' ];
         let tree = new TreeView("calcstack");
-        let view = new TreeViewItems(document.getElementById("calcstack-content") as HTMLDivElement)
+        let div = document.getElementById("calcstack-content") as HTMLDivElement;
+
+        while (div.hasChildNodes()) //当div下还存在子节点时 循环继续
+        {
+            div.removeChild(div.firstChild);
+        }
+        let view = new TreeViewItems(div)
         console.log(tree);
 
         this.calcStackShow(state.CalcStack[ 'list' ], tree);
