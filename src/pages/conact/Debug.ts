@@ -13,6 +13,7 @@ import { TreeView, TreeViewItems } from '../TreeViewItem';
 })
 export default class Debug extends Vue
 {
+
     txlist: { txid: string, createTime: number }[] = [];
     txid: string = "";
     dumpinfo: string = "";
@@ -64,6 +65,14 @@ export default class Debug extends Vue
     {
         let result = await tools.wwwtool.getTxCallContract(LoginInfo.getCurrentAddress());
         this.txlist = result;
+        this.txlist = this.txlist.map(tx =>
+        {
+            tx[ "txidstr" ] = [
+                tx.txid.substring(0, 4),
+                tx.txid.substring(tx.txid.length - 4)
+            ].join("...");
+            return tx;
+        })
     }
 
     async initDebugInfo()

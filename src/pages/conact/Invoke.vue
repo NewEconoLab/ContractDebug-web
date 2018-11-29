@@ -61,9 +61,6 @@
             <div class="change-box">
               <select class="change-select">
                 <option value="1">合约1</option>
-                <option value="2">合约1</option>
-                <option value="1">合约1</option>
-                <option value="2">合约1</option>
               </select>
               <input type="text" placeholder="选择合约" class="change-input">
             </div>

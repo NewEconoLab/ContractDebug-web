@@ -3,7 +3,7 @@
     <div class="debug-title">
       <div style=":auto;padding:5px; width:362px;">
         <select style="width:100%;height:26px;" v-model="txid">
-          <option v-for="tx in txlist" :key="tx.id" :value="tx.txid">0x00...ba77</option>
+          <option v-for="tx in txlist" :key="tx.id" :value="tx.txid">{{tx.txidstr}}</option>
         </select>
         <input
           type="text"

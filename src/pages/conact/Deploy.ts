@@ -154,7 +154,7 @@ export default class Deploy extends Vue
     async test()
     {
         // let appcall = Neo.Uint160.parse(this.conactHash);
-        let appcall = Neo.Uint160.parse("0xb2d5df69977b0e0948b81aef1b77cac9de699681");
+        let appcall = Neo.Uint160.parse("0x23a23d69a1afe78663c746065e6f5df044026c6c");
         let data = tools.contract.buildScript_random(appcall, "test", []);
         let txhex = await tools.contract.buildInvokeTransData_attributes(data);
         let result = await tools.wwwtool.setTxCallContract(LoginInfo.getCurrentAddress(), txhex.toHexString());
