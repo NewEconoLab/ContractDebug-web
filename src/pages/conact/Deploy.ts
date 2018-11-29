@@ -37,7 +37,7 @@ export default class Deploy extends Vue
     {
         this.initConactInfo();
         this.initCodeEditor();
-        this.opneToast = this.$refs[ "toast" ][ "opneToast" ];
+        this.opneToast = this.$refs[ "toast" ][ "isShow" ];
     }
 
     initConactInfo()
