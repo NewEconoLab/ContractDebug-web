@@ -8,11 +8,11 @@
             <v-btn :type="'warn'">帮助</v-btn>
           </p-title>
           <div class="code-content" id="code-content">
-            <!-- <textarea id="csharp-code" rows="25" cols="20"></textarea> -->
+            <textarea id="invoke-json-code" rows="25" cols="20"></textarea>
           </div>
         </panel>
         <v-btn :type="'primary'">调用交易</v-btn>
-        <v-btn>试运行</v-btn>
+        <v-btn @onclick="testRun">试运行</v-btn>
       </div>
       <div class="result-bottom">
         <div class="result-left">
@@ -21,33 +21,33 @@
             <div class="panel-form">
               <div class="form-lable">参数Script hash</div>
               <div class="form-content">
-                <input type="text">
+                <input class="input" :value="invokeResult.script">
               </div>
             </div>
             <div class="panel-form">
               <div class="form-lable">执行结果</div>
               <div class="form-content">
-                <input type="text">
+                <input class="input" :value="invokeResult.state">
               </div>
             </div>
             <div class="panel-form">
               <div class="form-lable">方法返回</div>
               <div class="form-content">
-                <input type="text">
+                <input class="input" :value="JSON.stringify(invokeResult.stack)">
               </div>
             </div>
             <div class="panel-form">
               <div class="form-lable">GAS消耗</div>
               <div class="form-content">
-                <input type="text">
+                <input class="input" :value="invokeResult.gas_consumed">
               </div>
             </div>
           </div>
         </div>
         <div class="result-right">
           <p-title :title="'结果代码'"></p-title>
-          <div class="panel-content">
-            <div class="compile-result"></div>
+          <div class="content">
+            <textarea id="invoke-result-code"></textarea>
           </div>
         </div>
       </div>
@@ -55,7 +55,7 @@
       <div class="changehash-dialog" v-if="openSelect">
         <div class="changhash-wrapper">
           <p-title :title="'更换合约'">
-            <img src="../../assets/close.png" alt>
+            <img src="../../assets/close.png" alt @click="openSelect=false">
           </p-title>
           <div class="changehash-content">
             <div class="change-box">
@@ -74,6 +74,7 @@
           </div>
         </div>
       </div>
+      <v-toast ref="toast"></v-toast>
     </div>
   </div>
 </template>
@@ -152,7 +153,7 @@
     .form-content {
       width: 74%;
       padding-bottom: 20px;
-      input {
+      .input {
         background: #292a30;
         border: 1px solid #ffffff;
         box-shadow: 0 2px 4px 0 #023169;

@@ -843,7 +843,8 @@ declare namespace CodeMirror
 
         /** How many spaces a block (whatever that means in the edited language) should be indented. The default is 2. */
         indentUnit?: number;
-
+        matchBrackets?: boolean;
+        autoCloseBrackets?: boolean;
         /** Whether to use the context-sensitive indentation that the mode provides (or just indent the same as the line before). Defaults to true. */
         smartIndent?: boolean;
 

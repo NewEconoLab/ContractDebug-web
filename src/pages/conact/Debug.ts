@@ -243,7 +243,7 @@ export default class Debug extends Vue
                 console.log(script.ops[ i ].param.toHexString());
                 let arr = [];
                 //预先获得所有需要加载的 avm等信息
-                console.log(script.ops[ i ].subScript.GetAllScriptName(arr));
+                // console.log(script.ops[ i ].subScript.GetAllScriptName(arr));
                 console.log(arr);
             }
             this.stackarr.push({ script: script, op: script.ops[ i ] });
