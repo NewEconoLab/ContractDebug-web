@@ -26,7 +26,6 @@
           </div>
           <p-foot>
             <v-btn :type="'primary'" @onclick="compile">编译代码</v-btn>
-            <v-btn @onclick="test">调用合约的测试不要乱点</v-btn>
           </p-foot>
         </panel>
       </div>

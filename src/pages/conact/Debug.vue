@@ -1,15 +1,13 @@
 <template>
   <div>
     <div class="debug-title">
-      <div style=":auto;padding:5px; width:362px;">
-        <select style="width:100%;height:26px;" v-model="txid">
-          <option v-for="tx in txlist" :key="tx.id" :value="tx.txid">{{tx.txidstr}}</option>
-        </select>
-        <input
-          type="text"
-          style="width:90%;height:26px;position: relative;top: -26px"
-          v-model="txid"
-        >
+      <div class="changehash-content">
+        <div class="change-box">
+          <select class="change-select" v-model="txid">
+            <option v-for="tx in txlist" :key="tx.id" :value="tx.txid">{{tx.txidstr}}</option>
+          </select>
+          <input type="text" placeholder="选择历史交易" class="change-input" v-model="txid">
+        </div>
       </div>
       <v-btn @onclick="initDebugInfo">查询</v-btn>
       <v-btn :type="'warn'">帮助</v-btn>
@@ -63,6 +61,50 @@
 <style lang="less" scoped>
 .debug-title {
   display: flex;
+  .changehash-content {
+    text-align: center;
+    .change-box {
+      width: 362px;
+      height: 30px;
+      margin: 0 auto;
+      background: #292a30;
+      border: 1px solid #ffffff;
+      border-radius: 3px 0px 3px 3px 3px;
+      position: relative;
+      .change-select {
+        width: 100%;
+        height: 100%;
+        border: none;
+        background: none;
+        color: #fff;
+        outline: none;
+        option {
+          background: #292a30;
+          color: #fff;
+        }
+      }
+      .change-input {
+        width: 95%;
+        height: 100%;
+        border: none;
+        background: #292a30;
+        color: #fff;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 2;
+        outline: none;
+        text-indent: 20px;
+        &::placeholder {
+          color: #fff;
+        }
+      }
+    }
+    .changehash-btn {
+      margin-top: 50px;
+      margin-bottom: 30px;
+    }
+  }
 }
 .debug-panel {
   display: flex;

@@ -92,7 +92,7 @@ export default class Invoke extends Vue
         let script = this.paresInvokeJson()
         let data = await tools.contract.buildInvokeTransData(script);
         let result = await tools.wwwtool.setTxCallContract(LoginInfo.getCurrentAddress(), data.data.toHexString());
-        if (result)
+        if (result)  
         {
             // this.resultEditor.setValue(JSON.stringify(result));
         }

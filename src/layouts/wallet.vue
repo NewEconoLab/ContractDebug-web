@@ -3,7 +3,7 @@
     <taskbar-layout></taskbar-layout>
     <div class="wallet-content">
       <router-view></router-view>
-    </div>    
+    </div>
   </main-layout>
 </template>
 
@@ -150,10 +150,22 @@
 .th-onelist {
   padding: 30px;
   border-bottom: 1px solid #454f60;
+  position: relative;
 }
 .th-onelist:last-child {
   border-bottom: none;
 }
+.btn-right {
+  position: absolute;
+  top: 50%;
+  right: 30px;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
 .th-type {
   margin-bottom: 15px;
 }
@@ -200,6 +212,9 @@ a.green-text {
   border-right: 1px solid #fff;
   padding-right: 10px;
   margin-right: 10px;
+}
+.th-block-txid .th-state {
+  padding-left: 92px;
 }
 .th-txid a {
   font-size: 12px;

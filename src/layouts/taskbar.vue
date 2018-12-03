@@ -32,7 +32,51 @@
             <img src="../assets/Timing.png" alt>
             计时器：{{taskNumber}}
           </span>
-          <v-btn>操作记录</v-btn>
+          <v-btn @onclick="showHistory=true">操作记录</v-btn>
+        </div>
+        <div class="tranhistory-box">
+          <div class="tranhistory-wrap" v-if="showHistory">
+            <div class="tranhistory-listbox">
+              <div class="tranhistory-title">
+                <div class="tranhistory-close" @click="showHistory=!showHistory">
+                  <img src="../../static/img/close.png" alt>
+                </div>
+                <span>{{$t('operation.title')}}</span>
+                <div class="tranhistory-tips">{{$t('operation.tips')}}</div>
+              </div>
+              <div class="tranhistory-list">
+                <div class="th-onelist">
+                  <div>
+                    <div class="th-type">
+                      <div class="th-typename">{{$t('operation.transfer')}}</div>
+                      <div class="th-other">
+                        <div class="th-number">
+                          <span>test</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="th-block-txid">
+                      <span class="th-txid" style="padding-right:10px">
+                        {{$t('operation.txid')}}
+                        <a class="green-text" target="_blank">x0ssss</a>
+                      </span>
+                      <!-- <span class="red-text">{{$t('operation.waiting')}} tttt</span>
+                      <span class="th-txid"></span>
+                      <span class="red-text">{{$t('operation.fail')}}</span>-->
+                      <span class="th-state">
+                        <span>状态：</span>
+                        <span class="green-text">成功</span>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="btn-right">
+                    <v-btn>test</v-btn>
+                  </div>
+                </div>
+              </div>
+              <div class="notask" v-if="taskList.length == 0">{{$t('operation.nodata')}}</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -171,6 +215,89 @@ export default class TaskBar extends Vue {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  makeTaskList(tasks) {
+    for (let i in tasks) {
+      let arr = [];
+      let href = "https://scan.nel.group/test/";
+      arr["tasktype"] = tasks[i].tasktype;
+      arr["startTime"] = tasks[i].startTime;
+      arr["txid"] =
+        tasks[i].txid.substring(0, 6) +
+        "..." +
+        tasks[i].txid.substring(tasks[i].txid.length - 6);
+      arr["txidhref"] = href + "transaction/" + tasks[i].txid;
+      arr["height"] = tasks[i].height;
+      arr["state"] = tasks[i].state;
+      arr["addrhref"] =
+        href +
+        "address/" +
+        (tasks[i].message.toaddress
+          ? tasks[i].message.toaddress
+          : tasks[i].message.address);
+      arr["message"] = tasks[i].message;
+      arr["domainhref"] =
+        href +
+        "nnsinfo/" +
+        (tasks[i].message.domain ? tasks[i].message.domain : "");
+      arr["resolver"] =
+        "" +
+        (tasks[i].message.contract
+          ? tasks[i].message.contract.substring(0, 4) +
+            "..." +
+            tasks[i].message.contract.substring(
+              tasks[i].message.contract.length - 4
+            )
+          : "");
+      this.taskList.push(arr);
+    }
+  }
+  taskHistory() {
+    this.clearTimer();
+    let list = TaskManager.taskStore.getList();
+    this.taskList = [];
+    for (const type in list) {
+      if (list.hasOwnProperty(type)) {
+        const tasks = list[type] as Task[];
+        this.makeTaskList(tasks);
+      }
+    }
+    this.taskList.sort((n1, n2) => {
+      return n1.startTime > n2.startTime ? -1 : 1;
+    });
+
+    this.taskList.forEach(v => {
+      if (v.state == 0) {
+        this.timer(v);
+      }
+    });
+  }
+  timer(item) {
+    if (item.timer) {
+      clearInterval(item.timer);
+    }
+    let pendingText = "";
+    let seconds = "" + (new Date().getTime() - item["startTime"]) / 1000;
+    pendingText = `(${parseInt(seconds)}s)`;
+    this.$set(item, "pendingText", pendingText);
+    let timer = setInterval(() => {
+      if (item.state != 0) {
+        clearInterval(timer);
+      }
+      let seconds = "" + (new Date().getTime() - item["startTime"]) / 1000;
+      pendingText = `(${parseInt(seconds)}s)`;
+      this.$set(item, "pendingText", pendingText);
+    }, 1000);
+    item.timer = timer;
+  }
+  clearTimer() {
+    this.taskList.forEach(v => {
+      if (v.timer) {
+        clearInterval(v.timer);
+        v.timer = null;
+      }
+    });
   }
 }
 </script>

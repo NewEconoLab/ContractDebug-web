@@ -97,6 +97,13 @@ exports.default = Valert;
 
 /***/ }),
 
+/***/ "0m5M":
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ "2v9N":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -3308,13 +3315,6 @@ var Component = normalizeComponent(
 
 /***/ }),
 
-/***/ "H3sK":
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
 /***/ "HOkF":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3377,6 +3377,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var vue_1 = __webpack_require__("/5sW");
 var vue_class_component_1 = __webpack_require__("c+8m");
+var taskmanager_1 = __webpack_require__("XfB5");
 var entity_1 = __webpack_require__("6nHw");
 var StorageMap_1 = __webpack_require__("slXE");
 var importpack_1 = __webpack_require__("VKSY");
@@ -3475,6 +3476,87 @@ var TaskBar = /** @class */ (function (_super) {
                     case 3: return [2 /*return*/];
                 }
             });
+        });
+    };
+    TaskBar.prototype.makeTaskList = function (tasks) {
+        for (var i in tasks) {
+            var arr = [];
+            var href = "https://scan.nel.group/test/";
+            arr["tasktype"] = tasks[i].tasktype;
+            arr["startTime"] = tasks[i].startTime;
+            arr["txid"] =
+                tasks[i].txid.substring(0, 6) +
+                    "..." +
+                    tasks[i].txid.substring(tasks[i].txid.length - 6);
+            arr["txidhref"] = href + "transaction/" + tasks[i].txid;
+            arr["height"] = tasks[i].height;
+            arr["state"] = tasks[i].state;
+            arr["addrhref"] =
+                href +
+                    "address/" +
+                    (tasks[i].message.toaddress
+                        ? tasks[i].message.toaddress
+                        : tasks[i].message.address);
+            arr["message"] = tasks[i].message;
+            arr["domainhref"] =
+                href +
+                    "nnsinfo/" +
+                    (tasks[i].message.domain ? tasks[i].message.domain : "");
+            arr["resolver"] =
+                "" +
+                    (tasks[i].message.contract
+                        ? tasks[i].message.contract.substring(0, 4) +
+                            "..." +
+                            tasks[i].message.contract.substring(tasks[i].message.contract.length - 4)
+                        : "");
+            this.taskList.push(arr);
+        }
+    };
+    TaskBar.prototype.taskHistory = function () {
+        var _this = this;
+        this.clearTimer();
+        var list = taskmanager_1.TaskManager.taskStore.getList();
+        this.taskList = [];
+        for (var type in list) {
+            if (list.hasOwnProperty(type)) {
+                var tasks = list[type];
+                this.makeTaskList(tasks);
+            }
+        }
+        this.taskList.sort(function (n1, n2) {
+            return n1.startTime > n2.startTime ? -1 : 1;
+        });
+        this.taskList.forEach(function (v) {
+            if (v.state == 0) {
+                _this.timer(v);
+            }
+        });
+    };
+    TaskBar.prototype.timer = function (item) {
+        var _this = this;
+        if (item.timer) {
+            clearInterval(item.timer);
+        }
+        var pendingText = "";
+        var seconds = "" + (new Date().getTime() - item["startTime"]) / 1000;
+        pendingText = "(" + parseInt(seconds) + "s)";
+        this.$set(item, "pendingText", pendingText);
+        var timer = setInterval(function () {
+            if (item.state != 0) {
+                clearInterval(timer);
+            }
+            var seconds = "" + (new Date().getTime() - item["startTime"]) / 1000;
+            pendingText = "(" + parseInt(seconds) + "s)";
+            _this.$set(item, "pendingText", pendingText);
+        }, 1000);
+        item.timer = timer;
+    };
+    TaskBar.prototype.clearTimer = function () {
+        this.taskList.forEach(function (v) {
+            if (v.timer) {
+                clearInterval(v.timer);
+                v.timer = null;
+            }
         });
     };
     TaskBar = __decorate([
@@ -3985,8 +4067,8 @@ var vue_1 = __webpack_require__("/5sW");
 var vue_router_1 = __webpack_require__("/ocq");
 var wallet_vue_1 = __webpack_require__("PPZq");
 vue_1.default.use(vue_router_1.default);
-var Login = function (resolve) { return __webpack_require__.e/* require */(2).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__("Luci")]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe); };
-var Deploy = function (resolve) { return __webpack_require__.e/* require */(0).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__("Do0Z")]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe); };
+var Login = function (resolve) { return __webpack_require__.e/* require */(0).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__("Luci")]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe); };
+var Deploy = function (resolve) { return __webpack_require__.e/* require */(2).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__("Do0Z")]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe); };
 var Debug = function (resolve) { return __webpack_require__.e/* require */(3).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__("qfqf")]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe); };
 var Invoke = function (resolve) { return __webpack_require__.e/* require */(1).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__("ev4o")]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe); };
 exports.default = new vue_router_1.default({
@@ -4392,14 +4474,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var wallet = __webpack_require__("YRcM");
 var wallet_default = /*#__PURE__*/__webpack_require__.n(wallet);
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/template-compiler?{"id":"data-v-0fb5ecdd","hasScoped":false,"transformToRequire":{"video":"src","source":"src","img":"src","image":"xlink:href"},"buble":{"transforms":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./src/layouts/wallet.vue
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/template-compiler?{"id":"data-v-0f951bba","hasScoped":false,"transformToRequire":{"video":"src","source":"src","img":"src","image":"xlink:href"},"buble":{"transforms":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./src/layouts/wallet.vue
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('main-layout',{attrs:{"id":"wallet"}},[_c('taskbar-layout'),_vm._v(" "),_c('div',{staticClass:"wallet-content"},[_c('router-view')],1)],1)}
 var staticRenderFns = []
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ var layouts_wallet = (esExports);
 // CONCATENATED MODULE: ./src/layouts/wallet.vue
 function injectStyle (ssrContext) {
-  __webpack_require__("H3sK")
+  __webpack_require__("p9Y5")
 }
 var normalizeComponent = __webpack_require__("VU/8")
 /* script */
@@ -6393,14 +6475,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var taskbar = __webpack_require__("HOkF");
 var taskbar_default = /*#__PURE__*/__webpack_require__.n(taskbar);
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/template-compiler?{"id":"data-v-e0a3bf38","hasScoped":true,"transformToRequire":{"video":"src","source":"src","img":"src","image":"xlink:href"},"buble":{"transforms":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./src/layouts/taskbar.vue
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"navbar navbar-wallet"},[_c('div',{staticClass:"blockheight"},[_c('div',{staticClass:"main"},[_c('div',{staticClass:"balance"},[_c('span',{staticClass:"asset"},[_vm._v("GAS")]),_vm._v(" "),_c('span',{staticClass:"amount"},[_vm._v(_vm._s(_vm.balance.toString()))]),_vm._v(" "),(_vm.claimState==='3010')?_c('v-btn',{on:{"onclick":_vm.claimGas}},[_vm._v("索取500 GAS")]):(_vm.claimState==='3011')?_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("排队中")]):(_vm.claimState==='3012')?_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("已发放 GAS")]):_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("Gas不足")]),_vm._v(" "),_c('v-hint',[_c('div',{staticClass:"hint-img"},[_c('img',{attrs:{"src":__webpack_require__("dqMZ"),"alt":""}})]),_vm._v(" "),_c('div',{staticClass:"hint-content"},[_c('p',[_vm._v("每个钱包每日可索取一次500gas，需要更多请在论坛留言索取。")])])])],1),_vm._v(" "),_c('div',{staticClass:"task-btn"},[_c('span',{staticClass:"task-tab"},[_c('img',{attrs:{"src":__webpack_require__("R2WG"),"alt":""}}),_vm._v("\n          "+_vm._s(_vm.$t('transfer.title2')+"：")+"\n          "),_c('a',{attrs:{"href":_vm.href,"target":"_blank"}},[_vm._v(_vm._s(_vm.showaddr))])]),_vm._v(" "),_c('span',{staticClass:"task-tab"},[_c('img',{attrs:{"src":__webpack_require__("ECX6"),"alt":""}}),_vm._v("\n          "+_vm._s([_vm.$t('navbar.blockheight'),_vm.blockheight].join("："))+"\n        ")]),_vm._v(" "),_c('span',{staticClass:"task-tab"},[_c('img',{attrs:{"src":__webpack_require__("5bZ7"),"alt":""}}),_vm._v("\n          计时器："+_vm._s(_vm.taskNumber)+"\n        ")]),_vm._v(" "),_c('v-btn',[_vm._v("操作记录")])],1)])]),_vm._v(" "),_c('v-toast',{ref:"toast"})],1)}
-var staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/template-compiler?{"id":"data-v-7ef6dba6","hasScoped":true,"transformToRequire":{"video":"src","source":"src","img":"src","image":"xlink:href"},"buble":{"transforms":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./src/layouts/taskbar.vue
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"navbar navbar-wallet"},[_c('div',{staticClass:"blockheight"},[_c('div',{staticClass:"main"},[_c('div',{staticClass:"balance"},[_c('span',{staticClass:"asset"},[_vm._v("GAS")]),_vm._v(" "),_c('span',{staticClass:"amount"},[_vm._v(_vm._s(_vm.balance.toString()))]),_vm._v(" "),(_vm.claimState==='3010')?_c('v-btn',{on:{"onclick":_vm.claimGas}},[_vm._v("索取500 GAS")]):(_vm.claimState==='3011')?_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("排队中")]):(_vm.claimState==='3012')?_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("已发放 GAS")]):_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("Gas不足")]),_vm._v(" "),_c('v-hint',[_c('div',{staticClass:"hint-img"},[_c('img',{attrs:{"src":__webpack_require__("dqMZ"),"alt":""}})]),_vm._v(" "),_c('div',{staticClass:"hint-content"},[_c('p',[_vm._v("每个钱包每日可索取一次500gas，需要更多请在论坛留言索取。")])])])],1),_vm._v(" "),_c('div',{staticClass:"task-btn"},[_c('span',{staticClass:"task-tab"},[_c('img',{attrs:{"src":__webpack_require__("R2WG"),"alt":""}}),_vm._v("\n          "+_vm._s(_vm.$t('transfer.title2')+"：")+"\n          "),_c('a',{attrs:{"href":_vm.href,"target":"_blank"}},[_vm._v(_vm._s(_vm.showaddr))])]),_vm._v(" "),_c('span',{staticClass:"task-tab"},[_c('img',{attrs:{"src":__webpack_require__("ECX6"),"alt":""}}),_vm._v("\n          "+_vm._s([_vm.$t('navbar.blockheight'),_vm.blockheight].join("："))+"\n        ")]),_vm._v(" "),_c('span',{staticClass:"task-tab"},[_c('img',{attrs:{"src":__webpack_require__("5bZ7"),"alt":""}}),_vm._v("\n          计时器："+_vm._s(_vm.taskNumber)+"\n        ")]),_vm._v(" "),_c('v-btn',{on:{"onclick":function($event){_vm.showHistory=true}}},[_vm._v("操作记录")])],1),_vm._v(" "),_c('div',{staticClass:"tranhistory-box"},[(_vm.showHistory)?_c('div',{staticClass:"tranhistory-wrap"},[_c('div',{staticClass:"tranhistory-listbox"},[_c('div',{staticClass:"tranhistory-title"},[_c('div',{staticClass:"tranhistory-close",on:{"click":function($event){_vm.showHistory=!_vm.showHistory}}},[_c('img',{attrs:{"src":__webpack_require__("fgqV"),"alt":""}})]),_vm._v(" "),_c('span',[_vm._v(_vm._s(_vm.$t('operation.title')))]),_vm._v(" "),_c('div',{staticClass:"tranhistory-tips"},[_vm._v(_vm._s(_vm.$t('operation.tips')))])]),_vm._v(" "),_c('div',{staticClass:"tranhistory-list"},[_c('div',{staticClass:"th-onelist"},[_c('div',[_c('div',{staticClass:"th-type"},[_c('div',{staticClass:"th-typename"},[_vm._v(_vm._s(_vm.$t('operation.transfer')))]),_vm._v(" "),_vm._m(0,false,false)]),_vm._v(" "),_c('div',{staticClass:"th-block-txid"},[_c('span',{staticClass:"th-txid",staticStyle:{"padding-right":"10px"}},[_vm._v("\n                      "+_vm._s(_vm.$t('operation.txid'))+"\n                      "),_c('a',{staticClass:"green-text",attrs:{"target":"_blank"}},[_vm._v("x0ssss")])]),_vm._v(" "),_vm._m(1,false,false)])]),_vm._v(" "),_c('div',{staticClass:"btn-right"},[_c('v-btn',[_vm._v("test")])],1)])]),_vm._v(" "),(_vm.taskList.length == 0)?_c('div',{staticClass:"notask"},[_vm._v(_vm._s(_vm.$t('operation.nodata')))]):_vm._e()])]):_vm._e()])])]),_vm._v(" "),_c('v-toast',{ref:"toast"})],1)}
+var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"th-other"},[_c('div',{staticClass:"th-number"},[_c('span',[_vm._v("test")])])])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('span',{staticClass:"th-state"},[_c('span',[_vm._v("状态：")]),_vm._v(" "),_c('span',{staticClass:"green-text"},[_vm._v("成功")])])}]
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ var layouts_taskbar = (esExports);
 // CONCATENATED MODULE: ./src/layouts/taskbar.vue
 function injectStyle (ssrContext) {
-  __webpack_require__("pNlC")
+  __webpack_require__("0m5M")
 }
 var normalizeComponent = __webpack_require__("VU/8")
 /* script */
@@ -6412,7 +6494,7 @@ var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = "data-v-e0a3bf38"
+var __vue_scopeId__ = "data-v-7ef6dba6"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -6433,6 +6515,13 @@ var Component = normalizeComponent(
 /***/ (function(module, exports) {
 
 module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAflBMVEUAAAAbduUbd+Ucd+UcduYcd+UbducceecfeOoffOgbd+YcduYbduYbduX////5/P72+v5Mk+tFj+plo+0pf+by9/1Sl+s4h+gje+bh7fva6frK3/nA2fiwz/aix/SAs/BAjeno8fzX5/qz0fapy/Wcw/N/svBzq+9bnOwzhOfJk/7vAAAADXRSTlMA2ezHvoFUPzEh8/ryKD27+QAAAOtJREFUKM+Fk+mSwiAQhEEhkrg0IYdZb3e93/8FLRWGI1X6/QlDFzMD02GEkoJXFRdSsZyCa4IXiVROdcK0DNpsojMmM9LmesTcqSWd+21sR2ffmX294WgArK2v++rTBW2N/91pCdO4jWfP3KVc9u3zs8HG34gx5Yvc3ycser+jmNQpA4xfSiYycY+1XwpXkljUtdVUtMo0c6OgSsWmN22IftK0K1yjiCcNLbDSESK5SottLEqmoqhrhlhU9HxjuHt4h93tI7GIR6a7GrgEq6TDPgA4h2FnNtni70A2GRmsCwb7ZM3vpv74OzwAZ0kg+dZauW8AAAAASUVORK5CYII="
+
+/***/ }),
+
+/***/ "fgqV":
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAAAXNSR0IArs4c6QAAAWtJREFUWAntWFsOwjAMG5wGzs9xgG+4xXAmKpXQhaTxBggqRVNXx/b6WtVh+Jdf7IFxHDdrf/ec5lYbAfCAd0c8d7ptqfpdSzRFe74AsEGcEFIuiP08mtMiGogrQopo26MHwA4h5qQsahL8Yq7W8o1aI5Hek2mNNIExA2jcNKLKLJ2TScjkqr55GBjEDI4HU7qSEcjkah9mXQnJ3vVydd9zyj636LY1mVeCpskI1uyZaKNH2IOJ6obwlgGrLSSSBbeMtN5ldVL5DUNlQZjzMyUaTVYmUZ1OJy9XuEfn6TzoSfoqjOo9GdbPGeKGOTnf1QfQ981Dy4jVtsr08BjwYBYxGxGOYClmewR7crrMZoQyuS6zDAEGR9Msk5jJNZmlE4KVxkkjaoxLmjtN0DClX3VrdCdqB456WAsJcnl0RkhZ5T8Knfrf7bo8OiBJgJTznKMjy8IRTfv6rZABaF+BFSDx+Q5Nov0/VX8P3ADlEi1to8Kl3wAAAABJRU5ErkJggg=="
 
 /***/ }),
 
@@ -6603,6 +6692,13 @@ exports.default = Hint;
 /***/ }),
 
 /***/ "olDd":
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ "p9Y5":
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
@@ -7546,13 +7642,6 @@ var CoinTool = /** @class */ (function () {
 }());
 exports.CoinTool = CoinTool;
 
-
-/***/ }),
-
-/***/ "pNlC":
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
 
 /***/ }),
 

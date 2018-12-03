@@ -50,15 +50,15 @@ export default class Debug extends Vue
         this.initHashList();
 
         let div = document.getElementById("valuetool") as HTMLDivElement;
-        let tree = new TreeViewItems(div)
-        let view = new TreeView("test")
-        let view1 = new TreeView("test1")
-        let view2 = new TreeView("test2")
-        let view3 = new TreeView("test3")
-        view.addChildren(view1)
-        view1.addChildren(view2)
-        view.addChildren(view3);
-        tree.showTree(tree.ul, view);
+        // let tree = new TreeViewItems(div)
+        // let view = new TreeView("test")
+        // let view1 = new TreeView("test1")
+        // let view2 = new TreeView("test2")
+        // let view3 = new TreeView("test3")
+        // view.addChildren(view1)
+        // view1.addChildren(view2)
+        // view.addChildren(view3);
+        // tree.showTree(tree.ul, view);
     }
 
     async initHashList()
