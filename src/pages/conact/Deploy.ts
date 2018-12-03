@@ -1,8 +1,4 @@
 /// <reference path="../../tools/editor.api.d.ts"/>
-import * as CodeMirror from 'codemirror'
-import 'codemirror/mode/clike/clike'
-import 'codemirror/addon/hint/show-hint'
-import 'codemirror/addon/hint/sql-hint'
 import Component from "vue-class-component";
 import Vue from "vue";
 import { tools } from "../../tools/importpack";

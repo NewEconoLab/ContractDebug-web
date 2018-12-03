@@ -1,6 +1,3 @@
-import 'codemirror/mode/javascript/javascript'
-import 'codemirror/addon/hint/show-hint'
-import 'codemirror/addon/hint/javascript-hint'
 import Component from "vue-class-component";
 import Vue from "vue";
 import { tools } from '../../tools/importpack';
@@ -92,6 +89,13 @@ export default class Invoke extends Vue
 
     async invoking()
     {
+        let script = this.paresInvokeJson()
+        let data = await tools.contract.buildInvokeTransData(script);
+        let result = await tools.wwwtool.setTxCallContract(LoginInfo.getCurrentAddress(), data.data.toHexString());
+        if (result)
+        {
+            // this.resultEditor.setValue(JSON.stringify(result));
+        }
 
     }
 

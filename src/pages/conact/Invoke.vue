@@ -11,7 +11,7 @@
             <textarea id="invoke-json-code" rows="25" cols="20"></textarea>
           </div>
         </panel>
-        <v-btn :type="'primary'">调用交易</v-btn>
+        <v-btn @onclick="invoking">调用交易</v-btn>
         <v-btn @onclick="testRun">试运行</v-btn>
       </div>
       <div class="result-bottom">
