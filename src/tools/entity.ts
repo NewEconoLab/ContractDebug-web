@@ -1013,6 +1013,7 @@ export class TaskFunction
 
 export class Task
 {
+    taskType: TaskType;
     height: number;
     confirm: number;
     type: ConfirmType;
@@ -1021,6 +1022,7 @@ export class Task
     state: TaskState;
     startTime: number;
     constructor(
+        taskType: TaskType,
         type: ConfirmType,
         txid: string,
         messgae?
@@ -1029,6 +1031,7 @@ export class Task
         let oldBlock = new tools.sessionstoretool("block");
         this.height = oldBlock.select('height');
         this.type = type;
+        this.taskType = taskType;
         this.confirm = 0;
         this.txid = txid;
         this.state = TaskState.watting;
