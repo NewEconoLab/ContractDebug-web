@@ -165,8 +165,7 @@ export default class TaskBar extends Vue {
       this.currentAddress.substring(0, 4),
       this.currentAddress.substring(this.currentAddress.length - 4)
     ].join("...");
-    this.href =
-      "https://scan.nel.group/#testnet/address/" + this.currentAddress;
+    this.href = "https://scan.nel.group/test/address/" + this.currentAddress;
     this.taskList = [];
     this.taskNumber = sessionStorage.getItem("newTaskNumber")
       ? parseInt(sessionStorage.getItem("newTaskNumber"))
