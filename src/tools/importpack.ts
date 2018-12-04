@@ -5,7 +5,6 @@ import { StorageTool, LocalStoreTool, sessionStoreTool } from "./storagetool";
 import { WWW } from "./wwwtool";
 import DateTool from "./timetool";
 import Contract from "./contract";
-import { TaskManager } from "./taskmanager";
 
 export namespace tools
 {
@@ -19,6 +18,5 @@ export namespace tools
     export let contract = Contract;         //智能合约调用方法封装
     export let localstoretool = LocalStoreTool;
     export let sessionstoretool = sessionStoreTool;
-    export let taskManager = TaskManager;
 
 }

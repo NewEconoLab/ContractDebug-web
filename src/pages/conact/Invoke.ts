@@ -108,7 +108,7 @@ export default class Invoke extends Vue
         {
             sb.EmitParamJson(arr[ i ]);
         }
-        let appcall = Neo.Uint160.parse("0x17f26389efc8fe0d9f2116f8ea474202b8d78280");
+        let appcall = Neo.Uint160.parse(this.currentContract.scripthash);
         sb.EmitAppCall(appcall);
         return sb.ToArray();
     }

@@ -2795,30 +2795,6 @@ var PageUtil = /** @class */ (function () {
     return PageUtil;
 }());
 exports.PageUtil = PageUtil;
-var TaskFunction = /** @class */ (function () {
-    function TaskFunction() {
-    }
-    return TaskFunction;
-}());
-exports.TaskFunction = TaskFunction;
-var Task = /** @class */ (function () {
-    function Task(taskType, type, txid, messgae) {
-        var oldBlock = new importpack_1.tools.sessionstoretool("block");
-        this.height = oldBlock.select('height');
-        this.type = type;
-        this.taskType = taskType;
-        this.confirm = 0;
-        this.txid = txid;
-        this.state = TaskState.watting;
-        this.message = messgae;
-        this.startTime = new Date().getTime();
-    }
-    Task.prototype.toString = function () {
-        return JSON.stringify(this);
-    };
-    return Task;
-}());
-exports.Task = Task;
 var Process = /** @class */ (function () {
     function Process(start) {
         this.timearr = [];
@@ -2853,45 +2829,6 @@ var Process = /** @class */ (function () {
     return Process;
 }());
 exports.Process = Process;
-/**
- * 任务状态
- */
-var TaskState;
-(function (TaskState) {
-    TaskState[TaskState["watting"] = 0] = "watting";
-    TaskState[TaskState["success"] = 1] = "success";
-    TaskState[TaskState["fail"] = 2] = "fail";
-})(TaskState = exports.TaskState || (exports.TaskState = {}));
-/**
- * 任务类型
- */
-var TaskType;
-(function (TaskType) {
-    TaskType[TaskType["tranfer"] = 0] = "tranfer";
-    TaskType[TaskType["openAuction"] = 1] = "openAuction";
-    TaskType[TaskType["addPrice"] = 2] = "addPrice";
-    TaskType[TaskType["gasToSgas"] = 3] = "gasToSgas";
-    TaskType[TaskType["sgasToGas"] = 4] = "sgasToGas";
-    TaskType[TaskType["topup"] = 5] = "topup";
-    TaskType[TaskType["withdraw"] = 6] = "withdraw";
-    TaskType[TaskType["getGasTest"] = 7] = "getGasTest";
-    TaskType[TaskType["domainMapping"] = 8] = "domainMapping";
-    TaskType[TaskType["domainResovle"] = 9] = "domainResovle";
-    TaskType[TaskType["domainRenewal"] = 10] = "domainRenewal";
-    TaskType[TaskType["getDomain"] = 11] = "getDomain";
-    TaskType[TaskType["recoverSgas"] = 12] = "recoverSgas";
-    TaskType[TaskType["ClaimGas"] = 13] = "ClaimGas";
-    TaskType[TaskType["domainTransfer"] = 14] = "domainTransfer";
-})(TaskType = exports.TaskType || (exports.TaskType = {}));
-/**
- * 确认的操作类型
- */
-var ConfirmType;
-(function (ConfirmType) {
-    ConfirmType[ConfirmType["tranfer"] = 0] = "tranfer";
-    ConfirmType[ConfirmType["contract"] = 1] = "contract";
-    ConfirmType[ConfirmType["recharge"] = 2] = "recharge";
-})(ConfirmType = exports.ConfirmType || (exports.ConfirmType = {}));
 /**
  * @param open 开标或者重新开标
  * @param fixed 确定期
@@ -3110,6 +3047,80 @@ exports.default = Valert;
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ "CveJ":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var importpack_1 = __webpack_require__("VKSY");
+var TaskFunction = /** @class */ (function () {
+    function TaskFunction() {
+    }
+    return TaskFunction;
+}());
+exports.TaskFunction = TaskFunction;
+var Task = /** @class */ (function () {
+    function Task(taskType, type, txid, messgae) {
+        var oldBlock = new importpack_1.tools.sessionstoretool("block");
+        this.height = oldBlock.select('height');
+        this.type = type;
+        this.taskType = taskType;
+        this.confirm = 0;
+        this.txid = txid;
+        this.state = TaskState.watting;
+        this.message = messgae;
+        this.startTime = new Date().getTime();
+    }
+    Task.prototype.toString = function () {
+        return JSON.stringify(this);
+    };
+    return Task;
+}());
+exports.Task = Task;
+/**
+ * 任务状态
+ */
+var TaskState;
+(function (TaskState) {
+    TaskState[TaskState["watting"] = 0] = "watting";
+    TaskState[TaskState["success"] = 1] = "success";
+    TaskState[TaskState["fail"] = 2] = "fail";
+})(TaskState = exports.TaskState || (exports.TaskState = {}));
+/**
+ * 任务类型
+ */
+var TaskType;
+(function (TaskType) {
+    TaskType[TaskType["tranfer"] = 0] = "tranfer";
+    TaskType[TaskType["openAuction"] = 1] = "openAuction";
+    TaskType[TaskType["addPrice"] = 2] = "addPrice";
+    TaskType[TaskType["gasToSgas"] = 3] = "gasToSgas";
+    TaskType[TaskType["sgasToGas"] = 4] = "sgasToGas";
+    TaskType[TaskType["topup"] = 5] = "topup";
+    TaskType[TaskType["withdraw"] = 6] = "withdraw";
+    TaskType[TaskType["getGasTest"] = 7] = "getGasTest";
+    TaskType[TaskType["domainMapping"] = 8] = "domainMapping";
+    TaskType[TaskType["domainResovle"] = 9] = "domainResovle";
+    TaskType[TaskType["domainRenewal"] = 10] = "domainRenewal";
+    TaskType[TaskType["getDomain"] = 11] = "getDomain";
+    TaskType[TaskType["recoverSgas"] = 12] = "recoverSgas";
+    TaskType[TaskType["ClaimGas"] = 13] = "ClaimGas";
+    TaskType[TaskType["domainTransfer"] = 14] = "domainTransfer";
+})(TaskType = exports.TaskType || (exports.TaskType = {}));
+/**
+ * 确认的操作类型
+ */
+var ConfirmType;
+(function (ConfirmType) {
+    ConfirmType[ConfirmType["tranfer"] = 0] = "tranfer";
+    ConfirmType[ConfirmType["contract"] = 1] = "contract";
+    ConfirmType[ConfirmType["recharge"] = 2] = "recharge";
+})(ConfirmType = exports.ConfirmType || (exports.ConfirmType = {}));
+
 
 /***/ }),
 
@@ -3364,7 +3375,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var vue_1 = __webpack_require__("/5sW");
 var vue_class_component_1 = __webpack_require__("c+8m");
-var taskmanager_1 = __webpack_require__("XfB5");
 var entity_1 = __webpack_require__("6nHw");
 var StorageMap_1 = __webpack_require__("slXE");
 var importpack_1 = __webpack_require__("VKSY");
@@ -3390,7 +3400,7 @@ var TaskBar = /** @class */ (function (_super) {
     }
     TaskBar.prototype.mounted = function () {
         this.getHeight();
-        entity_1.TaskFunction.heightRefresh = this.getHeight;
+        // TaskFunction.heightRefresh = this.getHeight;
         this.getBalance();
         this.initClaimState();
     };
@@ -3501,7 +3511,8 @@ var TaskBar = /** @class */ (function (_super) {
     TaskBar.prototype.taskHistory = function () {
         var _this = this;
         this.clearTimer();
-        var list = taskmanager_1.TaskManager.taskStore.getList();
+        // let list = TaskManager.taskStore.getList();
+        var list = [];
         this.taskList = [];
         for (var type in list) {
             if (list.hasOwnProperty(type)) {
@@ -4627,6 +4638,13 @@ exports.default = Selected;
 
 /***/ }),
 
+/***/ "V8JE":
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ "VKSY":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4640,7 +4658,6 @@ var storagetool_1 = __webpack_require__("5LD5");
 var wwwtool_1 = __webpack_require__("50aY");
 var timetool_1 = __webpack_require__("48oz");
 var contract_1 = __webpack_require__("HWxh");
-var taskmanager_1 = __webpack_require__("XfB5");
 var tools;
 (function (tools) {
     tools.coinTool = cointool_1.CoinTool; //构造交易，UTXO排序
@@ -4652,7 +4669,6 @@ var tools;
     tools.contract = contract_1.default; //智能合约调用方法封装
     tools.localstoretool = storagetool_1.LocalStoreTool;
     tools.sessionstoretool = storagetool_1.sessionStoreTool;
-    tools.taskManager = taskmanager_1.TaskManager;
 })(tools = exports.tools || (exports.tools = {}));
 
 
@@ -4922,45 +4938,18 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var storagetool_1 = __webpack_require__("5LD5");
-var entity_1 = __webpack_require__("6nHw");
-var importpack_1 = __webpack_require__("VKSY");
 /**
  * 任务管理器
  */
 var TaskManager = /** @class */ (function () {
     function TaskManager() {
     }
-    TaskManager.getBlockHeight = function () {
-        var height = this.oldBlock.select('height');
-        return height;
-    };
     /**
      * 更新方法
      */
     TaskManager.update = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var taskList, txid, task, index, element;
             return __generator(this, function (_a) {
-                taskList = this.taskStore.getList();
-                for (txid in taskList) {
-                    if (taskList.hasOwnProperty(txid)) {
-                        task = taskList[txid];
-                    }
-                }
-                /**
-                 * 放在任务状态更新后面执行刷新操作，以防数据未变化就刷新操作
-                 */
-                if (entity_1.TaskFunction.taskHistory) {
-                    entity_1.TaskFunction.taskHistory();
-                }
-                // await services.auction.updateAuctionList(LoginInfo.getCurrentAddress());
-                for (index in this.functionList) {
-                    if (this.functionList.hasOwnProperty(index)) {
-                        element = this.functionList[index];
-                        element();
-                    }
-                }
                 return [2 /*return*/];
             });
         });
@@ -4971,19 +4960,21 @@ var TaskManager = /** @class */ (function () {
      * @param call 回调方法
      */
     TaskManager.forConfirm = function (tasks, call) {
-        var taskarr = [];
-        for (var index = 0; index < tasks.length; index++) {
-            var tasknew = void 0;
-            var task = tasks[index];
-            if (task.state == entity_1.TaskState.watting) {
-                tasknew = call(task);
-            }
-            else {
-                tasknew = task;
-            }
-            taskarr.push(tasknew);
-        }
-        return taskarr;
+        // let taskarr: Task[] = [];
+        // for (let index = 0; index < tasks.length; index++)
+        // {
+        //     let tasknew: Task;
+        //     const task = tasks[ index ];
+        //     if (task.state == TaskState.watting)
+        //     {
+        //         tasknew = call(task);
+        //     } else
+        //     {
+        //         tasknew = task;
+        //     }
+        //     taskarr.push(tasknew);
+        // }
+        // return taskarr;
     };
     /**
      * 循环得到任务返回的结果
@@ -4991,67 +4982,14 @@ var TaskManager = /** @class */ (function () {
      */
     TaskManager.getResult = function (tasks) {
         return __awaiter(this, void 0, void 0, function () {
-            var ress, index, element, _a, _b, _c, _d, _e, _f, _g, _h, _j;
-            return __generator(this, function (_k) {
-                switch (_k.label) {
-                    case 0:
-                        ress = {};
-                        index = 0;
-                        _k.label = 1;
-                    case 1:
-                        if (!(index < tasks.length)) return [3 /*break*/, 13];
-                        element = tasks[index];
-                        if (!(element.state == entity_1.TaskState.watting)) return [3 /*break*/, 11];
-                        _a = element.type;
-                        switch (_a) {
-                            case entity_1.ConfirmType.tranfer: return [3 /*break*/, 2];
-                            case entity_1.ConfirmType.contract: return [3 /*break*/, 4];
-                            case entity_1.ConfirmType.recharge: return [3 /*break*/, 6];
-                        }
-                        return [3 /*break*/, 8];
-                    case 2:
-                        _b = ress;
-                        _c = element.txid;
-                        return [4 /*yield*/, importpack_1.tools.wwwtool.hastx(element.txid)];
-                    case 3:
-                        _b[_c] = _k.sent();
-                        return [3 /*break*/, 10];
-                    case 4:
-                        _d = ress;
-                        _e = element.txid;
-                        return [4 /*yield*/, importpack_1.tools.wwwtool.hascontract(element.txid)];
-                    case 5:
-                        _d[_e] = _k.sent();
-                        return [3 /*break*/, 10];
-                    case 6:
-                        _f = ress;
-                        _g = element.txid;
-                        return [4 /*yield*/, importpack_1.tools.wwwtool.getrechargeandtransfer(element.txid)];
-                    case 7:
-                        _f[_g] = _k.sent();
-                        return [3 /*break*/, 10];
-                    case 8:
-                        _h = ress;
-                        _j = element.txid;
-                        return [4 /*yield*/, importpack_1.tools.wwwtool.hastx(element.txid)];
-                    case 9:
-                        _h[_j] = _k.sent();
-                        return [3 /*break*/, 10];
-                    case 10: return [3 /*break*/, 12];
-                    case 11:
-                        ress[element.txid] = undefined;
-                        _k.label = 12;
-                    case 12:
-                        index++;
-                        return [3 /*break*/, 1];
-                    case 13: return [2 /*return*/, ress];
-                }
+            return __generator(this, function (_a) {
+                return [2 /*return*/];
             });
         });
     };
     TaskManager.addTask = function (task) {
-        this.taskStore.push(task.txid, task);
-        entity_1.TaskFunction.newTaskNumber();
+        // this.taskStore.push(task.txid, task);
+        // TaskFunction.newTaskNumber();
     };
     /**
      * 交易确认
@@ -5059,36 +4997,12 @@ var TaskManager = /** @class */ (function () {
      */
     TaskManager.confirm_claimGas = function (tasks) {
         return __awaiter(this, void 0, void 0, function () {
-            var ress, taskarr;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.getResult(tasks)];
-                    case 1:
-                        ress = _a.sent();
-                        taskarr = this.forConfirm(tasks, function (task) {
-                            if (task.confirm > 3) {
-                                task.state = entity_1.TaskState.fail;
-                                entity_1.TaskFunction.claimState(0);
-                            }
-                            else {
-                                var result = ress[task.txid]; //获取通知数组
-                                if (result.issucces) {
-                                    task.state = entity_1.TaskState.success;
-                                    entity_1.TaskFunction.claimState(1);
-                                }
-                            }
-                            task.confirm++;
-                            return task;
-                        });
-                        this.taskStore.put(entity_1.TaskType.ClaimGas.toString(), taskarr); //保存修改的状态
-                        return [2 /*return*/];
-                }
+                return [2 /*return*/];
             });
         });
     };
-    TaskManager.taskStore = new storagetool_1.sessionStoreTool("task-manager");
-    TaskManager.refresh = new storagetool_1.sessionStoreTool("refresh_auction");
-    TaskManager.oldBlock = new storagetool_1.sessionStoreTool("block");
+    TaskManager.TableName = "task-manager";
     TaskManager.functionList = [];
     return TaskManager;
 }());
@@ -5209,13 +5123,6 @@ var Component = normalizeComponent(
 
 /* harmony default export */ var src_components_PTitle = __webpack_exports__["default"] = (Component.exports);
 
-
-/***/ }),
-
-/***/ "Z91g":
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
 
 /***/ }),
 
@@ -5782,14 +5689,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var taskbar = __webpack_require__("HOkF");
 var taskbar_default = /*#__PURE__*/__webpack_require__.n(taskbar);
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/template-compiler?{"id":"data-v-4e85f2ed","hasScoped":true,"transformToRequire":{"video":"src","source":"src","img":"src","image":"xlink:href"},"buble":{"transforms":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./src/layouts/taskbar.vue
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/template-compiler?{"id":"data-v-0ada7a1c","hasScoped":true,"transformToRequire":{"video":"src","source":"src","img":"src","image":"xlink:href"},"buble":{"transforms":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./src/layouts/taskbar.vue
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"navbar navbar-wallet"},[_c('div',{staticClass:"blockheight"},[_c('div',{staticClass:"main"},[_c('div',{staticClass:"balance"},[_c('span',{staticClass:"asset"},[_vm._v("GAS")]),_vm._v(" "),_c('span',{staticClass:"amount"},[_vm._v(_vm._s(_vm.balance.toString()))]),_vm._v(" "),(_vm.claimState==='3010')?_c('v-btn',{on:{"onclick":_vm.claimGas}},[_vm._v("索取500 GAS")]):(_vm.claimState==='3011')?_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("排队中")]):(_vm.claimState==='3012')?_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("已发放 GAS")]):_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("Gas不足")]),_vm._v(" "),_c('v-hint',[_c('div',{staticClass:"hint-img"},[_c('img',{attrs:{"src":__webpack_require__("dqMZ"),"alt":""}})]),_vm._v(" "),_c('div',{staticClass:"hint-content"},[_c('p',[_vm._v("每个钱包每日可索取一次500gas，需要更多请在论坛留言索取。")])])])],1),_vm._v(" "),_c('div',{staticClass:"task-btn"},[_c('span',{staticClass:"task-tab"},[_c('img',{attrs:{"src":__webpack_require__("R2WG"),"alt":""}}),_vm._v("\n          "+_vm._s(_vm.$t('transfer.title2')+"：")+"\n          "),_c('a',{attrs:{"href":_vm.href,"target":"_blank"}},[_vm._v(_vm._s(_vm.showaddr))])]),_vm._v(" "),_c('span',{staticClass:"task-tab"},[_c('img',{attrs:{"src":__webpack_require__("ECX6"),"alt":""}}),_vm._v("\n          "+_vm._s([_vm.$t('navbar.blockheight'),_vm.blockheight].join("："))+"\n        ")]),_vm._v(" "),_c('v-btn',{on:{"onclick":function($event){_vm.showHistory=true}}},[_vm._v("操作记录")])],1),_vm._v(" "),_c('div',{staticClass:"tranhistory-box"},[(_vm.showHistory)?_c('div',{staticClass:"tranhistory-wrap"},[_c('div',{staticClass:"tranhistory-listbox"},[_c('div',{staticClass:"tranhistory-title"},[_c('div',{staticClass:"tranhistory-close",on:{"click":function($event){_vm.showHistory=!_vm.showHistory}}},[_c('img',{attrs:{"src":__webpack_require__("fgqV"),"alt":""}})]),_vm._v(" "),_c('span',[_vm._v(_vm._s(_vm.$t('operation.title')))]),_vm._v(" "),_c('div',{staticClass:"tranhistory-tips"},[_vm._v(_vm._s(_vm.$t('operation.tips')))])]),_vm._v(" "),_c('div',{staticClass:"tranhistory-list"},[_c('div',{staticClass:"th-onelist"},[_c('div',[_c('div',{staticClass:"th-type"},[_c('div',{staticClass:"th-typename"},[_vm._v(_vm._s(_vm.$t('operation.transfer')))]),_vm._v(" "),_vm._m(0,false,false)]),_vm._v(" "),_c('div',{staticClass:"th-block-txid"},[_c('span',{staticClass:"th-txid",staticStyle:{"padding-right":"10px"}},[_vm._v("\n                      "+_vm._s(_vm.$t('operation.txid'))+"\n                      "),_c('a',{staticClass:"green-text",attrs:{"target":"_blank"}},[_vm._v("x0ssss")])]),_vm._v(" "),_vm._m(1,false,false)])]),_vm._v(" "),_c('div',{staticClass:"btn-right"},[_c('v-btn',[_vm._v("test")])],1)])]),_vm._v(" "),(_vm.taskList.length == 0)?_c('div',{staticClass:"notask"},[_vm._v(_vm._s(_vm.$t('operation.nodata')))]):_vm._e()])]):_vm._e()])])]),_vm._v(" "),_c('v-toast',{ref:"toast"})],1)}
 var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"th-other"},[_c('div',{staticClass:"th-number"},[_c('span',[_vm._v("test")])])])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('span',{staticClass:"th-state"},[_c('span',[_vm._v("状态：")]),_vm._v(" "),_c('span',{staticClass:"green-text"},[_vm._v("成功")])])}]
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ var layouts_taskbar = (esExports);
 // CONCATENATED MODULE: ./src/layouts/taskbar.vue
 function injectStyle (ssrContext) {
-  __webpack_require__("Z91g")
+  __webpack_require__("V8JE")
 }
 var normalizeComponent = __webpack_require__("VU/8")
 /* script */
@@ -5801,7 +5708,7 @@ var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = "data-v-4e85f2ed"
+var __vue_scopeId__ = "data-v-0ada7a1c"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -7667,7 +7574,7 @@ var vue_1 = __webpack_require__("/5sW");
 var importpack_1 = __webpack_require__("VKSY");
 var taskmanager_1 = __webpack_require__("XfB5");
 var index_1 = __webpack_require__("OrGm");
-var entity_1 = __webpack_require__("6nHw");
+var TaskEntitys_1 = __webpack_require__("CveJ");
 var app_vue_1 = __webpack_require__("5VpT");
 var router_1 = __webpack_require__("LJj6");
 var I18n_1 = __webpack_require__("I0Fu");
@@ -7698,8 +7605,8 @@ setInterval(function () {
                 /**
                  * 高度变化放在最开始高度变化就启动高度刷新
                  */
-                if (entity_1.TaskFunction.heightRefresh) {
-                    entity_1.TaskFunction.heightRefresh();
+                if (TaskEntitys_1.TaskFunction.heightRefresh) {
+                    TaskEntitys_1.TaskFunction.heightRefresh();
                 }
                 taskmanager_1.TaskManager.update();
             }

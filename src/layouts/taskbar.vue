@@ -137,10 +137,10 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import { TaskManager } from "../tools/taskmanager";
-import { TaskType, Task, TaskFunction, LoginInfo } from "../tools/entity";
+import { LoginInfo } from "../tools/entity";
 import Store from "../tools/StorageMap";
 import { tools } from "../tools/importpack";
+import { Task } from "../entity/TaskEntitys";
 @Component({
   components: {}
 })
@@ -173,7 +173,7 @@ export default class TaskBar extends Vue {
   }
   mounted() {
     this.getHeight();
-    TaskFunction.heightRefresh = this.getHeight;
+    // TaskFunction.heightRefresh = this.getHeight;
     this.getBalance();
     this.initClaimState();
   }
@@ -254,7 +254,8 @@ export default class TaskBar extends Vue {
   }
   taskHistory() {
     this.clearTimer();
-    let list = TaskManager.taskStore.getList();
+    // let list = TaskManager.taskStore.getList();
+    let list = [];
     this.taskList = [];
     for (const type in list) {
       if (list.hasOwnProperty(type)) {
