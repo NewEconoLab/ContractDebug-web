@@ -28,10 +28,10 @@
             <img src="../assets/height.png" alt>
             {{[$t('navbar.blockheight'),blockheight].join("：")}}
           </span>
-          <span class="task-tab">
+          <!-- <span class="task-tab">
             <img src="../assets/Timing.png" alt>
             计时器：{{taskNumber}}
-          </span>
+          </span>-->
           <v-btn @onclick="showHistory=true">操作记录</v-btn>
         </div>
         <div class="tranhistory-box">

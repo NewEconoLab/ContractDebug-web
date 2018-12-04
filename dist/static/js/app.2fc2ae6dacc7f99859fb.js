@@ -97,13 +97,6 @@ exports.default = Valert;
 
 /***/ }),
 
-/***/ "0m5M":
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
 /***/ "2v9N":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1909,13 +1902,6 @@ var Component = normalizeComponent(
 
 /***/ }),
 
-/***/ "5bZ7":
-/***/ (function(module, exports) {
-
-module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAMAAAC7IEhfAAAAVFBMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////8wXzyWAAAAG3RSTlMA/Bry6E/z2hy2m2uNiBbfs6JzbpVLSgYE9T5UAKhjAAAAyElEQVQ4y9XTyw6DIBCF4eEiKIjXttqe93/PsiDpZSaGhRv/9ZchKEOXbEvWpq0CJuRSBbTI2TNhj1xfAfc+u51qAojOg8MyjcA4LfqYzQolNR/QxuAr1wy3l+iiwm8WN3EeSo87Sn4QXGtQIkLJaAEGcIhZGKgkqPjIFRLEwmAH8MsAE4MeYiODTobPWuhqj/byZXgdg1GGUfzgPNWKv5AXiKcNd0aLz0yxgxsSW9WfW+tWwZR5Ujp8lisc72EbO++c72JL1+sNaGwvOL8NbeUAAAAASUVORK5CYII="
-
-/***/ }),
-
 /***/ "620q":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2816,10 +2802,11 @@ var TaskFunction = /** @class */ (function () {
 }());
 exports.TaskFunction = TaskFunction;
 var Task = /** @class */ (function () {
-    function Task(type, txid, messgae) {
+    function Task(taskType, type, txid, messgae) {
         var oldBlock = new importpack_1.tools.sessionstoretool("block");
         this.height = oldBlock.select('height');
         this.type = type;
+        this.taskType = taskType;
         this.confirm = 0;
         this.txid = txid;
         this.state = TaskState.watting;
@@ -4932,7 +4919,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var storagetool_1 = __webpack_require__("5LD5");
 var entity_1 = __webpack_require__("6nHw");
 var importpack_1 = __webpack_require__("VKSY");
-var StorageMap_1 = __webpack_require__("slXE");
 /**
  * 任务管理器
  */
@@ -4948,120 +4934,28 @@ var TaskManager = /** @class */ (function () {
      */
     TaskManager.update = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var taskList, _a, _b, _i, type, tasks, _c, index, element;
-            return __generator(this, function (_d) {
-                switch (_d.label) {
-                    case 0:
-                        taskList = this.taskStore.getList();
-                        _a = [];
-                        for (_b in taskList)
-                            _a.push(_b);
-                        _i = 0;
-                        _d.label = 1;
-                    case 1:
-                        if (!(_i < _a.length)) return [3 /*break*/, 34];
-                        type = _a[_i];
-                        if (!taskList.hasOwnProperty(type)) return [3 /*break*/, 33];
-                        tasks = taskList[type];
-                        _c = parseInt(type);
-                        switch (_c) {
-                            case entity_1.TaskType.tranfer: return [3 /*break*/, 2];
-                            case entity_1.TaskType.ClaimGas: return [3 /*break*/, 4];
-                            case entity_1.TaskType.openAuction: return [3 /*break*/, 6];
-                            case entity_1.TaskType.addPrice: return [3 /*break*/, 8];
-                            case entity_1.TaskType.getDomain: return [3 /*break*/, 10];
-                            case entity_1.TaskType.recoverSgas: return [3 /*break*/, 12];
-                            case entity_1.TaskType.gasToSgas: return [3 /*break*/, 14];
-                            case entity_1.TaskType.sgasToGas: return [3 /*break*/, 16];
-                            case entity_1.TaskType.topup: return [3 /*break*/, 18];
-                            case entity_1.TaskType.withdraw: return [3 /*break*/, 20];
-                            case entity_1.TaskType.getGasTest: return [3 /*break*/, 22];
-                            case entity_1.TaskType.domainResovle: return [3 /*break*/, 24];
-                            case entity_1.TaskType.domainMapping: return [3 /*break*/, 26];
-                            case entity_1.TaskType.domainRenewal: return [3 /*break*/, 28];
-                            case entity_1.TaskType.domainTransfer: return [3 /*break*/, 30];
-                        }
-                        return [3 /*break*/, 32];
-                    case 2: return [4 /*yield*/, this.confirm_tranfer(tasks)];
-                    case 3:
-                        _d.sent();
-                        return [3 /*break*/, 33];
-                    case 4: return [4 /*yield*/, this.confirm_claimGas(tasks)];
-                    case 5:
-                        _d.sent();
-                        return [3 /*break*/, 33];
-                    case 6: return [4 /*yield*/, this.confirm_open(tasks)];
-                    case 7:
-                        _d.sent();
-                        return [3 /*break*/, 33];
-                    case 8: return [4 /*yield*/, this.confirm_bid(tasks)];
-                    case 9:
-                        _d.sent();
-                        return [3 /*break*/, 33];
-                    case 10: return [4 /*yield*/, this.confirm_getDomain(tasks)];
-                    case 11:
-                        _d.sent();
-                        return [3 /*break*/, 33];
-                    case 12: return [4 /*yield*/, this.confirm_recoverSgas(tasks)];
-                    case 13:
-                        _d.sent();
-                        return [3 /*break*/, 33];
-                    case 14: return [4 /*yield*/, this.confirm_gasToSgas(tasks)];
-                    case 15:
-                        _d.sent();
-                        return [3 /*break*/, 33];
-                    case 16: return [4 /*yield*/, this.confirm_sgasToGas(tasks)];
-                    case 17:
-                        _d.sent();
-                        return [3 /*break*/, 33];
-                    case 18: return [4 /*yield*/, this.confirm_topup(tasks)];
-                    case 19:
-                        _d.sent();
-                        return [3 /*break*/, 33];
-                    case 20: return [4 /*yield*/, this.confirm_withdraw(tasks)];
-                    case 21:
-                        _d.sent();
-                        return [3 /*break*/, 33];
-                    case 22: return [4 /*yield*/, this.confirm_getGas(tasks)];
-                    case 23:
-                        _d.sent();
-                        return [3 /*break*/, 33];
-                    case 24: return [4 /*yield*/, this.confirm_resovler(tasks)];
-                    case 25:
-                        _d.sent();
-                        return [3 /*break*/, 33];
-                    case 26: return [4 /*yield*/, this.confirm_mapping(tasks)];
-                    case 27:
-                        _d.sent();
-                        return [3 /*break*/, 33];
-                    case 28: return [4 /*yield*/, this.confirm_renewal(tasks)];
-                    case 29:
-                        _d.sent();
-                        return [3 /*break*/, 33];
-                    case 30: return [4 /*yield*/, this.confirm_domain_transfer(tasks)];
-                    case 31:
-                        _d.sent();
-                        return [3 /*break*/, 33];
-                    case 32: return [3 /*break*/, 33];
-                    case 33:
-                        _i++;
-                        return [3 /*break*/, 1];
-                    case 34:
-                        /**
-                         * 放在任务状态更新后面执行刷新操作，以防数据未变化就刷新操作
-                         */
-                        if (entity_1.TaskFunction.taskHistory) {
-                            entity_1.TaskFunction.taskHistory();
-                        }
-                        // await services.auction.updateAuctionList(LoginInfo.getCurrentAddress());
-                        for (index in this.functionList) {
-                            if (this.functionList.hasOwnProperty(index)) {
-                                element = this.functionList[index];
-                                element();
-                            }
-                        }
-                        return [2 /*return*/];
+            var taskList, txid, task, index, element;
+            return __generator(this, function (_a) {
+                taskList = this.taskStore.getList();
+                for (txid in taskList) {
+                    if (taskList.hasOwnProperty(txid)) {
+                        task = taskList[txid];
+                    }
                 }
+                /**
+                 * 放在任务状态更新后面执行刷新操作，以防数据未变化就刷新操作
+                 */
+                if (entity_1.TaskFunction.taskHistory) {
+                    entity_1.TaskFunction.taskHistory();
+                }
+                // await services.auction.updateAuctionList(LoginInfo.getCurrentAddress());
+                for (index in this.functionList) {
+                    if (this.functionList.hasOwnProperty(index)) {
+                        element = this.functionList[index];
+                        element();
+                    }
+                }
+                return [2 /*return*/];
             });
         });
     };
@@ -5149,58 +5043,9 @@ var TaskManager = /** @class */ (function () {
             });
         });
     };
-    TaskManager.addTask = function (task, type) {
-        this.taskStore.push(type.toString(), task);
+    TaskManager.addTask = function (task) {
+        this.taskStore.push(task.txid, task);
         entity_1.TaskFunction.newTaskNumber();
-    };
-    /**
-     * 交易确认
-     * @param tasks
-     */
-    TaskManager.confirm_tranfer = function (tasks) {
-        return __awaiter(this, void 0, void 0, function () {
-            var ress, taskarr;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.getResult(tasks)];
-                    case 1:
-                        ress = _a.sent();
-                        taskarr = this.forConfirm(tasks, function (task) {
-                            if (task.confirm > 3) {
-                                task.state = entity_1.TaskState.fail;
-                            }
-                            else {
-                                var result = ress[task.txid]; //获取通知数组
-                                if (result.issucces) {
-                                    task.state = entity_1.TaskState.success;
-                                    if (task.message.type && task.message.type == "Claim") {
-                                        // TaskFunction.claimGas();
-                                        importpack_1.tools.coinTool.claimGas()
-                                            .then(function (res) {
-                                            if (res["sendrawtransactionresult"]) {
-                                                if (entity_1.TaskFunction.claimState)
-                                                    entity_1.TaskFunction.claimState(2);
-                                                var txid = res["txid"];
-                                                var amount = JSON.parse(res['amount']);
-                                                var height = StorageMap_1.default.blockheight.select("height");
-                                                TaskManager.addTask(new entity_1.Task(entity_1.ConfirmType.tranfer, txid, { amount: amount }), entity_1.TaskType.ClaimGas);
-                                                sessionStorage.setItem("claimState", "2");
-                                            }
-                                        })
-                                            .catch(function (err) {
-                                            console.error(err);
-                                        });
-                                    }
-                                }
-                            }
-                            task.confirm++;
-                            return task;
-                        });
-                        this.taskStore.put(entity_1.TaskType.tranfer.toString(), taskarr); //保存修改的状态
-                        return [2 /*return*/];
-                }
-            });
-        });
     };
     /**
      * 交易确认
@@ -5230,557 +5075,6 @@ var TaskManager = /** @class */ (function () {
                             return task;
                         });
                         this.taskStore.put(entity_1.TaskType.ClaimGas.toString(), taskarr); //保存修改的状态
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    /**
-     * 退币操作跟踪
-     * @param tasks
-     */
-    TaskManager.confirm_withdraw = function (tasks) {
-        return __awaiter(this, void 0, void 0, function () {
-            var ress, taskarr;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.getResult(tasks)];
-                    case 1:
-                        ress = _a.sent();
-                        taskarr = this.forConfirm(tasks, function (task) {
-                            if (task.confirm > 3) {
-                                task.state = entity_1.TaskState.fail;
-                                if (entity_1.TaskFunction.withdraw)
-                                    entity_1.TaskFunction.withdraw();
-                            }
-                            else {
-                                var result = ress[task.txid]; //获取通知数组
-                                if (result.issucces) {
-                                    task.state = entity_1.TaskState.success;
-                                    if (entity_1.TaskFunction.withdraw)
-                                        entity_1.TaskFunction.withdraw();
-                                }
-                            }
-                            task.confirm++;
-                            return task;
-                        });
-                        this.taskStore.put(entity_1.TaskType.withdraw.toString(), taskarr); //保存修改的状态
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    /**
-     * 注册器充值操作跟踪
-     * @param tasks
-     */
-    TaskManager.confirm_topup = function (tasks) {
-        return __awaiter(this, void 0, void 0, function () {
-            var ress, taskarr;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.getResult(tasks)];
-                    case 1:
-                        ress = _a.sent();
-                        taskarr = this.forConfirm(tasks, function (task) {
-                            if (task.confirm > 3) {
-                                task.state = entity_1.TaskState.fail;
-                                if (entity_1.TaskFunction.topup)
-                                    entity_1.TaskFunction.topup();
-                            }
-                            else {
-                                var result = ress[task.txid]; //获取通知数组
-                                if (result.issucces) {
-                                    task.state = entity_1.TaskState.success;
-                                    if (entity_1.TaskFunction.topup)
-                                        entity_1.TaskFunction.topup();
-                                }
-                            }
-                            task.confirm++;
-                            return task;
-                        });
-                        this.taskStore.put(entity_1.TaskType.topup.toString(), taskarr); //保存修改的状态
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    /**
-     * 域名开标操作跟踪
-     * @param tasks
-     */
-    TaskManager.confirm_open = function (tasks) {
-        return __awaiter(this, void 0, void 0, function () {
-            var ress, taskarr;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.getResult(tasks)];
-                    case 1:
-                        ress = _a.sent();
-                        taskarr = this.forConfirm(tasks, function (task) {
-                            var result = ress[task.txid]; //获取通知数组
-                            if (result && result["vmstate"] && result["vmstate"] != "") {
-                                if (result.vmstate == "FAULT, BREAK") {
-                                    task.state = entity_1.TaskState.fail;
-                                    StorageMap_1.default.session_open.delete(task.message.domain);
-                                }
-                                else if (result && result.displayNameList && result.displayNameList.includes("startAuction")) {
-                                    task.state = entity_1.TaskState.success;
-                                    StorageMap_1.default.session_open.delete(task.message.domain);
-                                }
-                                else {
-                                    task.state = entity_1.TaskState.fail;
-                                    StorageMap_1.default.session_open.delete(task.message.domain);
-                                }
-                            }
-                            task.confirm++;
-                            return task;
-                        });
-                        this.taskStore.put(entity_1.TaskType.openAuction.toString(), taskarr); //保存修改的状态
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    /**
-     * 域名加价操作跟踪
-     * @param tasks 加价操作对象数组
-     */
-    TaskManager.confirm_bid = function (tasks) {
-        return __awaiter(this, void 0, void 0, function () {
-            var ress, taskarr;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.getResult(tasks)];
-                    case 1:
-                        ress = _a.sent();
-                        taskarr = this.forConfirm(tasks, function (task) {
-                            var result = ress[task.txid]; //获取通知数组
-                            if (result && result["vmstate"] && result["vmstate"] != "") {
-                                if (result.vmstate == "FAULT, BREAK") {
-                                    task.state = entity_1.TaskState.fail;
-                                }
-                                else if (result && result.displayNameList && result.displayNameList.includes("raise")) {
-                                    task.state = entity_1.TaskState.success;
-                                }
-                                else if (result && result.displayNameList && result.displayNameList.includes("bidSettlement")) {
-                                    task.state = entity_1.TaskState.fail;
-                                }
-                                else {
-                                    task.state = entity_1.TaskState.fail;
-                                }
-                            }
-                            task.confirm++;
-                            return task;
-                        });
-                        this.taskStore.put(entity_1.TaskType.addPrice.toString(), taskarr); //保存修改的状态
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    /**
-     * 确认Gas到SGas的兑换
-     * @param tasks 任务数组
-     */
-    TaskManager.confirm_sgasToGas = function (tasks) {
-        return __awaiter(this, void 0, void 0, function () {
-            var ress, taskarr;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.getResult(tasks)];
-                    case 1:
-                        ress = _a.sent();
-                        taskarr = this.forConfirm(tasks, function (task) {
-                            var result = ress[task.txid]; //获取通知数组
-                            if (result && result['errCode']) {
-                                switch (result['errCode']) {
-                                    case '0000'://成功
-                                        task.state = entity_1.TaskState.success;
-                                        if (entity_1.TaskFunction.exchange)
-                                            entity_1.TaskFunction.exchange();
-                                        break;
-                                    case '3001'://失败
-                                        task.state = entity_1.TaskState.fail;
-                                        if (entity_1.TaskFunction.exchange)
-                                            entity_1.TaskFunction.exchange();
-                                        break;
-                                    case '3002'://失败
-                                        task.state = entity_1.TaskState.fail;
-                                        if (entity_1.TaskFunction.exchange)
-                                            entity_1.TaskFunction.exchange();
-                                        break;
-                                }
-                            }
-                            task.confirm++;
-                            return task;
-                        });
-                        this.taskStore.put(entity_1.TaskType.sgasToGas.toString(), taskarr); //保存修改的状态
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    /**
-     * 确认Sgas到 Gas的兑换
-     * @param tasks 任务数组
-     */
-    TaskManager.confirm_gasToSgas = function (tasks) {
-        return __awaiter(this, void 0, void 0, function () {
-            var ress, taskarr;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.getResult(tasks)];
-                    case 1:
-                        ress = _a.sent();
-                        taskarr = this.forConfirm(tasks, function (task) {
-                            if (task.confirm > 3) {
-                                task.state = entity_1.TaskState.fail;
-                                if (entity_1.TaskFunction.exchange)
-                                    entity_1.TaskFunction.exchange();
-                            }
-                            else {
-                                var result = ress[task.txid]; //获取通知数组
-                                if (result.issucces) {
-                                    task.state = entity_1.TaskState.success;
-                                    if (entity_1.TaskFunction.exchange)
-                                        entity_1.TaskFunction.exchange();
-                                }
-                            }
-                            task.confirm++;
-                            return task;
-                        });
-                        this.taskStore.put(entity_1.TaskType.gasToSgas.toString(), taskarr); //保存修改的状态
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    /**
-     * 确认域名解析器的注册
-     * @param tasks 任务列表
-     */
-    TaskManager.confirm_resovler = function (tasks) {
-        return __awaiter(this, void 0, void 0, function () {
-            var ress, domainEdit, taskarr;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.getResult(tasks)];
-                    case 1:
-                        ress = _a.sent();
-                        domainEdit = new storagetool_1.sessionStoreTool("domain-edit");
-                        taskarr = this.forConfirm(tasks, function (task) {
-                            var result = ress[task.txid]; //获取通知数组
-                            if (result && result["vmstate"] && result["vmstate"] != "") {
-                                if (result.vmstate == "FAULT, BREAK") {
-                                    task.state = entity_1.TaskState.fail;
-                                    if (entity_1.TaskFunction.domainResovle)
-                                        entity_1.TaskFunction.domainResovle(task.message['domain']);
-                                    domainEdit.delete(task.message['domain'], 'resolver');
-                                }
-                                else if (result && result.displayNameList && result.displayNameList.includes("changeOwnerInfo")) {
-                                    task.state = entity_1.TaskState.success;
-                                    if (entity_1.TaskFunction.domainResovle)
-                                        entity_1.TaskFunction.domainResovle(task.message['domain']);
-                                    domainEdit.delete(task.message['domain'], 'resolver');
-                                }
-                                else {
-                                    task.state = entity_1.TaskState.fail;
-                                    if (entity_1.TaskFunction.domainResovle)
-                                        entity_1.TaskFunction.domainResovle(task.message['domain']);
-                                    domainEdit.delete(task.message['domain'], 'resolver');
-                                }
-                            }
-                            task.confirm++;
-                            return task;
-                        });
-                        this.taskStore.put(entity_1.TaskType.domainResovle.toString(), taskarr); //保存修改的状态
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    TaskManager.confirm_domain_transfer = function (tasks) {
-        return __awaiter(this, void 0, void 0, function () {
-            var ress, domainEdit, taskarr;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.getResult(tasks)];
-                    case 1:
-                        ress = _a.sent();
-                        domainEdit = new storagetool_1.sessionStoreTool("domain-edit");
-                        taskarr = this.forConfirm(tasks, function (task) {
-                            var result = ress[task.txid];
-                            if (result && result["vmstate"] && result["vmstate"] != "") {
-                                if (result.vmstate == "FAULT, BREAK") {
-                                    task.state = entity_1.TaskState.fail;
-                                    if (entity_1.TaskFunction.domainTransfer)
-                                        entity_1.TaskFunction.domainTransfer(task.message['domain']);
-                                    domainEdit.delete(task.message['domain'], 'domain_transfer');
-                                }
-                                else if (result && result.displayNameList && result.displayNameList.includes("changeOwnerInfo")) {
-                                    task.state = entity_1.TaskState.success;
-                                    if (entity_1.TaskFunction.domainTransfer)
-                                        entity_1.TaskFunction.domainTransfer(task.message['domain']);
-                                    domainEdit.delete(task.message['domain'], 'domain_transfer');
-                                }
-                                else {
-                                    task.state = entity_1.TaskState.fail;
-                                    if (entity_1.TaskFunction.domainTransfer)
-                                        entity_1.TaskFunction.domainTransfer(task.message['domain']);
-                                    domainEdit.delete(task.message['domain'], 'domain_transfer');
-                                }
-                            }
-                            task.confirm++;
-                            return task;
-                        });
-                        this.taskStore.put(entity_1.TaskType.domainTransfer.toString(), taskarr);
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    /**
-     * 确认域名映射的结果
-     * @param tasks 所有映射的任务
-     */
-    TaskManager.confirm_mapping = function (tasks) {
-        return __awaiter(this, void 0, void 0, function () {
-            var ress, domainEdit, taskarr;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.getResult(tasks)];
-                    case 1:
-                        ress = _a.sent();
-                        domainEdit = new storagetool_1.sessionStoreTool("domain-edit");
-                        taskarr = this.forConfirm(tasks, function (task) {
-                            var result = ress[task.txid]; //获取通知数组
-                            if (result && result["vmstate"] && result["vmstate"] != "") {
-                                if (result.vmstate == "FAULT, BREAK") {
-                                    task.state = entity_1.TaskState.fail;
-                                    if (entity_1.TaskFunction.domainMapping)
-                                        entity_1.TaskFunction.domainMapping(task['domain'], undefined);
-                                    domainEdit.delete(task.message['domain'], 'mapping');
-                                }
-                                else if (result && result.displayNameList && result.displayNameList.includes("setResolverData")) {
-                                    task.state = entity_1.TaskState.success;
-                                    if (entity_1.TaskFunction.domainMapping)
-                                        entity_1.TaskFunction.domainMapping(task.message['domain'], task.message['address']);
-                                    domainEdit.delete(task.message['domain'], 'mapping');
-                                }
-                                else {
-                                    task.state = entity_1.TaskState.fail;
-                                    if (entity_1.TaskFunction.domainMapping)
-                                        entity_1.TaskFunction.domainMapping(task['domain'], undefined);
-                                    domainEdit.delete(task.message['domain'], 'mapping');
-                                }
-                            }
-                            task.confirm++;
-                            return task;
-                        });
-                        this.taskStore.put(entity_1.TaskType.domainMapping.toString(), taskarr); //保存修改的状态
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    /**
-     * 续约确认方法
-     * @param tasks 任务数组
-     */
-    TaskManager.confirm_renewal = function (tasks) {
-        return __awaiter(this, void 0, void 0, function () {
-            var ress, domainEdit, taskarr;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.getResult(tasks)];
-                    case 1:
-                        ress = _a.sent();
-                        domainEdit = new storagetool_1.sessionStoreTool("domain-edit");
-                        taskarr = this.forConfirm(tasks, function (task) {
-                            var result = ress[task.txid]; //获取通知数组
-                            if (result && result["vmstate"] && result["vmstate"] != "") {
-                                if (result.vmstate == "FAULT, BREAK") {
-                                    task.state = entity_1.TaskState.fail;
-                                    if (entity_1.TaskFunction.domainRenewal)
-                                        entity_1.TaskFunction.domainRenewal(task.message['domain']);
-                                    domainEdit.delete(task.message['domain'], 'renewal');
-                                }
-                                else if (result && result.displayNameList && result.displayNameList.includes("changeOwnerInfo")) {
-                                    task.state = entity_1.TaskState.success;
-                                    if (entity_1.TaskFunction.domainRenewal)
-                                        entity_1.TaskFunction.domainRenewal(task.message['domain']);
-                                    domainEdit.delete(task.message['domain'], 'renewal');
-                                }
-                                else {
-                                    task.state = entity_1.TaskState.fail;
-                                    if (entity_1.TaskFunction.domainRenewal)
-                                        entity_1.TaskFunction.domainRenewal(task.message['domain']);
-                                    domainEdit.delete(task.message['domain'], 'renewal');
-                                }
-                            }
-                            task.confirm++;
-                            return task;
-                        });
-                        this.taskStore.put(entity_1.TaskType.domainRenewal.toString(), taskarr); //保存修改的状态
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    /**
-     * 获得域名状态跟踪
-     * @param tasks 任务数组
-     */
-    TaskManager.confirm_getDomain = function (tasks) {
-        return __awaiter(this, void 0, void 0, function () {
-            var ress, taskarr;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.getResult(tasks)];
-                    case 1:
-                        ress = _a.sent();
-                        taskarr = this.forConfirm(tasks, function (task) {
-                            var result = ress[task.txid]; //获取通知数组
-                            if (task.type == entity_1.ConfirmType.recharge) {
-                                if (result && result['errCode']) {
-                                    switch (result['errCode']) {
-                                        case '0000'://成功
-                                            task.state = entity_1.TaskState.success;
-                                            StorageMap_1.default.auctionInfo.put(task.message["domain"], false, 'isGetDomainWait');
-                                            if (entity_1.TaskFunction.auctionStateUpdate)
-                                                entity_1.TaskFunction.auctionStateUpdate();
-                                            break;
-                                        case '3001'://失败
-                                            task.state = entity_1.TaskState.fail;
-                                            StorageMap_1.default.auctionInfo.put(task.message["domain"], false, 'isGetDomainWait');
-                                            if (entity_1.TaskFunction.auctionStateUpdate)
-                                                entity_1.TaskFunction.auctionStateUpdate();
-                                            break;
-                                        case '3002'://失败
-                                            task.state = entity_1.TaskState.fail;
-                                            StorageMap_1.default.auctionInfo.put(task.message["domain"], false, 'isGetDomainWait');
-                                            if (entity_1.TaskFunction.auctionStateUpdate)
-                                                entity_1.TaskFunction.auctionStateUpdate();
-                                            break;
-                                    }
-                                }
-                            }
-                            else {
-                                if (result && result["vmstate"] && result["vmstate"] != "") {
-                                    if (result.vmstate == "FAULT, BREAK") {
-                                        task.state = entity_1.TaskState.fail;
-                                        StorageMap_1.default.auctionInfo.put(task.message["domain"], false, 'isGetDomainWait');
-                                        if (entity_1.TaskFunction.auctionStateUpdate)
-                                            entity_1.TaskFunction.auctionStateUpdate();
-                                    }
-                                    else if (result && result.displayNameList && result.displayNameList.includes("collectDomain")) {
-                                        task.state = entity_1.TaskState.success;
-                                        StorageMap_1.default.auctionInfo.put(task.message["domain"], false, 'isGetDomainWait');
-                                        if (entity_1.TaskFunction.auctionStateUpdate)
-                                            entity_1.TaskFunction.auctionStateUpdate();
-                                    }
-                                    else {
-                                        task.state = entity_1.TaskState.fail;
-                                        StorageMap_1.default.auctionInfo.put(task.message["domain"], false, 'isGetDomainWait');
-                                        if (entity_1.TaskFunction.auctionStateUpdate)
-                                            entity_1.TaskFunction.auctionStateUpdate();
-                                    }
-                                }
-                            }
-                            task.confirm++;
-                            return task;
-                        });
-                        this.taskStore.put(entity_1.TaskType.getDomain.toString(), taskarr); //保存修改的状态
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    /**
-     * 退回sgas状态跟踪
-     * @param tasks 任务数组
-     */
-    TaskManager.confirm_recoverSgas = function (tasks) {
-        return __awaiter(this, void 0, void 0, function () {
-            var ress, taskarr;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.getResult(tasks)];
-                    case 1:
-                        ress = _a.sent();
-                        taskarr = this.forConfirm(tasks, function (task) {
-                            if (task.confirm > 3) {
-                                task.state = entity_1.TaskState.fail;
-                                StorageMap_1.default.auctionInfo.put(task.message["domain"], false, 'isRecoverWait');
-                                if (entity_1.TaskFunction.auctionStateUpdate)
-                                    entity_1.TaskFunction.auctionStateUpdate();
-                            }
-                            else {
-                                var result = ress[task.txid]; //获取通知数组
-                                if (result && result.issucces) {
-                                    task.state = entity_1.TaskState.success;
-                                    StorageMap_1.default.auctionInfo.put(task.message["domain"], false, 'isRecoverWait');
-                                    if (entity_1.TaskFunction.auctionStateUpdate)
-                                        entity_1.TaskFunction.auctionStateUpdate();
-                                }
-                            }
-                            task.confirm++;
-                            return task;
-                        });
-                        this.taskStore.put(entity_1.TaskType.recoverSgas.toString(), taskarr); //保存修改的状态
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    /**
-     * 获取 测试 Gas
-     * @param tasks
-     */
-    TaskManager.confirm_getGas = function (tasks) {
-        return __awaiter(this, void 0, void 0, function () {
-            var taskarr, index, task, res;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        taskarr = [];
-                        index = 0;
-                        _a.label = 1;
-                    case 1:
-                        if (!(index < tasks.length)) return [3 /*break*/, 5];
-                        task = tasks[index];
-                        if (!(task.state == entity_1.TaskState.watting)) return [3 /*break*/, 3];
-                        return [4 /*yield*/, importpack_1.tools.wwwtool.api_hasclaimgas(task.message.address)];
-                    case 2:
-                        res = _a.sent();
-                        if (res) {
-                            if (res[0].code == "3010") {
-                                task.state = entity_1.TaskState.fail;
-                                if (entity_1.TaskFunction.getGasTest)
-                                    entity_1.TaskFunction.getGasTest(0); //可领取
-                            }
-                            else if (res[0].code == "3012") {
-                                task.state = entity_1.TaskState.success;
-                                if (entity_1.TaskFunction.getGasTest)
-                                    entity_1.TaskFunction.getGasTest(1); //已领取
-                            }
-                            else if (res[0].code == "3011") {
-                                task.state = entity_1.TaskState.watting;
-                                if (entity_1.TaskFunction.getGasTest)
-                                    entity_1.TaskFunction.getGasTest(2); //已领取
-                            }
-                        }
-                        _a.label = 3;
-                    case 3:
-                        task.confirm++;
-                        taskarr.push(task);
-                        _a.label = 4;
-                    case 4:
-                        index++;
-                        return [3 /*break*/, 1];
-                    case 5:
-                        this.taskStore.put(entity_1.TaskType.getGasTest.toString(), taskarr);
                         return [2 /*return*/];
                 }
             });
@@ -6475,14 +5769,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var taskbar = __webpack_require__("HOkF");
 var taskbar_default = /*#__PURE__*/__webpack_require__.n(taskbar);
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/template-compiler?{"id":"data-v-7ef6dba6","hasScoped":true,"transformToRequire":{"video":"src","source":"src","img":"src","image":"xlink:href"},"buble":{"transforms":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./src/layouts/taskbar.vue
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"navbar navbar-wallet"},[_c('div',{staticClass:"blockheight"},[_c('div',{staticClass:"main"},[_c('div',{staticClass:"balance"},[_c('span',{staticClass:"asset"},[_vm._v("GAS")]),_vm._v(" "),_c('span',{staticClass:"amount"},[_vm._v(_vm._s(_vm.balance.toString()))]),_vm._v(" "),(_vm.claimState==='3010')?_c('v-btn',{on:{"onclick":_vm.claimGas}},[_vm._v("索取500 GAS")]):(_vm.claimState==='3011')?_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("排队中")]):(_vm.claimState==='3012')?_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("已发放 GAS")]):_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("Gas不足")]),_vm._v(" "),_c('v-hint',[_c('div',{staticClass:"hint-img"},[_c('img',{attrs:{"src":__webpack_require__("dqMZ"),"alt":""}})]),_vm._v(" "),_c('div',{staticClass:"hint-content"},[_c('p',[_vm._v("每个钱包每日可索取一次500gas，需要更多请在论坛留言索取。")])])])],1),_vm._v(" "),_c('div',{staticClass:"task-btn"},[_c('span',{staticClass:"task-tab"},[_c('img',{attrs:{"src":__webpack_require__("R2WG"),"alt":""}}),_vm._v("\n          "+_vm._s(_vm.$t('transfer.title2')+"：")+"\n          "),_c('a',{attrs:{"href":_vm.href,"target":"_blank"}},[_vm._v(_vm._s(_vm.showaddr))])]),_vm._v(" "),_c('span',{staticClass:"task-tab"},[_c('img',{attrs:{"src":__webpack_require__("ECX6"),"alt":""}}),_vm._v("\n          "+_vm._s([_vm.$t('navbar.blockheight'),_vm.blockheight].join("："))+"\n        ")]),_vm._v(" "),_c('span',{staticClass:"task-tab"},[_c('img',{attrs:{"src":__webpack_require__("5bZ7"),"alt":""}}),_vm._v("\n          计时器："+_vm._s(_vm.taskNumber)+"\n        ")]),_vm._v(" "),_c('v-btn',{on:{"onclick":function($event){_vm.showHistory=true}}},[_vm._v("操作记录")])],1),_vm._v(" "),_c('div',{staticClass:"tranhistory-box"},[(_vm.showHistory)?_c('div',{staticClass:"tranhistory-wrap"},[_c('div',{staticClass:"tranhistory-listbox"},[_c('div',{staticClass:"tranhistory-title"},[_c('div',{staticClass:"tranhistory-close",on:{"click":function($event){_vm.showHistory=!_vm.showHistory}}},[_c('img',{attrs:{"src":__webpack_require__("fgqV"),"alt":""}})]),_vm._v(" "),_c('span',[_vm._v(_vm._s(_vm.$t('operation.title')))]),_vm._v(" "),_c('div',{staticClass:"tranhistory-tips"},[_vm._v(_vm._s(_vm.$t('operation.tips')))])]),_vm._v(" "),_c('div',{staticClass:"tranhistory-list"},[_c('div',{staticClass:"th-onelist"},[_c('div',[_c('div',{staticClass:"th-type"},[_c('div',{staticClass:"th-typename"},[_vm._v(_vm._s(_vm.$t('operation.transfer')))]),_vm._v(" "),_vm._m(0,false,false)]),_vm._v(" "),_c('div',{staticClass:"th-block-txid"},[_c('span',{staticClass:"th-txid",staticStyle:{"padding-right":"10px"}},[_vm._v("\n                      "+_vm._s(_vm.$t('operation.txid'))+"\n                      "),_c('a',{staticClass:"green-text",attrs:{"target":"_blank"}},[_vm._v("x0ssss")])]),_vm._v(" "),_vm._m(1,false,false)])]),_vm._v(" "),_c('div',{staticClass:"btn-right"},[_c('v-btn',[_vm._v("test")])],1)])]),_vm._v(" "),(_vm.taskList.length == 0)?_c('div',{staticClass:"notask"},[_vm._v(_vm._s(_vm.$t('operation.nodata')))]):_vm._e()])]):_vm._e()])])]),_vm._v(" "),_c('v-toast',{ref:"toast"})],1)}
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/template-compiler?{"id":"data-v-7f833b92","hasScoped":true,"transformToRequire":{"video":"src","source":"src","img":"src","image":"xlink:href"},"buble":{"transforms":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./src/layouts/taskbar.vue
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"navbar navbar-wallet"},[_c('div',{staticClass:"blockheight"},[_c('div',{staticClass:"main"},[_c('div',{staticClass:"balance"},[_c('span',{staticClass:"asset"},[_vm._v("GAS")]),_vm._v(" "),_c('span',{staticClass:"amount"},[_vm._v(_vm._s(_vm.balance.toString()))]),_vm._v(" "),(_vm.claimState==='3010')?_c('v-btn',{on:{"onclick":_vm.claimGas}},[_vm._v("索取500 GAS")]):(_vm.claimState==='3011')?_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("排队中")]):(_vm.claimState==='3012')?_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("已发放 GAS")]):_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("Gas不足")]),_vm._v(" "),_c('v-hint',[_c('div',{staticClass:"hint-img"},[_c('img',{attrs:{"src":__webpack_require__("dqMZ"),"alt":""}})]),_vm._v(" "),_c('div',{staticClass:"hint-content"},[_c('p',[_vm._v("每个钱包每日可索取一次500gas，需要更多请在论坛留言索取。")])])])],1),_vm._v(" "),_c('div',{staticClass:"task-btn"},[_c('span',{staticClass:"task-tab"},[_c('img',{attrs:{"src":__webpack_require__("R2WG"),"alt":""}}),_vm._v("\n          "+_vm._s(_vm.$t('transfer.title2')+"：")+"\n          "),_c('a',{attrs:{"href":_vm.href,"target":"_blank"}},[_vm._v(_vm._s(_vm.showaddr))])]),_vm._v(" "),_c('span',{staticClass:"task-tab"},[_c('img',{attrs:{"src":__webpack_require__("ECX6"),"alt":""}}),_vm._v("\n          "+_vm._s([_vm.$t('navbar.blockheight'),_vm.blockheight].join("："))+"\n        ")]),_vm._v(" "),_c('v-btn',{on:{"onclick":function($event){_vm.showHistory=true}}},[_vm._v("操作记录")])],1),_vm._v(" "),_c('div',{staticClass:"tranhistory-box"},[(_vm.showHistory)?_c('div',{staticClass:"tranhistory-wrap"},[_c('div',{staticClass:"tranhistory-listbox"},[_c('div',{staticClass:"tranhistory-title"},[_c('div',{staticClass:"tranhistory-close",on:{"click":function($event){_vm.showHistory=!_vm.showHistory}}},[_c('img',{attrs:{"src":__webpack_require__("fgqV"),"alt":""}})]),_vm._v(" "),_c('span',[_vm._v(_vm._s(_vm.$t('operation.title')))]),_vm._v(" "),_c('div',{staticClass:"tranhistory-tips"},[_vm._v(_vm._s(_vm.$t('operation.tips')))])]),_vm._v(" "),_c('div',{staticClass:"tranhistory-list"},[_c('div',{staticClass:"th-onelist"},[_c('div',[_c('div',{staticClass:"th-type"},[_c('div',{staticClass:"th-typename"},[_vm._v(_vm._s(_vm.$t('operation.transfer')))]),_vm._v(" "),_vm._m(0,false,false)]),_vm._v(" "),_c('div',{staticClass:"th-block-txid"},[_c('span',{staticClass:"th-txid",staticStyle:{"padding-right":"10px"}},[_vm._v("\n                      "+_vm._s(_vm.$t('operation.txid'))+"\n                      "),_c('a',{staticClass:"green-text",attrs:{"target":"_blank"}},[_vm._v("x0ssss")])]),_vm._v(" "),_vm._m(1,false,false)])]),_vm._v(" "),_c('div',{staticClass:"btn-right"},[_c('v-btn',[_vm._v("test")])],1)])]),_vm._v(" "),(_vm.taskList.length == 0)?_c('div',{staticClass:"notask"},[_vm._v(_vm._s(_vm.$t('operation.nodata')))]):_vm._e()])]):_vm._e()])])]),_vm._v(" "),_c('v-toast',{ref:"toast"})],1)}
 var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"th-other"},[_c('div',{staticClass:"th-number"},[_c('span',[_vm._v("test")])])])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('span',{staticClass:"th-state"},[_c('span',[_vm._v("状态：")]),_vm._v(" "),_c('span',{staticClass:"green-text"},[_vm._v("成功")])])}]
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ var layouts_taskbar = (esExports);
 // CONCATENATED MODULE: ./src/layouts/taskbar.vue
 function injectStyle (ssrContext) {
-  __webpack_require__("0m5M")
+  __webpack_require__("fqX/")
 }
 var normalizeComponent = __webpack_require__("VU/8")
 /* script */
@@ -6494,7 +5788,7 @@ var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = "data-v-7ef6dba6"
+var __vue_scopeId__ = "data-v-7f833b92"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -6526,6 +5820,13 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM
 /***/ }),
 
 /***/ "fp7m":
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ "fqX/":
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

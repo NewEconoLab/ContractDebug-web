@@ -9,8 +9,12 @@
           <input type="text" placeholder="选择历史交易" class="change-input" v-model="txid">
         </div>
       </div>
-      <v-btn @onclick="initDebugInfo">查询</v-btn>
-      <v-btn :type="'warn'">帮助</v-btn>
+      <div class="btn-list">
+        <v-btn @onclick="initDebugInfo">查询</v-btn>
+      </div>
+      <div class="btn-list">
+        <v-btn :type="'warn'">帮助</v-btn>
+      </div>
     </div>
     <div class="debug-panel">
       <div class="debug-info">
@@ -61,6 +65,10 @@
 <style lang="less" scoped>
 .debug-title {
   display: flex;
+  padding-bottom: 30px;
+  .btn-list {
+    padding-left: 30px;
+  }
   .changehash-content {
     text-align: center;
     .change-box {
