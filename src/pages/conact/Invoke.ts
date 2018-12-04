@@ -3,6 +3,8 @@ import Vue from "vue";
 import { tools } from '../../tools/importpack';
 import { LoginInfo } from '../../tools/entity';
 import { ContractResult } from '../../entity/ContractEntitys';
+import { services } from "../../services/index";
+import { TaskType, ConfirmType } from "../../entity/TaskEntitys";
 @Component({
     components: {}
 })
@@ -94,6 +96,8 @@ export default class Invoke extends Vue
         let result = await tools.wwwtool.setTxCallContract(LoginInfo.getCurrentAddress(), data.data.toHexString());
         if (result)  
         {
+            this.opneToast("succes", "invoke 交易发送成功，等待区块确认", 4000)
+            services.taskManager.addTask(TaskType.invoke, ConfirmType.tranfer, result.txid, {})
             // this.resultEditor.setValue(JSON.stringify(result));
         }
 

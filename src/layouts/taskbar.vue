@@ -45,7 +45,7 @@
                 <div class="tranhistory-tips">{{$t('operation.tips')}}</div>
               </div>
               <div class="tranhistory-list">
-                <div class="th-onelist">
+                <div class="th-onelist" v-for="task in taskList" :key="task.txid">
                   <div>
                     <div class="th-type">
                       <div class="th-typename">{{$t('operation.transfer')}}</div>
@@ -58,7 +58,10 @@
                     <div class="th-block-txid">
                       <span class="th-txid" style="padding-right:10px">
                         {{$t('operation.txid')}}
-                        <a class="green-text" target="_blank">x0ssss</a>
+                        <a
+                          class="green-text"
+                          target="_blank"
+                        >{{task.simpleTxid}}</a>
                       </span>
                       <!-- <span class="red-text">{{$t('operation.waiting')}} tttt</span>
                       <span class="th-txid"></span>
@@ -69,7 +72,7 @@
                       </span>
                     </div>
                   </div>
-                  <div class="btn-right">
+                  <div v-if="task.state==1" class="btn-right">
                     <v-btn>test</v-btn>
                   </div>
                 </div>
@@ -140,7 +143,9 @@ import Component from "vue-class-component";
 import { LoginInfo } from "../tools/entity";
 import Store from "../tools/StorageMap";
 import { tools } from "../tools/importpack";
-import { Task } from "../entity/TaskEntitys";
+import { Task, TaskView } from "../entity/TaskEntitys";
+import { services } from "../services/index";
+import { store } from "../store/index";
 @Component({
   components: {}
 })
@@ -150,7 +155,7 @@ export default class TaskBar extends Vue {
   href: string;
   blockheight: number;
   showHistory: boolean;
-  taskList: any;
+  taskList: TaskView[];
   taskNumber: number;
   balance: Neo.Fixed8;
   claimState: string;
@@ -176,6 +181,8 @@ export default class TaskBar extends Vue {
     // TaskFunction.heightRefresh = this.getHeight;
     this.getBalance();
     this.initClaimState();
+    this.taskList = services.taskManager.showTaskList();
+    console.log(this.taskList);
   }
 
   getHeight() {
@@ -216,62 +223,18 @@ export default class TaskBar extends Vue {
     }
   }
 
-  makeTaskList(tasks) {
-    for (let i in tasks) {
-      let arr = [];
-      let href = "https://scan.nel.group/test/";
-      arr["tasktype"] = tasks[i].tasktype;
-      arr["startTime"] = tasks[i].startTime;
-      arr["txid"] =
-        tasks[i].txid.substring(0, 6) +
-        "..." +
-        tasks[i].txid.substring(tasks[i].txid.length - 6);
-      arr["txidhref"] = href + "transaction/" + tasks[i].txid;
-      arr["height"] = tasks[i].height;
-      arr["state"] = tasks[i].state;
-      arr["addrhref"] =
-        href +
-        "address/" +
-        (tasks[i].message.toaddress
-          ? tasks[i].message.toaddress
-          : tasks[i].message.address);
-      arr["message"] = tasks[i].message;
-      arr["domainhref"] =
-        href +
-        "nnsinfo/" +
-        (tasks[i].message.domain ? tasks[i].message.domain : "");
-      arr["resolver"] =
-        "" +
-        (tasks[i].message.contract
-          ? tasks[i].message.contract.substring(0, 4) +
-            "..." +
-            tasks[i].message.contract.substring(
-              tasks[i].message.contract.length - 4
-            )
-          : "");
-      this.taskList.push(arr);
-    }
-  }
   taskHistory() {
-    this.clearTimer();
-    // let list = TaskManager.taskStore.getList();
-    let list = [];
-    this.taskList = [];
-    for (const type in list) {
-      if (list.hasOwnProperty(type)) {
-        const tasks = list[type] as Task[];
-        this.makeTaskList(tasks);
-      }
-    }
-    this.taskList.sort((n1, n2) => {
-      return n1.startTime > n2.startTime ? -1 : 1;
-    });
+    // this.clearTimer();
+    this.taskList = services.taskManager.showTaskList();
+    // this.taskList.sort((n1, n2) => {
+    //   return n1.startTime > n2.startTime ? -1 : 1;
+    // });
 
-    this.taskList.forEach(v => {
-      if (v.state == 0) {
-        this.timer(v);
-      }
-    });
+    // this.taskList.forEach(v => {
+    //   if (v.state == 0) {
+    //     this.timer(v);
+    //   }
+    // });
   }
   timer(item) {
     if (item.timer) {
@@ -293,10 +256,10 @@ export default class TaskBar extends Vue {
   }
   clearTimer() {
     this.taskList.forEach(v => {
-      if (v.timer) {
-        clearInterval(v.timer);
-        v.timer = null;
-      }
+      // if (v.timer) {
+      //   clearInterval(v.timer);
+      //   v.timer = null;
+      // }
     });
   }
 }

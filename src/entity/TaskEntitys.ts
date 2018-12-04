@@ -56,6 +56,23 @@ export class Task
     }
 }
 
+export class TaskView extends Task
+{
+    txidhref: string;
+    simpleTxid: string;
+    constructor(task: Task)
+    {
+        let href = "https://scan.nel.group/test/";
+        super(task.taskType, task.type, task.txid, task.message);
+        this.state = task.state;
+        this.txidhref = href + "transaction/" + task.txid;
+        this.simpleTxid =
+            [ task.txid.substring(0, 6),
+            task.txid.substring(task.txid.length - 6) ]
+                .join("...");
+    }
+}
+
 /**
  * 任务状态
  */
@@ -72,20 +89,8 @@ export enum TaskState
 export enum TaskType
 {
     tranfer,// 交易确认 需要签名的任务，涉及资产变动
-    openAuction,//开标
-    addPrice,// 资产更新 在tx交易成功后添加资产更新任务，资产更新立即执行
-    gasToSgas,//gas转sgas
-    sgasToGas,//sgas转gas
-    topup,//充值
-    withdraw,//退款
-    getGasTest,//测试网领取gas
-    domainMapping,//域名映射
-    domainResovle,//域名合约地址
-    domainRenewal,
-    getDomain,//领取域名
-    recoverSgas,//退回sgas
-    ClaimGas,//领取Gas
-    domainTransfer,
+    invoke,
+    deploy
 }
 
 /**

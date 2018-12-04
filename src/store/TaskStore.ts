@@ -14,10 +14,15 @@ export class TaskStore
         return list;
     }
 
-    addTask(task: Task)
+    pushTask(task: Task)
     {
         let list = this.getTaskList();
         list.push(task);
         sessionStorage.setItem(this.tableName, JSON.stringify(list));
+    }
+
+    setTasklist(tasks: Task[])
+    {
+        sessionStorage.setItem(this.tableName, JSON.stringify(tasks));
     }
 }

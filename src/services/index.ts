@@ -1,4 +1,5 @@
-import { store } from "../store/index";
+import { TaskService } from "./TaskService";
 export namespace services
 {
+    export const taskManager = new TaskService();
 }
