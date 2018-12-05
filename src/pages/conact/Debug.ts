@@ -153,6 +153,7 @@ export default class Debug extends Vue
         this.calcStackShow(state.AltStack[ "list" ], tree1)
         view.showTree(view.ul, tree, div2);
         view1.showTree(view1.ul, tree1, div2);
+
         console.log(this.CalcStack);
         console.log(this.AltStack);
     }

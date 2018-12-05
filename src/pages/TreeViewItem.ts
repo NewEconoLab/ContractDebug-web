@@ -37,9 +37,27 @@ export class TreeViewItems
                     pater.appendChild(li);
                     if (tree.href)
                     {
+                        let value = document.createElement("ul");
+                        value.textContent = tree.href;
+                        let bts = tree.href.hexToBytes();
+                        let asstr = document.createElement("li");
+                        let str = ThinNeo.Helper.Bytes2String(bts);
+                        asstr.textContent = "asStr : " + str;
+                        value.appendChild(asstr);
+                        if (tree.href.length <= 8)
+                        {
+                            let num = Neo.BigInteger.fromUint8Array(bts);
+                            let asnum = document.createElement("li");
+                            asnum.textContent = "asNum : " + num.toString();
+                            value.appendChild(asnum);
+                        }
                         li.onclick = () =>
                         {
-                            valueDiv.textContent = tree.href;
+                            while (valueDiv.hasChildNodes()) //当div下还存在子节点时 循环继续
+                            {
+                                valueDiv.removeChild(valueDiv.firstChild);
+                            }
+                            valueDiv.appendChild(value)
                         }
                     }
                 }
