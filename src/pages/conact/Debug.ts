@@ -61,38 +61,44 @@ export default class Debug extends Vue
         const result = await tools.wwwtool.getDumpInfoByTxid(this.txid);
         this.dumpinfo = result[ 'dimpInfo' ];
         let lzma: nid.LZMA = new nid.LZMA();
-        console.log("new LZMA");
+        // console.log("new LZMA");
         var srcbytes = this.dumpinfo.hexToBytes();
         var unpackjsonstr: string = "";
         var unpackjson: {} = null;
         try
         {
             var destbytes = lzma.decode(srcbytes);
-            console.log("decode got: srcsize=" + srcbytes.length + " destsize=" + destbytes.length);
+            // console.log("decode got: srcsize=" + srcbytes.length + " destsize=" + destbytes.length);
             unpackjsonstr = ThinNeo.Helper.Bytes2String(destbytes);
-            console.log("jsonstr =" + unpackjsonstr);
+            // console.log("jsonstr =" + unpackjsonstr);
             unpackjson = JSON.parse(unpackjsonstr);
-            console.log("convert to json . log to console");
+            // console.log("convert to json . log to console");
         }
         catch (e)
         {
-            console.log("decode error." + e);
+            // console.log("decode error." + e);
             return;
         }
 
         if (unpackjson != null)
         {
-            let fulllog = ThinNeo.SmartContract.Debug.DumpInfo.FromJson(unpackjson);
+            let dumpinfo = ThinNeo.SmartContract.Debug.DumpInfo.FromJson(unpackjson);
             this.simVM = new ThinNeo.Debug.SimVM();
-            this.simVM.Execute(fulllog);
-            console.log("read fulllog struct.");
-            console.log("run state:" + fulllog.states);
-            for (var i = 0; i < fulllog.states.length; i++)
+            this.simVM.Execute(dumpinfo);
+            // console.log("read fulllog struct.");
+            // console.log("run state:" + dumpinfo.states);
+            for (var i = 0; i < dumpinfo.states.length; i++)
             {
-                console.log("--->" + ThinNeo.SmartContract.Debug.VMState[ fulllog.states[ i ] ]);
+                // console.log("--->" + ThinNeo.SmartContract.Debug.VMState[ dumpinfo.states[ i ] ]);
             }
             this.dumpstr = "";
-            this.dumpScript(fulllog.script, 1);
+
+            let arr = [];
+            //预先获得所有需要加载的 avm等信息
+            // console.log(dumpinfo.script.GetAllScriptName(arr));
+
+            // console.log(arr);
+            this.dumpScript(this.simVM.regenScript, 1);
 
             this.fulllogEditor.on("cursorActivity", (res) =>
             {
@@ -101,15 +107,17 @@ export default class Debug extends Vue
         }
     }
 
-    async debug()
+    debug()
     {
         let codeline = this.fulllogEditor.getCursor().line
         if (this.stackarr[ codeline ])
         {
             let script = this.stackarr[ codeline ].script;
             let op = this.stackarr[ codeline ].op;
+            this.showCode(script.hash);
             this.showStack(op);
-            await this.showCode(script.hash);
+            // console.log("script hash : " + script.hash);
+
             if (this.addr)
             {
                 var line = this.addr.GetLineBack(op.addr);//尽量倒着取到对应的代码
@@ -120,16 +128,9 @@ export default class Debug extends Vue
     }
     showStack(op: ThinNeo.SmartContract.Debug.LogOp)
     {
-        let stateid = this.simVM.mapState[ op.guid ];
-        let state = this.simVM.stateClone[ stateid ];
-        this.CalcStack = state.CalcStack[ 'list' ];
-        this.AltStack = state.AltStack[ 'list' ];
-        let tree = new TreeView("");
-        let tree1 = new TreeView("");
         let div = document.getElementById("calcstack-content") as HTMLDivElement;
         let div1 = document.getElementById("altstack-content") as HTMLDivElement;
         let div2 = document.getElementById("valuetool") as HTMLDivElement;
-
         while (div.hasChildNodes()) //当div下还存在子节点时 循环继续
         {
             div.removeChild(div.firstChild);
@@ -138,13 +139,27 @@ export default class Debug extends Vue
         {
             div1.removeChild(div1.firstChild);
         }
-        let view = new TreeViewItems(div)
-        let view1 = new TreeViewItems(div1)
+        let stateid = this.simVM.mapState[ op.guid ];
+        let state = this.simVM.stateClone[ stateid ];
+        if (state)
+        {
+            this.CalcStack = state.CalcStack[ 'list' ];
+            this.AltStack = state.AltStack[ 'list' ];
+            let tree = new TreeView("");
+            let tree1 = new TreeView("");
 
-        this.calcStackShow(state.CalcStack[ 'list' ], tree);
-        this.calcStackShow(state.AltStack[ "list" ], tree1)
-        view.showTree(view.ul, tree, div2);
-        view1.showTree(view1.ul, tree1, div2);
+            let view = new TreeViewItems(div)
+            let view1 = new TreeViewItems(div1)
+
+            this.calcStackShow(state.CalcStack[ 'list' ], tree);
+            this.calcStackShow(state.AltStack[ "list" ], tree1)
+            view.showTree(view.ul, tree, div2);
+            view1.showTree(view1.ul, tree1, div2);
+
+        } else
+        {
+            // console.log("state is undefined");
+        }
     }
 
     calcStackShow(item, tree: TreeView)
@@ -223,24 +238,24 @@ export default class Debug extends Vue
         else
             this.addAvmStr("hash : " + script.hash);
         this.stackarr.push(undefined);
+
         for (var i = 0; i < script.ops.length; i++)
         {
             this.addAvmStr(space + "op : " + script.ops[ i ].GetHeader());
             if (script.ops[ i ].GetHeader().includes("APPCALL"))
             {
-                console.log("----------------------------" + script.ops[ i ].GetHeader())
-                console.log(script.ops[ i ]);
-                console.log(script.ops[ i ].param);
-                console.log(script.ops[ i ].param.toHexString());
                 let arr = [];
                 //预先获得所有需要加载的 avm等信息
                 console.log(script.ops[ i ].subScript.GetAllScriptName(arr));
                 console.log(arr);
                 this.initCode(arr);
             }
-            this.stackarr.push({ script: script, op: script.ops[ i ] });
+
             if (script.ops[ i ].subScript != null)
+            {
                 this.dumpScript(script.ops[ i ].subScript, level + 1);
+            }
+            this.stackarr.push({ script: script, op: script.ops[ i ] });
         }
         if (level === 1)
         {

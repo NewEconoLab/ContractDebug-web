@@ -28,7 +28,7 @@ export class TreeViewItems
                 {
                     let li = document.createElement("li");
                     let ul = document.createElement("ul");
-                    li.textContent = tree.title + " : ";
+                    li.textContent = tree.title + ":";
                     li.appendChild(ul)
                     pater.appendChild(li);
                     this.showTree(ul, tree, valueDiv);
@@ -36,7 +36,7 @@ export class TreeViewItems
                 else
                 {
                     let li = document.createElement("li")
-                    li.textContent = tree.title + " : " + tree.value;
+                    li.textContent = tree.title + ":" + tree.value;
                     pater.appendChild(li);
                     if (tree.title === "ByteArray" && tree.value)
                     {

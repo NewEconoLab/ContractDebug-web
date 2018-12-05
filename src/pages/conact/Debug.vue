@@ -149,15 +149,20 @@
     padding-right: 30px;
     .value-content {
       overflow: auto;
-      max-width: 400px;
+      max-width: 350px;
+      width: 400px;
       max-height: 100px;
+      height: 50px;
       color: #fff;
+      margin-left: 5px;
+      margin-right: 5px;
       margin-top: 5px;
       margin-bottom: 5px;
     }
     .panel-content {
       overflow: auto;
-      max-width: 400px;
+      max-width: 350px;
+      width: 400px;
       max-height: 200px;
       height: 200px;
       color: #fff;
