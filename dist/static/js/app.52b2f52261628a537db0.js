@@ -2951,6 +2951,85 @@ var Component = normalizeComponent(
 
 /***/ }),
 
+/***/ "9vCx":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var AuctionEntitys_1 = __webpack_require__("Wj+m");
+var storagetool_1 = __webpack_require__("5LD5");
+var AuctionStore = /** @class */ (function () {
+    function AuctionStore(table) {
+        this.tablename = table;
+        this.session = new storagetool_1.sessionStoreTool(table);
+    }
+    /**
+     * 更新缓存队列
+     * @param data
+     * @param address
+     */
+    AuctionStore.prototype.setSotre = function (data, address) {
+        var list = this.session.getList();
+        list = list ? list : {};
+        for (var index = 0; index < data.length; index++) {
+            var auction = data[index];
+            if (auction.auctionState != AuctionEntitys_1.AuctionState.pass) {
+                if (auction.addwholist) {
+                    for (var i = 0; i < auction.addwholist.length; i++) {
+                        var who = auction.addwholist[i];
+                        if (who.address == address) {
+                            auction.addWho = who;
+                        }
+                    }
+                }
+                list[auction.auctionId] = auction;
+            }
+            else {
+                delete list[auction.auctionId];
+            }
+        }
+        this.session.setList(list);
+    };
+    /**
+     *
+     * 从缓存中获得域名列表
+     */
+    AuctionStore.prototype.getSotre = function () {
+        var list = this.session.getList();
+        var auctions = [];
+        for (var key in list) {
+            if (list.hasOwnProperty(key)) {
+                var auction = list[key];
+                // if (auction[ "auctionState" ] != AuctionState.watting)
+                auctions.push(auction);
+            }
+        }
+        return auctions;
+    };
+    /**
+     * 往域名列表中塞值
+     * @param auction 域名信息
+     */
+    AuctionStore.prototype.push = function (auction) {
+        var list = this.session.getList();
+        list[auction.auctionId] = auction;
+        this.session.setList(list);
+    };
+    /**
+     * 查询对应id 的竞标信息
+     * @param id
+     */
+    AuctionStore.prototype.queryStore = function (id) {
+        return this.session.select(id);
+    };
+    return AuctionStore;
+}());
+exports.AuctionStore = AuctionStore;
+
+
+/***/ }),
+
 /***/ "AU0D":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -3055,6 +3134,16 @@ exports.default = Valert;
 
 "use strict";
 
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 Object.defineProperty(exports, "__esModule", { value: true });
 var importpack_1 = __webpack_require__("VKSY");
 var TaskFunction = /** @class */ (function () {
@@ -3081,6 +3170,23 @@ var Task = /** @class */ (function () {
     return Task;
 }());
 exports.Task = Task;
+var TaskView = /** @class */ (function (_super) {
+    __extends(TaskView, _super);
+    function TaskView(task) {
+        var _this = this;
+        var href = "https://scan.nel.group/test/";
+        _this = _super.call(this, task.taskType, task.type, task.txid, task.message) || this;
+        _this.state = task.state;
+        _this.txidhref = href + "transaction/" + task.txid;
+        _this.simpleTxid =
+            [task.txid.substring(0, 6),
+                task.txid.substring(task.txid.length - 6)]
+                .join("...");
+        return _this;
+    }
+    return TaskView;
+}(Task));
+exports.TaskView = TaskView;
 /**
  * 任务状态
  */
@@ -3096,20 +3202,8 @@ var TaskState;
 var TaskType;
 (function (TaskType) {
     TaskType[TaskType["tranfer"] = 0] = "tranfer";
-    TaskType[TaskType["openAuction"] = 1] = "openAuction";
-    TaskType[TaskType["addPrice"] = 2] = "addPrice";
-    TaskType[TaskType["gasToSgas"] = 3] = "gasToSgas";
-    TaskType[TaskType["sgasToGas"] = 4] = "sgasToGas";
-    TaskType[TaskType["topup"] = 5] = "topup";
-    TaskType[TaskType["withdraw"] = 6] = "withdraw";
-    TaskType[TaskType["getGasTest"] = 7] = "getGasTest";
-    TaskType[TaskType["domainMapping"] = 8] = "domainMapping";
-    TaskType[TaskType["domainResovle"] = 9] = "domainResovle";
-    TaskType[TaskType["domainRenewal"] = 10] = "domainRenewal";
-    TaskType[TaskType["getDomain"] = 11] = "getDomain";
-    TaskType[TaskType["recoverSgas"] = 12] = "recoverSgas";
-    TaskType[TaskType["ClaimGas"] = 13] = "ClaimGas";
-    TaskType[TaskType["domainTransfer"] = 14] = "domainTransfer";
+    TaskType[TaskType["invoke"] = 1] = "invoke";
+    TaskType[TaskType["deploy"] = 2] = "deploy";
 })(TaskType = exports.TaskType || (exports.TaskType = {}));
 /**
  * 确认的操作类型
@@ -3378,6 +3472,7 @@ var vue_class_component_1 = __webpack_require__("c+8m");
 var entity_1 = __webpack_require__("6nHw");
 var StorageMap_1 = __webpack_require__("slXE");
 var importpack_1 = __webpack_require__("VKSY");
+var index_1 = __webpack_require__("r84I");
 var TaskBar = /** @class */ (function (_super) {
     __extends(TaskBar, _super);
     function TaskBar() {
@@ -3403,6 +3498,8 @@ var TaskBar = /** @class */ (function (_super) {
         // TaskFunction.heightRefresh = this.getHeight;
         this.getBalance();
         this.initClaimState();
+        this.taskList = index_1.services.taskManager.showTaskList();
+        console.log(this.taskList);
     };
     TaskBar.prototype.getHeight = function () {
         this.blockheight = StorageMap_1.default.blockheight.select("height");
@@ -3474,60 +3571,17 @@ var TaskBar = /** @class */ (function (_super) {
             });
         });
     };
-    TaskBar.prototype.makeTaskList = function (tasks) {
-        for (var i in tasks) {
-            var arr = [];
-            var href = "https://scan.nel.group/test/";
-            arr["tasktype"] = tasks[i].tasktype;
-            arr["startTime"] = tasks[i].startTime;
-            arr["txid"] =
-                tasks[i].txid.substring(0, 6) +
-                    "..." +
-                    tasks[i].txid.substring(tasks[i].txid.length - 6);
-            arr["txidhref"] = href + "transaction/" + tasks[i].txid;
-            arr["height"] = tasks[i].height;
-            arr["state"] = tasks[i].state;
-            arr["addrhref"] =
-                href +
-                    "address/" +
-                    (tasks[i].message.toaddress
-                        ? tasks[i].message.toaddress
-                        : tasks[i].message.address);
-            arr["message"] = tasks[i].message;
-            arr["domainhref"] =
-                href +
-                    "nnsinfo/" +
-                    (tasks[i].message.domain ? tasks[i].message.domain : "");
-            arr["resolver"] =
-                "" +
-                    (tasks[i].message.contract
-                        ? tasks[i].message.contract.substring(0, 4) +
-                            "..." +
-                            tasks[i].message.contract.substring(tasks[i].message.contract.length - 4)
-                        : "");
-            this.taskList.push(arr);
-        }
-    };
     TaskBar.prototype.taskHistory = function () {
-        var _this = this;
-        this.clearTimer();
-        // let list = TaskManager.taskStore.getList();
-        var list = [];
-        this.taskList = [];
-        for (var type in list) {
-            if (list.hasOwnProperty(type)) {
-                var tasks = list[type];
-                this.makeTaskList(tasks);
-            }
-        }
-        this.taskList.sort(function (n1, n2) {
-            return n1.startTime > n2.startTime ? -1 : 1;
-        });
-        this.taskList.forEach(function (v) {
-            if (v.state == 0) {
-                _this.timer(v);
-            }
-        });
+        // this.clearTimer();
+        this.taskList = index_1.services.taskManager.showTaskList();
+        // this.taskList.sort((n1, n2) => {
+        //   return n1.startTime > n2.startTime ? -1 : 1;
+        // });
+        // this.taskList.forEach(v => {
+        //   if (v.state == 0) {
+        //     this.timer(v);
+        //   }
+        // });
     };
     TaskBar.prototype.timer = function (item) {
         var _this = this;
@@ -3550,10 +3604,10 @@ var TaskBar = /** @class */ (function (_super) {
     };
     TaskBar.prototype.clearTimer = function () {
         this.taskList.forEach(function (v) {
-            if (v.timer) {
-                clearInterval(v.timer);
-                v.timer = null;
-            }
+            // if (v.timer) {
+            //   clearInterval(v.timer);
+            //   v.timer = null;
+            // }
         });
     };
     TaskBar = __decorate([
@@ -4050,6 +4104,39 @@ var Valert = /** @class */ (function (_super) {
     return Valert;
 }(vue_1.default));
 exports.default = Valert;
+
+
+/***/ }),
+
+/***/ "JsLz":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var TaskStore = /** @class */ (function () {
+    function TaskStore() {
+        this.tableName = "task-store-manager";
+    }
+    TaskStore.prototype.getTaskList = function () {
+        var listStr = sessionStorage.getItem(this.tableName);
+        var list = [];
+        if (listStr) {
+            list = JSON.parse(listStr);
+        }
+        return list;
+    };
+    TaskStore.prototype.pushTask = function (task) {
+        var list = this.getTaskList();
+        list.push(task);
+        sessionStorage.setItem(this.tableName, JSON.stringify(list));
+    };
+    TaskStore.prototype.setTasklist = function (tasks) {
+        sessionStorage.setItem(this.tableName, JSON.stringify(tasks));
+    };
+    return TaskStore;
+}());
+exports.TaskStore = TaskStore;
 
 
 /***/ }),
@@ -4559,6 +4646,13 @@ var Component = normalizeComponent(
 
 /***/ }),
 
+/***/ "Qz3G":
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ "R2WG":
 /***/ (function(module, exports) {
 
@@ -4631,14 +4725,185 @@ exports.default = Selected;
 
 /***/ }),
 
-/***/ "UOl0":
-/***/ (function(module, exports) {
+/***/ "Tww3":
+/***/ (function(module, exports, __webpack_require__) {
 
-// removed by extract-text-webpack-plugin
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var index_1 = __webpack_require__("VYSC");
+var TaskEntitys_1 = __webpack_require__("CveJ");
+var importpack_1 = __webpack_require__("VKSY");
+var TaskService = /** @class */ (function () {
+    function TaskService() {
+    }
+    TaskService.prototype.addTask = function (type, confirm, txid, message) {
+        var task = new TaskEntitys_1.Task(type, confirm, txid, message);
+        index_1.store.taskStore.pushTask(task);
+    };
+    TaskService.prototype.update = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var list, ress, tasklist;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        list = index_1.store.taskStore.getTaskList();
+                        return [4 /*yield*/, this.getResult(list)];
+                    case 1:
+                        ress = _a.sent();
+                        tasklist = this.forConfirm(list, function (task) {
+                            var result = ress[task.txid]; //获取通知数组
+                            if (result.issucces) {
+                                task.state = TaskEntitys_1.TaskState.success;
+                            }
+                            task.confirm++;
+                            return task;
+                        });
+                        index_1.store.taskStore.setTasklist(tasklist);
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    TaskService.prototype.showTaskList = function () {
+        var tasklist = index_1.store.taskStore.getTaskList();
+        var viewlist = [];
+        for (var _i = 0, tasklist_1 = tasklist; _i < tasklist_1.length; _i++) {
+            var task = tasklist_1[_i];
+            viewlist.push(new TaskEntitys_1.TaskView(task));
+        }
+        var list = viewlist.sort(function (a, b) {
+            return a.startTime > b.startTime ? -1 : 1;
+        });
+        return list;
+    };
+    /**
+     * 循环得到任务返回的结果
+     * @param {Task} tasks 任务类
+     */
+    TaskService.prototype.getResult = function (tasks) {
+        return __awaiter(this, void 0, void 0, function () {
+            var ress, index, element, _a, _b, _c, _d, _e, _f, _g, _h, _j;
+            return __generator(this, function (_k) {
+                switch (_k.label) {
+                    case 0:
+                        ress = {};
+                        index = 0;
+                        _k.label = 1;
+                    case 1:
+                        if (!(index < tasks.length)) return [3 /*break*/, 13];
+                        element = tasks[index];
+                        if (!(element.state == TaskEntitys_1.TaskState.watting)) return [3 /*break*/, 11];
+                        _a = element.type;
+                        switch (_a) {
+                            case TaskEntitys_1.ConfirmType.tranfer: return [3 /*break*/, 2];
+                            case TaskEntitys_1.ConfirmType.contract: return [3 /*break*/, 4];
+                            case TaskEntitys_1.ConfirmType.recharge: return [3 /*break*/, 6];
+                        }
+                        return [3 /*break*/, 8];
+                    case 2:
+                        _b = ress;
+                        _c = element.txid;
+                        return [4 /*yield*/, importpack_1.tools.wwwtool.hastx(element.txid)];
+                    case 3:
+                        _b[_c] = _k.sent();
+                        return [3 /*break*/, 10];
+                    case 4:
+                        _d = ress;
+                        _e = element.txid;
+                        return [4 /*yield*/, importpack_1.tools.wwwtool.hascontract(element.txid)];
+                    case 5:
+                        _d[_e] = _k.sent();
+                        return [3 /*break*/, 10];
+                    case 6:
+                        _f = ress;
+                        _g = element.txid;
+                        return [4 /*yield*/, importpack_1.tools.wwwtool.getrechargeandtransfer(element.txid)];
+                    case 7:
+                        _f[_g] = _k.sent();
+                        return [3 /*break*/, 10];
+                    case 8:
+                        _h = ress;
+                        _j = element.txid;
+                        return [4 /*yield*/, importpack_1.tools.wwwtool.hastx(element.txid)];
+                    case 9:
+                        _h[_j] = _k.sent();
+                        return [3 /*break*/, 10];
+                    case 10: return [3 /*break*/, 12];
+                    case 11:
+                        ress[element.txid] = undefined;
+                        _k.label = 12;
+                    case 12:
+                        index++;
+                        return [3 /*break*/, 1];
+                    case 13: return [2 /*return*/, ress];
+                }
+            });
+        });
+    };
+    /**
+     * 类似 js 数组的 map方法
+     * @param tasks Task数组
+     * @param call 回调方法
+     */
+    TaskService.prototype.forConfirm = function (tasks, call) {
+        var taskarr = [];
+        for (var index = 0; index < tasks.length; index++) {
+            var tasknew = void 0;
+            var task = tasks[index];
+            if (task.state == TaskEntitys_1.TaskState.watting) {
+                tasknew = call(task);
+            }
+            else {
+                tasknew = task;
+            }
+            taskarr.push(tasknew);
+        }
+        return taskarr;
+    };
+    return TaskService;
+}());
+exports.TaskService = TaskService;
+
 
 /***/ }),
 
-/***/ "V8JE":
+/***/ "UOl0":
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
@@ -4670,6 +4935,27 @@ var tools;
     tools.localstoretool = storagetool_1.LocalStoreTool;
     tools.sessionstoretool = storagetool_1.sessionStoreTool;
 })(tools = exports.tools || (exports.tools = {}));
+
+
+/***/ }),
+
+/***/ "VYSC":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var AuctionStore_1 = __webpack_require__("9vCx");
+var UtxoStore_1 = __webpack_require__("gAj9");
+var TaskStore_1 = __webpack_require__("JsLz");
+var store;
+(function (store) {
+    store.auction_neo = new AuctionStore_1.AuctionStore("AUCTION_LIST_NEO");
+    store.auction_test = new AuctionStore_1.AuctionStore("AUCTION_LIST_TEST");
+    store.utxo = UtxoStore_1.Utxo;
+    store.markutxo = UtxoStore_1.MarkUtxo;
+    store.taskStore = new TaskStore_1.TaskStore();
+})(store = exports.store || (exports.store = {}));
 
 
 /***/ }),
@@ -5689,14 +5975,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var taskbar = __webpack_require__("HOkF");
 var taskbar_default = /*#__PURE__*/__webpack_require__.n(taskbar);
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/template-compiler?{"id":"data-v-0ada7a1c","hasScoped":true,"transformToRequire":{"video":"src","source":"src","img":"src","image":"xlink:href"},"buble":{"transforms":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./src/layouts/taskbar.vue
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"navbar navbar-wallet"},[_c('div',{staticClass:"blockheight"},[_c('div',{staticClass:"main"},[_c('div',{staticClass:"balance"},[_c('span',{staticClass:"asset"},[_vm._v("GAS")]),_vm._v(" "),_c('span',{staticClass:"amount"},[_vm._v(_vm._s(_vm.balance.toString()))]),_vm._v(" "),(_vm.claimState==='3010')?_c('v-btn',{on:{"onclick":_vm.claimGas}},[_vm._v("索取500 GAS")]):(_vm.claimState==='3011')?_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("排队中")]):(_vm.claimState==='3012')?_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("已发放 GAS")]):_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("Gas不足")]),_vm._v(" "),_c('v-hint',[_c('div',{staticClass:"hint-img"},[_c('img',{attrs:{"src":__webpack_require__("dqMZ"),"alt":""}})]),_vm._v(" "),_c('div',{staticClass:"hint-content"},[_c('p',[_vm._v("每个钱包每日可索取一次500gas，需要更多请在论坛留言索取。")])])])],1),_vm._v(" "),_c('div',{staticClass:"task-btn"},[_c('span',{staticClass:"task-tab"},[_c('img',{attrs:{"src":__webpack_require__("R2WG"),"alt":""}}),_vm._v("\n          "+_vm._s(_vm.$t('transfer.title2')+"：")+"\n          "),_c('a',{attrs:{"href":_vm.href,"target":"_blank"}},[_vm._v(_vm._s(_vm.showaddr))])]),_vm._v(" "),_c('span',{staticClass:"task-tab"},[_c('img',{attrs:{"src":__webpack_require__("ECX6"),"alt":""}}),_vm._v("\n          "+_vm._s([_vm.$t('navbar.blockheight'),_vm.blockheight].join("："))+"\n        ")]),_vm._v(" "),_c('v-btn',{on:{"onclick":function($event){_vm.showHistory=true}}},[_vm._v("操作记录")])],1),_vm._v(" "),_c('div',{staticClass:"tranhistory-box"},[(_vm.showHistory)?_c('div',{staticClass:"tranhistory-wrap"},[_c('div',{staticClass:"tranhistory-listbox"},[_c('div',{staticClass:"tranhistory-title"},[_c('div',{staticClass:"tranhistory-close",on:{"click":function($event){_vm.showHistory=!_vm.showHistory}}},[_c('img',{attrs:{"src":__webpack_require__("fgqV"),"alt":""}})]),_vm._v(" "),_c('span',[_vm._v(_vm._s(_vm.$t('operation.title')))]),_vm._v(" "),_c('div',{staticClass:"tranhistory-tips"},[_vm._v(_vm._s(_vm.$t('operation.tips')))])]),_vm._v(" "),_c('div',{staticClass:"tranhistory-list"},[_c('div',{staticClass:"th-onelist"},[_c('div',[_c('div',{staticClass:"th-type"},[_c('div',{staticClass:"th-typename"},[_vm._v(_vm._s(_vm.$t('operation.transfer')))]),_vm._v(" "),_vm._m(0,false,false)]),_vm._v(" "),_c('div',{staticClass:"th-block-txid"},[_c('span',{staticClass:"th-txid",staticStyle:{"padding-right":"10px"}},[_vm._v("\n                      "+_vm._s(_vm.$t('operation.txid'))+"\n                      "),_c('a',{staticClass:"green-text",attrs:{"target":"_blank"}},[_vm._v("x0ssss")])]),_vm._v(" "),_vm._m(1,false,false)])]),_vm._v(" "),_c('div',{staticClass:"btn-right"},[_c('v-btn',[_vm._v("test")])],1)])]),_vm._v(" "),(_vm.taskList.length == 0)?_c('div',{staticClass:"notask"},[_vm._v(_vm._s(_vm.$t('operation.nodata')))]):_vm._e()])]):_vm._e()])])]),_vm._v(" "),_c('v-toast',{ref:"toast"})],1)}
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/template-compiler?{"id":"data-v-fdc9446c","hasScoped":true,"transformToRequire":{"video":"src","source":"src","img":"src","image":"xlink:href"},"buble":{"transforms":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./src/layouts/taskbar.vue
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"navbar navbar-wallet"},[_c('div',{staticClass:"blockheight"},[_c('div',{staticClass:"main"},[_c('div',{staticClass:"balance"},[_c('span',{staticClass:"asset"},[_vm._v("GAS")]),_vm._v(" "),_c('span',{staticClass:"amount"},[_vm._v(_vm._s(_vm.balance.toString()))]),_vm._v(" "),(_vm.claimState==='3010')?_c('v-btn',{on:{"onclick":_vm.claimGas}},[_vm._v("索取500 GAS")]):(_vm.claimState==='3011')?_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("排队中")]):(_vm.claimState==='3012')?_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("已发放 GAS")]):_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("Gas不足")]),_vm._v(" "),_c('v-hint',[_c('div',{staticClass:"hint-img"},[_c('img',{attrs:{"src":__webpack_require__("dqMZ"),"alt":""}})]),_vm._v(" "),_c('div',{staticClass:"hint-content"},[_c('p',[_vm._v("每个钱包每日可索取一次500gas，需要更多请在论坛留言索取。")])])])],1),_vm._v(" "),_c('div',{staticClass:"task-btn"},[_c('span',{staticClass:"task-tab"},[_c('img',{attrs:{"src":__webpack_require__("R2WG"),"alt":""}}),_vm._v("\n          "+_vm._s(_vm.$t('transfer.title2')+"：")+"\n          "),_c('a',{attrs:{"href":_vm.href,"target":"_blank"}},[_vm._v(_vm._s(_vm.showaddr))])]),_vm._v(" "),_c('span',{staticClass:"task-tab"},[_c('img',{attrs:{"src":__webpack_require__("ECX6"),"alt":""}}),_vm._v("\n          "+_vm._s([_vm.$t('navbar.blockheight'),_vm.blockheight].join("："))+"\n        ")]),_vm._v(" "),_c('v-btn',{on:{"onclick":function($event){_vm.showHistory=true}}},[_vm._v("操作记录")])],1),_vm._v(" "),_c('div',{staticClass:"tranhistory-box"},[(_vm.showHistory)?_c('div',{staticClass:"tranhistory-wrap"},[_c('div',{staticClass:"tranhistory-listbox"},[_c('div',{staticClass:"tranhistory-title"},[_c('div',{staticClass:"tranhistory-close",on:{"click":function($event){_vm.showHistory=!_vm.showHistory}}},[_c('img',{attrs:{"src":__webpack_require__("fgqV"),"alt":""}})]),_vm._v(" "),_c('span',[_vm._v(_vm._s(_vm.$t('operation.title')))]),_vm._v(" "),_c('div',{staticClass:"tranhistory-tips"},[_vm._v(_vm._s(_vm.$t('operation.tips')))])]),_vm._v(" "),_c('div',{staticClass:"tranhistory-list"},_vm._l((_vm.taskList),function(task){return _c('div',{key:task.txid,staticClass:"th-onelist"},[_c('div',[_c('div',{staticClass:"th-type"},[_c('div',{staticClass:"th-typename"},[_vm._v(_vm._s(_vm.$t('operation.transfer')))]),_vm._v(" "),_vm._m(0,true,false)]),_vm._v(" "),_c('div',{staticClass:"th-block-txid"},[_c('span',{staticClass:"th-txid",staticStyle:{"padding-right":"10px"}},[_vm._v("\n                      "+_vm._s(_vm.$t('operation.txid'))+"\n                      "),_c('a',{staticClass:"green-text",attrs:{"target":"_blank"}},[_vm._v(_vm._s(task.simpleTxid))])]),_vm._v(" "),_vm._m(1,true,false)])]),_vm._v(" "),(task.state==1)?_c('div',{staticClass:"btn-right"},[_c('v-btn',[_vm._v("test")])],1):_vm._e()])})),_vm._v(" "),(_vm.taskList.length == 0)?_c('div',{staticClass:"notask"},[_vm._v(_vm._s(_vm.$t('operation.nodata')))]):_vm._e()])]):_vm._e()])])]),_vm._v(" "),_c('v-toast',{ref:"toast"})],1)}
 var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"th-other"},[_c('div',{staticClass:"th-number"},[_c('span',[_vm._v("test")])])])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('span',{staticClass:"th-state"},[_c('span',[_vm._v("状态：")]),_vm._v(" "),_c('span',{staticClass:"green-text"},[_vm._v("成功")])])}]
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ var layouts_taskbar = (esExports);
 // CONCATENATED MODULE: ./src/layouts/taskbar.vue
 function injectStyle (ssrContext) {
-  __webpack_require__("V8JE")
+  __webpack_require__("Qz3G")
 }
 var normalizeComponent = __webpack_require__("VU/8")
 /* script */
@@ -5708,7 +5994,7 @@ var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = "data-v-0ada7a1c"
+var __vue_scopeId__ = "data-v-fdc9446c"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -7065,6 +7351,21 @@ var Component = normalizeComponent(
 )
 
 /* harmony default export */ var src_components_Button = __webpack_exports__["default"] = (Component.exports);
+
+
+/***/ }),
+
+/***/ "r84I":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var TaskService_1 = __webpack_require__("Tww3");
+var services;
+(function (services) {
+    services.taskManager = new TaskService_1.TaskService();
+})(services = exports.services || (exports.services = {}));
 
 
 /***/ }),

@@ -144,20 +144,20 @@
     }
   }
   .debug-info {
-    width: 250px;
-    max-width: 250px;
+    width: 400px;
+    max-width: 400px;
     padding-right: 30px;
     .panel-content {
       overflow: auto;
-      max-width: 250px;
-      max-height: 300px;
+      max-width: 400px;
+      max-height: 200px;
       color: #fff;
-      margin-left: 20px;
-      margin-right: 20px;
-      margin-top: 20px;
-      margin-bottom: 20px;
+      margin-left: 5px;
+      margin-right: 5px;
+      margin-top: 5px;
+      margin-bottom: 5px;
       .content-btns {
-        padding-top: 20px;
+        padding-top: 5px;
         justify-content: flex-end;
       }
       input {
@@ -175,8 +175,8 @@
     }
   }
   .avm {
-    width: 250px;
-    max-width: 250px;
+    width: 400px;
+    max-width: 400px;
     padding-right: 30px;
     .panel-content {
       margin-left: 20px;
