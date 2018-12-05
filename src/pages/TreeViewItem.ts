@@ -14,7 +14,7 @@ export class TreeViewItems
 
     }
 
-    showTree(pater: HTMLUListElement, data: TreeView)
+    showTree(pater: HTMLUListElement, data: TreeView, valueDiv: HTMLDivElement)
     {
         // let pater = document.createElement("li");
         // pater.textContent = data.title;
@@ -28,13 +28,20 @@ export class TreeViewItems
                 {
                     let ul = document.createElement("ul");
                     pater.appendChild(ul);
-                    this.showTree(ul, tree);
+                    this.showTree(ul, tree, valueDiv);
                 }
                 else
                 {
                     let li = document.createElement("li")
                     li.textContent = tree.title;
                     pater.appendChild(li);
+                    if (tree.href)
+                    {
+                        li.onclick = () =>
+                        {
+                            valueDiv.textContent = tree.href;
+                        }
+                    }
                 }
             }
         }
@@ -46,6 +53,7 @@ export class TreeView
 {
     title: string;
     items: TreeView[];
+    href: string;
     constructor(title: string)
     {
         this.title = title;

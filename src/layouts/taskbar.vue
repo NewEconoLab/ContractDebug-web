@@ -200,7 +200,7 @@ export default class TaskBar extends Vue {
   async claimGas() {
     let openToast: any = this.$refs["toast"]["openToast"];
     try {
-      const result = await tools.wwwtool.claimGas(this.currentAddress, 10);
+      const result = await tools.wwwtool.claimGas(this.currentAddress, 500);
       if (result ? result[0] : false) {
         this.claimState = result[0]["code"];
         openToast("success", "请求发送成功", 4000);
@@ -226,15 +226,6 @@ export default class TaskBar extends Vue {
   taskHistory() {
     // this.clearTimer();
     this.taskList = services.taskManager.showTaskList();
-    // this.taskList.sort((n1, n2) => {
-    //   return n1.startTime > n2.startTime ? -1 : 1;
-    // });
-
-    // this.taskList.forEach(v => {
-    //   if (v.state == 0) {
-    //     this.timer(v);
-    //   }
-    // });
   }
   timer(item) {
     if (item.timer) {

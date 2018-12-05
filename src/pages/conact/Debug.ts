@@ -1,8 +1,4 @@
-// import * as CodeMirror from 'codemirror'
 /// <reference path="../../tools/codemirror.d.ts" />
-// import 'codemirror/mode/clike/clike'
-// import 'codemirror/addon/hint/show-hint'
-// import 'codemirror/addon/hint/sql-hint'
 import Component from "vue-class-component";
 import Vue from "vue";
 import { tools } from "../../tools/importpack";
@@ -50,15 +46,6 @@ export default class Debug extends Vue
         this.initHashList();
 
         let div = document.getElementById("valuetool") as HTMLDivElement;
-        // let tree = new TreeViewItems(div)
-        // let view = new TreeView("test")
-        // let view1 = new TreeView("test1")
-        // let view2 = new TreeView("test2")
-        // let view3 = new TreeView("test3")
-        // view.addChildren(view1)
-        // view1.addChildren(view2)
-        // view.addChildren(view3);
-        // tree.showTree(tree.ul, view);
     }
 
     async initHashList()
@@ -148,6 +135,7 @@ export default class Debug extends Vue
         let tree1 = new TreeView("");
         let div = document.getElementById("calcstack-content") as HTMLDivElement;
         let div1 = document.getElementById("altstack-content") as HTMLDivElement;
+        let div2 = document.getElementById("valuetool") as HTMLDivElement;
 
         while (div.hasChildNodes()) //当div下还存在子节点时 循环继续
         {
@@ -163,8 +151,8 @@ export default class Debug extends Vue
 
         this.calcStackShow(state.CalcStack[ 'list' ], tree);
         this.calcStackShow(state.AltStack[ "list" ], tree1)
-        view.showTree(view.ul, tree);
-        view1.showTree(view1.ul, tree1);
+        view.showTree(view.ul, tree, div2);
+        view1.showTree(view1.ul, tree1, div2);
         console.log(this.CalcStack);
         console.log(this.AltStack);
     }
@@ -189,6 +177,7 @@ export default class Debug extends Vue
             else
             {
                 let view = new TreeView(obj[ "type" ] + ":" + obj[ "strvalue" ])
+                view.href = obj[ 'strvalue' ]
                 tree.addChildren(view);
             }
         }
