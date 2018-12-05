@@ -172,13 +172,12 @@ export default class Debug extends Vue
                     this.calcStackShow(obj[ "subItems" ], view)
                 } else
                 {
-                    view.title = "Array : []"
+                    view.value = "[]"
                 }
             }
             else
             {
-                let view = new TreeView(obj[ "type" ] + ":" + obj[ "strvalue" ])
-                view.href = obj[ 'strvalue' ]
+                let view = new TreeView(obj[ "type" ], obj[ "strvalue" ])
                 tree.addChildren(view);
             }
         }

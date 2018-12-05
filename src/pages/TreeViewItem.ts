@@ -19,32 +19,35 @@ export class TreeViewItems
         // let pater = document.createElement("li");
         // pater.textContent = data.title;
         // paterul.appendChild(pater);
-        pater.textContent = data.title;
+        // pater.textContent = data.title;
         if (data.items.length > 0)
         {
             for (const tree of data.items)
             {
                 if (tree.items.length > 0)
                 {
+                    let li = document.createElement("li");
                     let ul = document.createElement("ul");
-                    pater.appendChild(ul);
+                    li.textContent = tree.title + " : ";
+                    li.appendChild(ul)
+                    pater.appendChild(li);
                     this.showTree(ul, tree, valueDiv);
                 }
                 else
                 {
                     let li = document.createElement("li")
-                    li.textContent = tree.title;
+                    li.textContent = tree.title + " : " + tree.value;
                     pater.appendChild(li);
-                    if (tree.href)
+                    if (tree.title === "ByteArray" && tree.value)
                     {
                         let value = document.createElement("ul");
-                        value.textContent = tree.href;
-                        let bts = tree.href.hexToBytes();
+                        value.textContent = tree.value;
+                        let bts = tree.value.hexToBytes();
                         let asstr = document.createElement("li");
                         let str = ThinNeo.Helper.Bytes2String(bts);
                         asstr.textContent = "asStr : " + str;
                         value.appendChild(asstr);
-                        if (tree.href.length <= 8)
+                        if (tree.value.length <= 8)
                         {
                             let num = Neo.BigInteger.fromUint8Array(bts);
                             let asnum = document.createElement("li");
@@ -70,11 +73,12 @@ export class TreeViewItems
 export class TreeView
 {
     title: string;
+    value: string;
     items: TreeView[];
-    href: string;
-    constructor(title: string)
+    constructor(title: string, value?: string)
     {
         this.title = title;
+        this.value = value;
         this.items = [];
     }
     addChildren(treenode: TreeView)
