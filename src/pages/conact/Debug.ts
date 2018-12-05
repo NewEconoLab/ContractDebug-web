@@ -40,12 +40,11 @@ export default class Debug extends Vue
         option.lineNumbers = true;
         option.mode = "text/x-csharp";
         option.dragDrop = true;
+        option.readOnly = true;
         option.theme = "monokai";
         this.cEditor = CodeMirror.fromTextArea(host, option);
         this.fulllogEditor = CodeMirror.fromTextArea(avm, option);
         this.initHashList();
-
-        let div = document.getElementById("valuetool") as HTMLDivElement;
     }
 
     async initHashList()
@@ -79,7 +78,6 @@ export default class Debug extends Vue
             console.log("jsonstr =" + unpackjsonstr);
             unpackjson = JSON.parse(unpackjsonstr);
             console.log("convert to json . log to console");
-
         }
         catch (e)
         {
@@ -147,15 +145,11 @@ export default class Debug extends Vue
         }
         let view = new TreeViewItems(div)
         let view1 = new TreeViewItems(div1)
-        console.log(tree);
 
         this.calcStackShow(state.CalcStack[ 'list' ], tree);
         this.calcStackShow(state.AltStack[ "list" ], tree1)
         view.showTree(view.ul, tree, div2);
         view1.showTree(view1.ul, tree1, div2);
-
-        console.log(this.CalcStack);
-        console.log(this.AltStack);
     }
 
     calcStackShow(item, tree: TreeView)
@@ -232,7 +226,7 @@ export default class Debug extends Vue
                 console.log(script.ops[ i ].param.toHexString());
                 let arr = [];
                 //预先获得所有需要加载的 avm等信息
-                // console.log(script.ops[ i ].subScript.GetAllScriptName(arr));
+                console.log(script.ops[ i ].subScript.GetAllScriptName(arr));
                 console.log(arr);
             }
             this.stackarr.push({ script: script, op: script.ops[ i ] });

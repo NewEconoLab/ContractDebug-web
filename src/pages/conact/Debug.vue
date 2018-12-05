@@ -28,7 +28,7 @@
         </panel>
         <panel>
           <p-title :title="'Value tool'"></p-title>
-          <div class="panel-content">
+          <div class="value-content">
             <div id="valuetool"></div>
           </div>
         </panel>
@@ -147,10 +147,19 @@
     width: 400px;
     max-width: 400px;
     padding-right: 30px;
+    .value-content {
+      overflow: auto;
+      max-width: 400px;
+      max-height: 100px;
+      color: #fff;
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
     .panel-content {
       overflow: auto;
       max-width: 400px;
       max-height: 200px;
+      height: 200px;
       color: #fff;
       margin-left: 5px;
       margin-right: 5px;

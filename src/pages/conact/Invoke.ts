@@ -103,8 +103,29 @@ export default class Invoke extends Vue
 
     }
 
+    // paresInvokeJson()
+    // {
+    //     let json = this.editor.getValue();
+    //     let arr = JSON.parse(json) as any[];
+    //     var sb = new ThinNeo.ScriptBuilder();
+    //     if (arr.length == 2)
+    //     {
+    //         sb.EmitParamJson(arr[ 1 ]);
+    //         sb.EmitPushString(arr[ 0 ]);
+    //         let appcall = Neo.Uint160.parse(this.currentContract.scripthash.substr(5));
+    //         // let appcall = Neo.Uint160.parse("0x17f26389efc8fe0d9f2116f8ea474202b8d78280");
+    //         let data = tools.contract.buildScript(appcall, arr[ 0 ], arr[ 1 ]);
+    //         return data;
+    //     }
+    //     else
+    //     {
+    //         throw new Error("Json format error");
+    //     }
+    // }
+
     paresInvokeJson()
     {
+
         let json = this.editor.getValue();
         let arr = JSON.parse(json) as any[];
         var sb = new ThinNeo.ScriptBuilder();
@@ -113,7 +134,29 @@ export default class Invoke extends Vue
             sb.EmitParamJson(arr[ i ]);
         }
         let appcall = Neo.Uint160.parse(this.currentContract.scripthash);
+        // let appcall = this.currentContract.scripthash.hexToBytes();
         sb.EmitAppCall(appcall);
         return sb.ToArray();
+    }
+
+
+    async test()
+    {
+        // let appcall = Neo.Uint160.parse(this.conactHash);
+        let appCall = Neo.Uint160.parse("0x17f26389efc8fe0d9f2116f8ea474202b8d78280");
+        let sb = new ThinNeo.ScriptBuilder()
+        sb.EmitParamJson([
+            '(str)test',
+            []
+        ])
+        sb.EmitAppCall(appCall);
+        let data = tools.contract.buildScript_random(appCall, "test", []);
+        let txhex = await tools.contract.buildInvokeTransData_attributes(data);
+        // let txhex = await tools.contract.buildInvokeTransData_attributes(sb.ToArray());
+        console.log(txhex);
+
+        let result = await tools.wwwtool.setTxCallContract(LoginInfo.getCurrentAddress(), txhex.toHexString());
+        console.log(result);
+
     }
 }

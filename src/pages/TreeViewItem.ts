@@ -54,6 +54,13 @@ export class TreeViewItems
                             asnum.textContent = "asNum : " + num.toString();
                             value.appendChild(asnum);
                         }
+                        if (tree.value.length == 40)
+                        {
+                            let addr = ThinNeo.Helper.GetAddressFromScriptHash(bts);
+                            let asaddr = document.createElement("li");
+                            asaddr.textContent = "asAddr : " + addr;
+                            value.appendChild(asaddr);
+                        }
                         li.onclick = () =>
                         {
                             while (valueDiv.hasChildNodes()) //当div下还存在子节点时 循环继续
