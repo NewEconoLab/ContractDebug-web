@@ -472,30 +472,5 @@ export class CoinTool
         return result;
     }
 
-    /**
-     * @method 获得Sgas账户下的utxo
-     */
-    static async getavailableutxos(count: number): Promise<{ [ id: string ]: UTXO[] }>
-    {
-        let currentaddr = LoginInfo.getCurrentAddress();
-        let utxos = await tools.wwwtool.getavailableutxos(currentaddr, count);
-        var assets = {};        //对utxo进行归类，并且将count由string转换成 Neo.Fixed8
-        var addr = ThinNeo.Helper.GetAddressFromScriptHash(tools.coinTool.id_SGAS);
-        var asset = tools.coinTool.id_GAS;
-        assets[ asset ] = [];
-        for (var i in utxos)
-        {
-            var item = utxos[ i ];
-            let utxo = new UTXO();
-            utxo.addr = addr;
-            utxo.asset = asset;
-            utxo.n = item.n;
-            utxo.txid = item.txid;
-            utxo.count = Neo.Fixed8.parse(item.value);
-            assets[ asset ].push(utxo);
-        }
-
-        return assets;
-    }
 }
 

@@ -5,6 +5,7 @@ export class WWW
     static apiaggr: string = "https://apiwallet.nel.group/api/testnet";
     // static apicontract: string = "http://121.43.170.160:1189/api/testnet";
     static apicontract: string = "https://apidebug.nel.group/api/testnet";
+    static apioss: string = "https://online-debug-data.oss-cn-hangzhou.aliyuncs.com";
     static makeRpcUrl(url: string, method: string, ..._params: any[])
     {
         // if (url[ url.length - 1 ] != '/')
@@ -32,36 +33,6 @@ export class WWW
         }
         body[ "params" ] = params;
         return body;
-    }
-
-    static async gettransbyaddress(address: string, pagesize: number, pageindex: number)
-    {
-        var postdata =
-            WWW.makeRpcPostBody(
-                "gettransbyaddress",
-                address,
-                pagesize,
-                pageindex
-            );
-        var result = await fetch(WWW.apiaggr, { "method": "post", "body": JSON.stringify(postdata) });
-        var json = await result.json();
-        var r = json[ "result" ];
-        return r;
-    }
-
-    static async gettransbyaddressnew(address: string, pagesize: number, pageindex: number)
-    {
-        var postdata =
-            WWW.makeRpcPostBody(
-                "gettransbyaddressNew",
-                address,
-                pagesize,
-                pageindex
-            );
-        var result = await fetch(WWW.apiaggr, { "method": "post", "body": JSON.stringify(postdata) });
-        var json = await result.json();
-        var r = json[ "result" ];
-        return r ? r : [];
     }
 
     static async  api_getHeight()
@@ -98,35 +69,6 @@ export class WWW
         var r = json[ "result" ];
         return r;
     }
-    /**判断是否可以获取gas */
-    static async api_hasclaimgas(address: string)
-    {
-        var postdata =
-            WWW.makeRpcPostBody(
-                "hasclaimgas",
-                address
-            );
-        var result = await fetch(WWW.apiaggr, { "method": "post", "body": JSON.stringify(postdata) });
-        var json = await result.json();
-        var r = json[ "result" ];
-        return r;
-    }
-    /**
-     * 获取gas
-     */
-    static async api_claimgas(address: string, num: number)
-    {
-        var postdata =
-            WWW.makeRpcPostBody(
-                "claimgas",
-                address, num
-            );
-        var result = await fetch(WWW.apiaggr, { "method": "post", "body": JSON.stringify(postdata) });
-        var json = await result.json();
-        var r = json[ "result" ];
-        return r;
-    }
-
     static async api_getnep5Balance(address: string)
     {
         var str = WWW.makeRpcUrl(WWW.api, "getallnep5assetofaddress", address, 1);
@@ -301,31 +243,6 @@ export class WWW
         var r = json[ "result" ][ 0 ]
         return r;
     }
-    //获取转账域名地址    
-    static async getresolvedaddress(domain: string)
-    {
-        var postdata = WWW.makeRpcPostBody("getresolvedaddress", domain);
-        var result = await fetch(WWW.apiaggr, { "method": "post", "body": JSON.stringify(postdata) });
-        var json = await result.json();
-        if (json[ "result" ] == null)
-            return null;
-        var r = json[ "result" ][ 0 ]
-        return r;
-    }
-
-    //获取地址下所有的域名
-    static async getnnsinfo(...params): Promise<string[]>
-    {
-        // let data = params.join(',');
-        var postdata = WWW.makeRpcPostBody("getdomainbyaddress", ...params);
-        var result = await fetch(WWW.apiaggr, { "method": "post", "body": JSON.stringify(postdata) });
-        var json = await result.json();
-        if (json[ "result" ] == null)
-            return null;
-        var r = json[ "result" ]
-        return r;
-    }
-
     /**
      * 发送合约调用
      * @param scriptaddr 合约参数脚本
@@ -338,38 +255,6 @@ export class WWW
         var r = json[ "result" ][ 0 ];
         return r;
     }
-
-    /**
-     * 获得bonus 历史记录
-     * @param address 地址
-     * @param currentpage 当前页码
-     * @param pagesize 条数
-     */
-    static async api_getbonushistbyaddress(address: string, currentpage: number, pagesize: number)
-    {
-        var postdata = WWW.makeRpcPostBody("getbonushistbyaddress", address, currentpage, pagesize);
-        var result = await fetch(WWW.apiaggr, { "method": "post", "body": JSON.stringify(postdata) });
-        var json = await result.json();
-        var r = json[ "result" ][ 0 ];
-        return r;
-    }
-
-
-    /**
-     * 获得bonus 历史记录
-     * @param address 地址
-     * @param currentpage 当前页码
-     * @param pagesize 条数
-     */
-    static async getavailableutxos(address: string, count: number)
-    {
-        var postdata = WWW.makeRpcPostBody("getavailableutxos", address, count);
-        var result = await fetch(WWW.apiaggr, { "method": "post", "body": JSON.stringify(postdata) });
-        var json = await result.json();
-        var r = json[ "result" ];
-        return r;
-    }
-
 
     /**
      * 两笔交易提交给服务器发送
@@ -396,27 +281,6 @@ export class WWW
         var json = await result.json();
         var r = json[ "result" ][ 0 ];
         return r;
-    }
-
-    /**
-     * 我的域名的状态
-     * @param address 地址
-     * @param domain 域名
-     */
-    static async getDomainState(address: string, id: string)
-    {
-        var postdata = WWW.makeRpcPostBody("getdomainstate", address, id);
-        var result = await fetch(WWW.apiaggr, { "method": "post", "body": JSON.stringify(postdata) });
-        var json = await result.json();
-        if (json[ "result" ])
-        {
-            var r = json[ "result" ][ 0 ];
-            return r;
-        } else
-        {
-            throw "not data";
-
-        }
     }
 
     /**
@@ -458,42 +322,6 @@ export class WWW
         return r;
     }
 
-    /**
-     * 查询我参与竞拍的域名
-     * @param address 地址
-     * @param domain 域名
-     */
-    static async searchdomainbyaddress(address: string, domain: string)
-    {
-        var postdata = WWW.makeRpcPostBody("searchdomainbyaddress", address, domain);
-        var result = await fetch(WWW.apiaggr, { "method": "post", "body": JSON.stringify(postdata) });
-        var json = await result.json();
-        if (json[ "result" ])
-        {
-            var r = json[ "result" ][ 0 ];
-            return r;
-        } else
-        {
-            throw "not data";
-
-        }
-    }
-    /**查询分红 */
-    static async getbonushistbyaddress(address: string, page: number, pagesize: number)
-    {
-        var postdata = WWW.makeRpcPostBody("getbonushistbyaddress", address, page, pagesize);
-        var result = await fetch(WWW.apiaggr, { "method": "post", "body": JSON.stringify(postdata) });
-        var json = await result.json();
-        if (json[ "result" ])
-        {
-            var r = json[ "result" ][ 0 ];
-            return r;
-        } else
-        {
-            throw "not data";
-
-        }
-    }
 
     /**
      * 
@@ -633,5 +461,13 @@ export class WWW
         {
             throw "not data";
         }
+    }
+
+    static async readOssFile(name: string, filename: string, temp: boolean)
+    {
+        var str = WWW.apioss + "/" + (temp ? "_temp" : "") + name + "." + filename;
+        var result = await fetch(str, { "method": "get" });
+        var text = await result.text();
+        return text;
     }
 }

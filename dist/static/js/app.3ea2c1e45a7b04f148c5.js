@@ -280,44 +280,6 @@ var WWW = /** @class */ (function () {
         body["params"] = params;
         return body;
     };
-    WWW.gettransbyaddress = function (address, pagesize, pageindex) {
-        return __awaiter(this, void 0, void 0, function () {
-            var postdata, result, json, r;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        postdata = WWW.makeRpcPostBody("gettransbyaddress", address, pagesize, pageindex);
-                        return [4 /*yield*/, fetch(WWW.apiaggr, { "method": "post", "body": JSON.stringify(postdata) })];
-                    case 1:
-                        result = _a.sent();
-                        return [4 /*yield*/, result.json()];
-                    case 2:
-                        json = _a.sent();
-                        r = json["result"];
-                        return [2 /*return*/, r];
-                }
-            });
-        });
-    };
-    WWW.gettransbyaddressnew = function (address, pagesize, pageindex) {
-        return __awaiter(this, void 0, void 0, function () {
-            var postdata, result, json, r;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        postdata = WWW.makeRpcPostBody("gettransbyaddressNew", address, pagesize, pageindex);
-                        return [4 /*yield*/, fetch(WWW.apiaggr, { "method": "post", "body": JSON.stringify(postdata) })];
-                    case 1:
-                        result = _a.sent();
-                        return [4 /*yield*/, result.json()];
-                    case 2:
-                        json = _a.sent();
-                        r = json["result"];
-                        return [2 /*return*/, r ? r : []];
-                }
-            });
-        });
-    };
     WWW.api_getHeight = function () {
         return __awaiter(this, void 0, void 0, function () {
             var str, result, json, r, height;
@@ -385,48 +347,6 @@ var WWW = /** @class */ (function () {
                     case 0:
                         str = WWW.makeRpcUrl(WWW.api, "getutxo", address);
                         return [4 /*yield*/, fetch(str, { "method": "get" })];
-                    case 1:
-                        result = _a.sent();
-                        return [4 /*yield*/, result.json()];
-                    case 2:
-                        json = _a.sent();
-                        r = json["result"];
-                        return [2 /*return*/, r];
-                }
-            });
-        });
-    };
-    /**判断是否可以获取gas */
-    WWW.api_hasclaimgas = function (address) {
-        return __awaiter(this, void 0, void 0, function () {
-            var postdata, result, json, r;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        postdata = WWW.makeRpcPostBody("hasclaimgas", address);
-                        return [4 /*yield*/, fetch(WWW.apiaggr, { "method": "post", "body": JSON.stringify(postdata) })];
-                    case 1:
-                        result = _a.sent();
-                        return [4 /*yield*/, result.json()];
-                    case 2:
-                        json = _a.sent();
-                        r = json["result"];
-                        return [2 /*return*/, r];
-                }
-            });
-        });
-    };
-    /**
-     * 获取gas
-     */
-    WWW.api_claimgas = function (address, num) {
-        return __awaiter(this, void 0, void 0, function () {
-            var postdata, result, json, r;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        postdata = WWW.makeRpcPostBody("claimgas", address, num);
-                        return [4 /*yield*/, fetch(WWW.apiaggr, { "method": "post", "body": JSON.stringify(postdata) })];
                     case 1:
                         result = _a.sent();
                         return [4 /*yield*/, result.json()];
@@ -778,54 +698,6 @@ var WWW = /** @class */ (function () {
             });
         });
     };
-    //获取转账域名地址    
-    WWW.getresolvedaddress = function (domain) {
-        return __awaiter(this, void 0, void 0, function () {
-            var postdata, result, json, r;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        postdata = WWW.makeRpcPostBody("getresolvedaddress", domain);
-                        return [4 /*yield*/, fetch(WWW.apiaggr, { "method": "post", "body": JSON.stringify(postdata) })];
-                    case 1:
-                        result = _a.sent();
-                        return [4 /*yield*/, result.json()];
-                    case 2:
-                        json = _a.sent();
-                        if (json["result"] == null)
-                            return [2 /*return*/, null];
-                        r = json["result"][0];
-                        return [2 /*return*/, r];
-                }
-            });
-        });
-    };
-    //获取地址下所有的域名
-    WWW.getnnsinfo = function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i] = arguments[_i];
-        }
-        return __awaiter(this, void 0, void 0, function () {
-            var postdata, result, json, r;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        postdata = WWW.makeRpcPostBody.apply(WWW, ["getdomainbyaddress"].concat(params));
-                        return [4 /*yield*/, fetch(WWW.apiaggr, { "method": "post", "body": JSON.stringify(postdata) })];
-                    case 1:
-                        result = _a.sent();
-                        return [4 /*yield*/, result.json()];
-                    case 2:
-                        json = _a.sent();
-                        if (json["result"] == null)
-                            return [2 /*return*/, null];
-                        r = json["result"];
-                        return [2 /*return*/, r];
-                }
-            });
-        });
-    };
     /**
      * 发送合约调用
      * @param scriptaddr 合约参数脚本
@@ -844,199 +716,6 @@ var WWW = /** @class */ (function () {
                     case 2:
                         json = _a.sent();
                         r = json["result"][0];
-                        return [2 /*return*/, r];
-                }
-            });
-        });
-    };
-    /**
-     * 获得全量的地址列表的数据
-     * @param address 地址
-     * @param currentpage 当前页码
-     * @param pagesize 页面条数
-     */
-    WWW.getauctioninfobyaddress = function (address, currentpage, pagesize, root) {
-        return __awaiter(this, void 0, void 0, function () {
-            var postdata, result, json, r;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        postdata = WWW.makeRpcPostBody("getauctioninfobyaddress", address, currentpage, pagesize, root);
-                        return [4 /*yield*/, fetch(WWW.apiaggr, { "method": "post", "body": JSON.stringify(postdata) })];
-                    case 1:
-                        result = _a.sent();
-                        return [4 /*yield*/, result.json()];
-                    case 2:
-                        json = _a.sent();
-                        r = json["result"];
-                        return [2 /*return*/, r];
-                }
-            });
-        });
-    };
-    /**
-     * 根据id和address更新列表数据
-     * @param address 地址
-     * @param ids id 列表
-     */
-    WWW.getauctioninfobyaucitonid = function (address, ids, root) {
-        return __awaiter(this, void 0, void 0, function () {
-            var postdata, result, json, r;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        postdata = WWW.makeRpcPostBody("getauctioninfobyaucitonid", address, ids, root);
-                        return [4 /*yield*/, fetch(WWW.apiaggr, { "method": "post", "body": JSON.stringify(postdata) })];
-                    case 1:
-                        result = _a.sent();
-                        return [4 /*yield*/, result.json()];
-                    case 2:
-                        json = _a.sent();
-                        r = json["result"];
-                        return [2 /*return*/, r];
-                }
-            });
-        });
-    };
-    /**
-     * 根据id和address更新列表数据
-     * @param address 地址
-     * @param ids id 列表
-     */
-    WWW.getdomainauctioninfo = function (domain) {
-        return __awaiter(this, void 0, void 0, function () {
-            var postdata, result, json, r;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        postdata = WWW.makeRpcPostBody("getdomainauctioninfo", domain);
-                        return [4 /*yield*/, fetch(WWW.apiaggr, { "method": "post", "body": JSON.stringify(postdata) })];
-                    case 1:
-                        result = _a.sent();
-                        return [4 /*yield*/, result.json()];
-                    case 2:
-                        json = _a.sent();
-                        r = json["result"];
-                        return [2 /*return*/, r];
-                }
-            });
-        });
-    };
-    /**
-     * 获得分页总条数
-     * @param address 地址
-     */
-    WWW.getauctioninfocount = function (address, root) {
-        return __awaiter(this, void 0, void 0, function () {
-            var postdata, result, json;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        postdata = WWW.makeRpcPostBody("getauctioninfocount", address, root);
-                        return [4 /*yield*/, fetch(WWW.apiaggr, { "method": "post", "body": JSON.stringify(postdata) })];
-                    case 1:
-                        result = _a.sent();
-                        return [4 /*yield*/, result.json()];
-                    case 2:
-                        json = _a.sent();
-                        return [2 /*return*/, (json && json["result"]) ? json["result"][0]["count"] : 0];
-                }
-            });
-        });
-    };
-    /**
-     * 根据地址查询参与竞拍的域名列表
-     * @param address 要查询的地址
-     */
-    WWW.api_getBidListByAddress = function (address) {
-        return __awaiter(this, void 0, void 0, function () {
-            var postdata, result, json, r;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        postdata = WWW.makeRpcPostBody("getbidlistbyaddress", address);
-                        return [4 /*yield*/, fetch(WWW.apiaggr, { "method": "post", "body": JSON.stringify(postdata) })];
-                    case 1:
-                        result = _a.sent();
-                        return [4 /*yield*/, result.json()];
-                    case 2:
-                        json = _a.sent();
-                        r = json["result"];
-                        return [2 /*return*/, r];
-                }
-            });
-        });
-    };
-    /**
-     * 获得时间轴的域名详情
-     * @param domain 域名
-     * @param currentpage 当前页码
-     * @param pagesize 条数
-     */
-    WWW.api_getBidDetail = function (id, currentpage, pagesize) {
-        return __awaiter(this, void 0, void 0, function () {
-            var postdata, result, json, r;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        postdata = WWW.makeRpcPostBody("getbiddetailbydomain", id, currentpage, pagesize);
-                        return [4 /*yield*/, fetch(WWW.apiaggr, { "method": "post", "body": JSON.stringify(postdata) })];
-                    case 1:
-                        result = _a.sent();
-                        return [4 /*yield*/, result.json()];
-                    case 2:
-                        json = _a.sent();
-                        r = json["result"];
-                        return [2 /*return*/, r];
-                }
-            });
-        });
-    };
-    /**
-     * 获得bonus 历史记录
-     * @param address 地址
-     * @param currentpage 当前页码
-     * @param pagesize 条数
-     */
-    WWW.api_getbonushistbyaddress = function (address, currentpage, pagesize) {
-        return __awaiter(this, void 0, void 0, function () {
-            var postdata, result, json, r;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        postdata = WWW.makeRpcPostBody("getbonushistbyaddress", address, currentpage, pagesize);
-                        return [4 /*yield*/, fetch(WWW.apiaggr, { "method": "post", "body": JSON.stringify(postdata) })];
-                    case 1:
-                        result = _a.sent();
-                        return [4 /*yield*/, result.json()];
-                    case 2:
-                        json = _a.sent();
-                        r = json["result"][0];
-                        return [2 /*return*/, r];
-                }
-            });
-        });
-    };
-    /**
-     * 获得bonus 历史记录
-     * @param address 地址
-     * @param currentpage 当前页码
-     * @param pagesize 条数
-     */
-    WWW.getavailableutxos = function (address, count) {
-        return __awaiter(this, void 0, void 0, function () {
-            var postdata, result, json, r;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        postdata = WWW.makeRpcPostBody("getavailableutxos", address, count);
-                        return [4 /*yield*/, fetch(WWW.apiaggr, { "method": "post", "body": JSON.stringify(postdata) })];
-                    case 1:
-                        result = _a.sent();
-                        return [4 /*yield*/, result.json()];
-                    case 2:
-                        json = _a.sent();
-                        r = json["result"];
                         return [2 /*return*/, r];
                 }
             });
@@ -1085,36 +764,6 @@ var WWW = /** @class */ (function () {
                         json = _a.sent();
                         r = json["result"][0];
                         return [2 /*return*/, r];
-                }
-            });
-        });
-    };
-    /**
-     * 我的域名的状态
-     * @param address 地址
-     * @param domain 域名
-     */
-    WWW.getDomainState = function (address, id) {
-        return __awaiter(this, void 0, void 0, function () {
-            var postdata, result, json, r;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        postdata = WWW.makeRpcPostBody("getdomainstate", address, id);
-                        return [4 /*yield*/, fetch(WWW.apiaggr, { "method": "post", "body": JSON.stringify(postdata) })];
-                    case 1:
-                        result = _a.sent();
-                        return [4 /*yield*/, result.json()];
-                    case 2:
-                        json = _a.sent();
-                        if (json["result"]) {
-                            r = json["result"][0];
-                            return [2 /*return*/, r];
-                        }
-                        else {
-                            throw "not data";
-                        }
-                        return [2 /*return*/];
                 }
             });
         });
@@ -1184,62 +833,6 @@ var WWW = /** @class */ (function () {
                         json = _a.sent();
                         r = json["result"][0];
                         return [2 /*return*/, r];
-                }
-            });
-        });
-    };
-    /**
-     * 查询我参与竞拍的域名
-     * @param address 地址
-     * @param domain 域名
-     */
-    WWW.searchdomainbyaddress = function (address, domain) {
-        return __awaiter(this, void 0, void 0, function () {
-            var postdata, result, json, r;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        postdata = WWW.makeRpcPostBody("searchdomainbyaddress", address, domain);
-                        return [4 /*yield*/, fetch(WWW.apiaggr, { "method": "post", "body": JSON.stringify(postdata) })];
-                    case 1:
-                        result = _a.sent();
-                        return [4 /*yield*/, result.json()];
-                    case 2:
-                        json = _a.sent();
-                        if (json["result"]) {
-                            r = json["result"][0];
-                            return [2 /*return*/, r];
-                        }
-                        else {
-                            throw "not data";
-                        }
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    /**查询分红 */
-    WWW.getbonushistbyaddress = function (address, page, pagesize) {
-        return __awaiter(this, void 0, void 0, function () {
-            var postdata, result, json, r;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        postdata = WWW.makeRpcPostBody("getbonushistbyaddress", address, page, pagesize);
-                        return [4 /*yield*/, fetch(WWW.apiaggr, { "method": "post", "body": JSON.stringify(postdata) })];
-                    case 1:
-                        result = _a.sent();
-                        return [4 /*yield*/, result.json()];
-                    case 2:
-                        json = _a.sent();
-                        if (json["result"]) {
-                            r = json["result"][0];
-                            return [2 /*return*/, r];
-                        }
-                        else {
-                            throw "not data";
-                        }
-                        return [2 /*return*/];
                 }
             });
         });
@@ -1468,10 +1061,29 @@ var WWW = /** @class */ (function () {
             });
         });
     };
+    WWW.readOssFile = function (name, filename, temp) {
+        return __awaiter(this, void 0, void 0, function () {
+            var str, result, text;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        str = WWW.apioss + "/" + (temp ? "_temp" : "") + name + "." + filename;
+                        return [4 /*yield*/, fetch(str, { "method": "get" })];
+                    case 1:
+                        result = _a.sent();
+                        return [4 /*yield*/, result.text()];
+                    case 2:
+                        text = _a.sent();
+                        return [2 /*return*/, text];
+                }
+            });
+        });
+    };
     WWW.api = "https://api.nel.group/api/testnet";
     WWW.apiaggr = "https://apiwallet.nel.group/api/testnet";
     // static apicontract: string = "http://121.43.170.160:1189/api/testnet";
     WWW.apicontract = "https://apidebug.nel.group/api/testnet";
+    WWW.apioss = "https://online-debug-data.oss-cn-hangzhou.aliyuncs.com";
     return WWW;
 }());
 exports.WWW = WWW;
@@ -7081,38 +6693,6 @@ var CoinTool = /** @class */ (function () {
                     case 2:
                         result = _a.sent();
                         return [2 /*return*/, result];
-                }
-            });
-        });
-    };
-    /**
-     * @method 获得Sgas账户下的utxo
-     */
-    CoinTool.getavailableutxos = function (count) {
-        return __awaiter(this, void 0, void 0, function () {
-            var currentaddr, utxos, assets, addr, asset, i, item, utxo;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        currentaddr = entity_1.LoginInfo.getCurrentAddress();
-                        return [4 /*yield*/, importpack_1.tools.wwwtool.getavailableutxos(currentaddr, count)];
-                    case 1:
-                        utxos = _a.sent();
-                        assets = {};
-                        addr = ThinNeo.Helper.GetAddressFromScriptHash(importpack_1.tools.coinTool.id_SGAS);
-                        asset = importpack_1.tools.coinTool.id_GAS;
-                        assets[asset] = [];
-                        for (i in utxos) {
-                            item = utxos[i];
-                            utxo = new entity_1.UTXO();
-                            utxo.addr = addr;
-                            utxo.asset = asset;
-                            utxo.n = item.n;
-                            utxo.txid = item.txid;
-                            utxo.count = Neo.Fixed8.parse(item.value);
-                            assets[asset].push(utxo);
-                        }
-                        return [2 /*return*/, assets];
                 }
             });
         });

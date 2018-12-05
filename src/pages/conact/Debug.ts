@@ -18,12 +18,9 @@ export default class Debug extends Vue
     fulllogEditor: CodeMirror.EditorFromTextArea;
     addr: ThinNeo.Debug.Helper.AddrMap;
     oplist: ThinNeo.Compiler.Op[] = [];
-    result: string = "";
-    conactHash: string = "";
-    avmhex: Uint8Array;
-    cscode: string = "";
     CalcStack = {};
     AltStack = {};
+    contractFiles: { [ hash: string ]: { cs: string, avm: string, map: string } } = {};
     //需要使用simVM来模拟执行一下，得到详细的情报
     simVM: ThinNeo.Debug.SimVM;//
     stackarr:
@@ -32,8 +29,6 @@ export default class Debug extends Vue
         }[] = [];
     mounted()
     {
-        this.result = "";
-        this.conactHash = "";
         const host = document.getElementById("csharp-code") as HTMLTextAreaElement;
         const avm = document.getElementById("avm-code") as HTMLTextAreaElement;
         const option: CodeMirror.EditorConfiguration = {}
@@ -114,7 +109,7 @@ export default class Debug extends Vue
             let script = this.stackarr[ codeline ].script;
             let op = this.stackarr[ codeline ].op;
             this.showStack(op);
-            await this.initCode(script.hash);
+            await this.showCode(script.hash);
             if (this.addr)
             {
                 var line = this.addr.GetLineBack(op.addr);//尽量倒着取到对应的代码
@@ -177,22 +172,35 @@ export default class Debug extends Vue
         }
     }
 
-    async initCode(hash: string): Promise<void>
+    showCode(hash: string)
     {
         try
         {
-            const coderesult = await tools.wwwtool.getContractCodeByHash(hash, "");
+            const coderesult = this.contractFiles[ hash ];
             if (coderesult)
             {
                 this.oplist = ThinNeo.Compiler.Avm2Asm.Trans(coderesult.avm.hexToBytes());
                 this.addr = ThinNeo.Debug.Helper.AddrMap.FromJson(JSON.parse(coderesult.map));
-                this.cscode = coderesult.cs;
                 this.cEditor.setValue(coderesult.cs);
             }
         } catch (error)
         {
             this.addr = undefined;
         }
+    }
+
+    async initCode(hasharr: string[])
+    {
+        for (const hash of hasharr)
+        {
+            const cs = await tools.wwwtool.readOssFile(hash, "cs", false);
+            const avm = await tools.wwwtool.readOssFile(hash, "avm", false);
+            const map = await tools.wwwtool.readOssFile(hash, "map.json", false);
+            this.contractFiles[ hash ] = {
+                cs, avm, map
+            }
+        }
+
     }
 
     addAvmStr(str: string)
@@ -228,6 +236,7 @@ export default class Debug extends Vue
                 //预先获得所有需要加载的 avm等信息
                 console.log(script.ops[ i ].subScript.GetAllScriptName(arr));
                 console.log(arr);
+                this.initCode(arr);
             }
             this.stackarr.push({ script: script, op: script.ops[ i ] });
             if (script.ops[ i ].subScript != null)
