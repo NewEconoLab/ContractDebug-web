@@ -66,10 +66,10 @@
                     </div>
                   </div>
                   <div v-if="task.state==1" class="btn-right">
-                    <div v-if="task.taskType === 1">
+                    <div v-if="task.taskType === 2">
                       <v-btn @onclick="skipPage('invoke',task.message)">合约调用</v-btn>
                     </div>
-                    <div v-if="task.taskType === 2">
+                    <div v-if="task.taskType === 1">
                       <v-btn @onclick="skipPage('debug',task.message)">合约调试</v-btn>
                     </div>
                   </div>
@@ -232,7 +232,10 @@ export default class TaskBar extends Vue {
   skipPage(key: string, value: string) {
     if (key) {
       services.routerParam[key] = value;
+      console.log(key);
+
       this.$router.push(key);
+      this.showHistory = false;
     }
   }
 }
