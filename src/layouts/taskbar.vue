@@ -232,6 +232,7 @@ export default class TaskBar extends Vue {
   skipPage(key: string, value: string) {
     if (key) {
       services.routerParam[key] = value;
+      this.$router.push(key);
     }
   }
 }
