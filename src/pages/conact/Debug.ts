@@ -45,6 +45,7 @@ export default class Debug extends Vue
         {
             this.txid = services.routerParam[ "debug" ].txid;
             this.initDebugInfo();
+            services.routerParam.debug = null;
         }
     }
 

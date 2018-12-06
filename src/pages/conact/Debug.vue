@@ -50,13 +50,9 @@
               </div>
             </div>
           </div>
-          <div class="code-content" id="code-content">
+          <div class="code-content">
             <textarea id="csharp-code"></textarea>
           </div>
-          <!-- <p-foot>
-                        <v-btn :type="'primary'" @onclick="compile">编译代码</v-btn>
-                        <v-btn @onclick="test">test</v-btn>
-          </p-foot>-->
         </panel>
       </div>
     </div>
@@ -152,7 +148,7 @@
       max-width: 350px;
       width: 400px;
       max-height: 100px;
-      height: 50px;
+      height: 70px;
       color: #fff;
       margin-left: 5px;
       margin-right: 5px;
@@ -164,7 +160,7 @@
       max-width: 350px;
       width: 400px;
       max-height: 200px;
-      height: 200px;
+      height: 195px;
       color: #fff;
       margin-left: 5px;
       margin-right: 5px;

@@ -51,20 +51,18 @@ export default class Deploy extends Vue
     initCodeEditor()
     {
         let codestore = sessionStorage.getItem("neo-contract-code");
-        var codeContent = document.getElementById("code-content") as HTMLDivElement;
-        var width = codeContent.offsetWidth;
-        var height = codeContent.offsetHeight;
         const host = document.getElementById("csharp-code") as HTMLTextAreaElement;
         const option: CodeMirror.EditorConfiguration = {}
         option.lineNumbers = true;
         option.mode = "text/x-csharp";
         option.dragDrop = true;
         option.theme = "monokai";
+        option.lineWrapping = true;
         // option.readOnly = true;
         this.cEditor = CodeMirror.fromTextArea(host, option);
         this.loadHashList();
         this.cEditor.setValue(codestore ? codestore : "");
-        this.cEditor.setSize("auto", height);
+        this.cEditor.setSize("auto", "100%");
         this.cEditor.on("change", function (Editor, change)
         {
             // 事件触发后执行事件
