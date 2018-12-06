@@ -56,17 +56,7 @@
                       </div>
                     </div>
                     <div class="th-block-txid">
-                      <span class="th-txid" style="padding-right:10px">
-                        {{task.timeStr}}
-                        <!-- {{$t('operation.txid')}}
-                        <a
-                          class="green-text"
-                          target="_blank"
-                        >{{task.simpleTxid}}</a>-->
-                      </span>
-                      <!-- <span class="red-text">{{$t('operation.waiting')}} tttt</span>
-                      <span class="th-txid"></span>
-                      <span class="red-text">{{$t('operation.fail')}}</span>-->
+                      <span class="th-txid" style="padding-right:10px">{{task.timeStr}}</span>
                       <span class="th-state">
                         <span>状态：</span>
                         <span v-if="task.state==0" class>等待</span>
@@ -77,10 +67,10 @@
                   </div>
                   <div v-if="task.state==1" class="btn-right">
                     <div v-if="task.taskType === 1">
-                      <v-btn>合约调用</v-btn>
+                      <v-btn @onclick="skipPage('invoke',task.message)">合约调用</v-btn>
                     </div>
                     <div v-if="task.taskType === 2">
-                      <v-btn>合约部署</v-btn>
+                      <v-btn @onclick="skipPage('debug',task.message)">合约调试</v-btn>
                     </div>
                   </div>
                 </div>
@@ -238,31 +228,11 @@ export default class TaskBar extends Vue {
     // this.clearTimer();
     this.taskList = services.taskManager.showTaskList();
   }
-  timer(item) {
-    if (item.timer) {
-      clearInterval(item.timer);
+
+  skipPage(key: string, value: string) {
+    if (key) {
+      services.routerParam[key] = value;
     }
-    let pendingText = "";
-    let seconds = "" + (new Date().getTime() - item["startTime"]) / 1000;
-    pendingText = `(${parseInt(seconds)}s)`;
-    this.$set(item, "pendingText", pendingText);
-    let timer = setInterval(() => {
-      if (item.state != 0) {
-        clearInterval(timer);
-      }
-      let seconds = "" + (new Date().getTime() - item["startTime"]) / 1000;
-      pendingText = `(${parseInt(seconds)}s)`;
-      this.$set(item, "pendingText", pendingText);
-    }, 1000);
-    item.timer = timer;
-  }
-  clearTimer() {
-    this.taskList.forEach(v => {
-      // if (v.timer) {
-      //   clearInterval(v.timer);
-      //   v.timer = null;
-      // }
-    });
   }
 }
 </script>

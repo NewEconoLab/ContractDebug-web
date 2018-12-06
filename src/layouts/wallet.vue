@@ -1,8 +1,8 @@
 <template>
-  <main-layout id="wallet">
+  <main-layout class="contract-debug">
     <taskbar-layout></taskbar-layout>
     <div class="wallet-content">
-      <router-view></router-view>
+      <router-view class="router-view"></router-view>
     </div>
   </main-layout>
 </template>
@@ -10,6 +10,12 @@
 <script lang="ts" src="./wallet.ts">
 </script>
 <style>
+.router-view {
+  height: 100%;
+}
+.contract-debug {
+  height: 100%;
+}
 .container {
   padding-left: 0px;
   padding-right: 0px;
@@ -54,6 +60,7 @@
   padding-top: 185px;
   padding-left: 50px;
   padding-right: 50px;
+  height: 97%;
 }
 @media screen and (max-width: 1199px) {
   .wallet-content {

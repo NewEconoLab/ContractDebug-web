@@ -114,7 +114,7 @@ export default class Deploy extends Vue
             this.avmhex,
             amount
         );
-        services.taskManager.addTask(TaskType.deploy, ConfirmType.tranfer, result.txid, {});
+        services.taskManager.addTask(TaskType.deploy, ConfirmType.tranfer, result.txid, { contract: this.conactHash });
         if (result.sendrawtransactionresult)
         {
             const res = await tools.wwwtool.storageContractFile(
@@ -148,26 +148,6 @@ export default class Deploy extends Vue
         target.select();
         document.execCommand("copy");
         console.log();
-    }
-
-    async test()
-    {
-        // let appcall = Neo.Uint160.parse(this.conactHash);
-        let appCall = Neo.Uint160.parse("0x17f26389efc8fe0d9f2116f8ea474202b8d78280");
-        let sb = new ThinNeo.ScriptBuilder()
-        sb.EmitParamJson([
-            '(str)test',
-            []
-        ])
-        sb.EmitAppCall(appCall);
-        let data = tools.contract.buildScript_random(appCall, "test", []);
-        let txhex = await tools.contract.buildInvokeTransData_attributes(data);
-        // let txhex = await tools.contract.buildInvokeTransData_attributes(sb.ToArray());
-        console.log(txhex);
-
-        let result = await tools.wwwtool.setTxCallContract(LoginInfo.getCurrentAddress(), txhex.toHexString());
-        console.log(result);
-
     }
 
     async loadHashList()

@@ -147,6 +147,7 @@ export default class Main extends Vue {
 }
 .main-content {
   margin: 0 auto;
+  height: 100%;
 }
 .main {
   padding-left: 50px;

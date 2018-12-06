@@ -4,6 +4,7 @@ import Vue from "vue";
 import { tools } from "../../tools/importpack";
 import { LoginInfo } from "../../tools/entity";
 import { TreeView, TreeViewItems } from '../TreeViewItem';
+import { services } from "../../services/index";
 @Component({
     components: {}
 })
@@ -40,6 +41,11 @@ export default class Debug extends Vue
         this.cEditor = CodeMirror.fromTextArea(host, option);
         this.fulllogEditor = CodeMirror.fromTextArea(avm, option);
         this.initHashList();
+        if (services.routerParam[ "debug" ])
+        {
+            this.txid = services.routerParam[ "debug" ].txid;
+            this.initDebugInfo();
+        }
     }
 
     async initHashList()

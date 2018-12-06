@@ -97,31 +97,11 @@ export default class Invoke extends Vue
         if (result)  
         {
             this.opneToast("succes", "invoke 交易发送成功，等待区块确认", 4000)
-            services.taskManager.addTask(TaskType.invoke, ConfirmType.tranfer, result.txid, {})
+            services.taskManager.addTask(TaskType.invoke, ConfirmType.tranfer, result.txid, { txid: result.txid })
             // this.resultEditor.setValue(JSON.stringify(result));
         }
 
     }
-
-    // paresInvokeJson()
-    // {
-    //     let json = this.editor.getValue();
-    //     let arr = JSON.parse(json) as any[];
-    //     var sb = new ThinNeo.ScriptBuilder();
-    //     if (arr.length == 2)
-    //     {
-    //         sb.EmitParamJson(arr[ 1 ]);
-    //         sb.EmitPushString(arr[ 0 ]);
-    //         let appcall = Neo.Uint160.parse(this.currentContract.scripthash.substr(5));
-    //         // let appcall = Neo.Uint160.parse("0x17f26389efc8fe0d9f2116f8ea474202b8d78280");
-    //         let data = tools.contract.buildScript(appcall, arr[ 0 ], arr[ 1 ]);
-    //         return data;
-    //     }
-    //     else
-    //     {
-    //         throw new Error("Json format error");
-    //     }
-    // }
 
     paresInvokeJson()
     {

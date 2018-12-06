@@ -2,7 +2,7 @@
   <div>
     <div class="deploy-panel">
       <div class="code">
-        <panel>
+        <panel class="code-panel">
           <div class="p-title">
             <div class="title">
               <div class="title-menu">
@@ -137,80 +137,81 @@
 </template>
 <style lang="less" scoped>
 .deploy-panel {
+  height: 100%;
   display: flex;
   .code {
     flex: 1;
     padding-right: 25px;
-    .code-content {
+    .code-panel {
       height: 100%;
-      max-height: 500px;
-      //   overflow: hidden;
-      overflow: auto;
-    }
-    .p-title {
-      border-bottom: 3px solid #3d3d3d;
-      width: 100%;
-      line-height: 55px;
-      .title {
-        padding-left: 25px;
-        font-family: NotoSansHans-Regular;
-        font-size: 14px;
-        color: #b5b5b5;
-        display: inline-block;
-        .title-menu {
-          cursor: pointer;
-          position: relative;
-          &:hover {
-            .title-active {
-              color: #3791ff;
+      .code-content {
+        height: ~"calc(100% - 120px)";
+      }
+      .p-title {
+        border-bottom: 3px solid #3d3d3d;
+        width: 100%;
+        line-height: 55px;
+        .title {
+          padding-left: 25px;
+          font-family: NotoSansHans-Regular;
+          font-size: 14px;
+          color: #b5b5b5;
+          display: inline-block;
+          .title-menu {
+            cursor: pointer;
+            position: relative;
+            &:hover {
+              .title-active {
+                color: #3791ff;
 
-              cursor: pointer;
+                cursor: pointer;
+              }
+              .titlemenu-list-wrap {
+                display: block;
+              }
             }
             .titlemenu-list-wrap {
-              display: block;
-            }
-          }
-          .titlemenu-list-wrap {
-            display: none;
-            border: 1px solid #4e4e4e;
-            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-            border-radius: 5px;
-            padding: 15px;
-            min-width: 110px;
-            background: #222222;
-            position: absolute;
-            top: 39px;
-            left: 0;
-            z-index: 4;
-            .titlemenu-list {
-              display: block;
-              list-style-type: disc;
-              margin-block-start: 0;
-              margin-block-end: 0;
-              margin-inline-start: 0px;
-              margin-inline-end: 0px;
-              padding-inline-start: 0;
-              li {
-                list-style: none;
-                margin-bottom: 15px;
-                line-height: 14px;
-                font-size: 12px;
-                &:last-child {
-                  margin-bottom: 0;
-                }
-                &:hover {
-                  color: #3791ff;
-                  cursor: pointer;
+              display: none;
+              border: 1px solid #4e4e4e;
+              box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+              border-radius: 5px;
+              padding: 15px;
+              min-width: 110px;
+              background: #222222;
+              position: absolute;
+              top: 39px;
+              left: 0;
+              z-index: 4;
+              .titlemenu-list {
+                display: block;
+                list-style-type: disc;
+                margin-block-start: 0;
+                margin-block-end: 0;
+                margin-inline-start: 0px;
+                margin-inline-end: 0px;
+                padding-inline-start: 0;
+                li {
+                  list-style: none;
+                  margin-bottom: 15px;
+                  line-height: 14px;
+                  font-size: 12px;
+                  &:last-child {
+                    margin-bottom: 0;
+                  }
+                  &:hover {
+                    color: #3791ff;
+                    cursor: pointer;
+                  }
                 }
               }
             }
           }
         }
-      }
-      .btn-list {
-        float: right;
-        margin-top: 15px;
-        margin-right: 25px;
+        .btn-list {
+          float: right;
+          margin-top: 15px;
+          margin-right: 25px;
+        }
       }
     }
   }
