@@ -2896,6 +2896,13 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoAQMAAAC2
 
 /***/ }),
 
+/***/ "GSWh":
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ "Gc41":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3103,6 +3110,8 @@ var TaskBar = /** @class */ (function (_super) {
             ? parseInt(sessionStorage.getItem("newTaskNumber"))
             : 0;
         index_1.services.taskManager.calcStack.push(_this.taskHistory);
+        index_1.services.taskManager.calcStack.push(_this.getHeight);
+        index_1.services.taskManager.calcStack.push(_this.getBalance);
         return _this;
     }
     TaskBar.prototype.mounted = function () {
@@ -5463,14 +5472,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var taskbar = __webpack_require__("HOkF");
 var taskbar_default = /*#__PURE__*/__webpack_require__.n(taskbar);
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/template-compiler?{"id":"data-v-1e6d6118","hasScoped":true,"transformToRequire":{"video":"src","source":"src","img":"src","image":"xlink:href"},"buble":{"transforms":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./src/layouts/taskbar.vue
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/template-compiler?{"id":"data-v-64afc029","hasScoped":true,"transformToRequire":{"video":"src","source":"src","img":"src","image":"xlink:href"},"buble":{"transforms":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./src/layouts/taskbar.vue
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"navbar navbar-wallet"},[_c('div',{staticClass:"blockheight"},[_c('div',{staticClass:"main"},[_c('div',{staticClass:"balance"},[_c('span',{staticClass:"asset"},[_vm._v("GAS")]),_vm._v(" "),_c('span',{staticClass:"amount"},[_vm._v(_vm._s(_vm.balance.toString()))]),_vm._v(" "),(_vm.claimState==='3010')?_c('v-btn',{on:{"onclick":_vm.claimGas}},[_vm._v("索取500 GAS")]):(_vm.claimState==='3011')?_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("排队中")]):(_vm.claimState==='3012')?_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("已发放 GAS")]):_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("Gas不足")]),_vm._v(" "),_c('v-hint',[_c('div',{staticClass:"hint-img"},[_c('img',{attrs:{"src":__webpack_require__("dqMZ"),"alt":""}})]),_vm._v(" "),_c('div',{staticClass:"hint-content"},[_c('p',[_vm._v("每个钱包每日可索取一次500gas，需要更多请在论坛留言索取。")])])])],1),_vm._v(" "),_c('div',{staticClass:"task-btn"},[_c('span',{staticClass:"task-tab"},[_c('img',{attrs:{"src":__webpack_require__("R2WG"),"alt":""}}),_vm._v("\n          "+_vm._s(_vm.$t('transfer.title2')+"：")+"\n          "),_c('a',{attrs:{"href":_vm.href,"target":"_blank"}},[_vm._v(_vm._s(_vm.showaddr))])]),_vm._v(" "),_c('span',{staticClass:"task-tab"},[_c('img',{attrs:{"src":__webpack_require__("ECX6"),"alt":""}}),_vm._v("\n          "+_vm._s([_vm.$t('navbar.blockheight'),_vm.blockheight].join("："))+"\n        ")]),_vm._v(" "),_c('v-btn',{on:{"onclick":function($event){_vm.showHistory=true}}},[_vm._v("操作记录")])],1),_vm._v(" "),_c('div',{staticClass:"tranhistory-box"},[(_vm.showHistory)?_c('div',{staticClass:"tranhistory-wrap"},[_c('div',{staticClass:"tranhistory-listbox"},[_c('div',{staticClass:"tranhistory-title"},[_c('div',{staticClass:"tranhistory-close",on:{"click":function($event){_vm.showHistory=!_vm.showHistory}}},[_c('img',{attrs:{"src":__webpack_require__("fgqV"),"alt":""}})]),_vm._v(" "),_c('span',[_vm._v(_vm._s(_vm.$t('operation.title')))]),_vm._v(" "),_c('div',{staticClass:"tranhistory-tips"},[_vm._v(_vm._s(_vm.$t('operation.tips')))])]),_vm._v(" "),_c('div',{staticClass:"tranhistory-list"},_vm._l((_vm.taskList),function(task){return _c('div',{key:task.txid,staticClass:"th-onelist"},[_c('div',[_c('div',{staticClass:"th-type"},[_c('div',{staticClass:"th-typename"},[_vm._v(_vm._s(_vm.$t('operation.transfer')))]),_vm._v(" "),_c('div',{staticClass:"th-other"},[_c('div',{staticClass:"th-number"},[_c('span',[_vm._v(_vm._s(task.simpleTxid))])])])]),_vm._v(" "),_c('div',{staticClass:"th-block-txid"},[_c('span',{staticClass:"th-txid",staticStyle:{"padding-right":"10px"}},[_vm._v("\n                      "+_vm._s(task.timeStr)+"\n                      ")]),_vm._v(" "),_c('span',{staticClass:"th-state"},[_c('span',[_vm._v("状态：")]),_vm._v(" "),(task.state==0)?_c('span',{},[_vm._v("等待")]):_vm._e(),_vm._v(" "),(task.state==1)?_c('span',{staticClass:"green-text"},[_vm._v("成功")]):_vm._e(),_vm._v(" "),(task.state==2)?_c('span',{staticClass:"red-text"},[_vm._v("失败")]):_vm._e()])])]),_vm._v(" "),(task.state==1)?_c('div',{staticClass:"btn-right"},[(task.taskType === 1)?_c('div',[_c('v-btn',[_vm._v("合约调用")])],1):_vm._e(),_vm._v(" "),(task.taskType === 2)?_c('div',[_c('v-btn',[_vm._v("合约部署")])],1):_vm._e()]):_vm._e()])})),_vm._v(" "),(_vm.taskList.length == 0)?_c('div',{staticClass:"notask"},[_vm._v(_vm._s(_vm.$t('operation.nodata')))]):_vm._e()])]):_vm._e()])])]),_vm._v(" "),_c('v-toast',{ref:"toast"})],1)}
 var staticRenderFns = []
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ var layouts_taskbar = (esExports);
 // CONCATENATED MODULE: ./src/layouts/taskbar.vue
 function injectStyle (ssrContext) {
-  __webpack_require__("x1Ol")
+  __webpack_require__("GSWh")
 }
 var normalizeComponent = __webpack_require__("VU/8")
 /* script */
@@ -5482,7 +5491,7 @@ var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = "data-v-1e6d6118"
+var __vue_scopeId__ = "data-v-64afc029"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -7318,13 +7327,6 @@ exports.default = {
 /***/ (function(module, exports) {
 
 module.exports = "data:image/svg+xml;base64,DQo8c3ZnIHdpZHRoPSIyNHB4IiBoZWlnaHQ9IjI0cHgiIHZpZXdCb3g9IjAgMCAyNCAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4NCiAgICA8IS0tIEdlbmVyYXRvcjogU2tldGNoIDQ5ICg1MTAwMikgLSBodHRwOi8vd3d3LmJvaGVtaWFuY29kaW5nLmNvbS9za2V0Y2ggLS0+DQogICAgPGRlc2M+Q3JlYXRlZCB3aXRoIFNrZXRjaC48L2Rlc2M+DQogICAgPGRlZnM+PC9kZWZzPg0KICAgIDxnIGlkPSJiYWxhbmNlNC10ZXN0bmV0IiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4NCiAgICAgICAgPGcgaWQ9IummlumhtS10cmFuc2Zlci1pbnB1dCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTkyMi4wMDAwMDAsIC0zNzguMDAwMDAwKSI+DQogICAgICAgICAgICA8ZyBpZD0iR3JvdXAtMyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTAwLjAwMDAwMCwgMjI2LjAwMDAwMCkiPg0KICAgICAgICAgICAgICAgIDxnIGlkPSLmiZPli74iIHRyYW5zZm9ybT0idHJhbnNsYXRlKDgyMi4wMDAwMDAsIDE1Mi4wMDAwMDApIj4NCiAgICAgICAgICAgICAgICAgICAgPHBhdGggZD0iTTI0LDEyLjE0ODE0ODEgQzI0LDUuMzcyNDQ0NDQgMTguNjI3NTU1NiwwIDExLjg1MTg1MTksMCBDNS4zNzI0NDQ0NCwwIDAsNS4zNzI0NDQ0NCAwLDEyLjE0ODE0ODEgQzAsMTguNjI3NTU1NiA1LjM3MjQ0NDQ0LDI0IDExLjg1MTg1MTksMjQgQzE4LjYyNzU1NTYsMjQgMjQsMTguNjI3NTU1NiAyNCwxMi4xNDgxNDgxIFoiIGlkPSJGaWxsLSIgZmlsbD0iIzJEREU0RiI+PC9wYXRoPg0KICAgICAgICAgICAgICAgICAgICA8cGF0aCBkPSJNNi4yNDQ5NTE3MywxMi44NDYzNTA0IEM1Ljg1NjI5Mzc1LDEyLjQ0NjI2NzIgNS44MDk5NDA0OCwxMS43NTgyNjA2IDYuMTMyMDI0OTksMTEuMzIyMzU4MiBMNS42NTA2MzE3NSwxMS45NzM4NjU3IEM1Ljk3NjkyMjAyLDExLjUzMjI3MTMgNi41OTc0OTM2MiwxMS40NDU3MjQzIDcuMDQxMjU0NzcsMTEuNzg0MDE2NiBMOC44OTAxMDY5NywxMy4xOTM0NTE2IEM5LjMzMTgzNjU5LDEzLjUzMDE5NTIgMTAuMDM3NTcyNSwxMy41MTUxMTkgMTAuNDY1NjkwNiwxMy4xNjAzNzU5IEwxNy4wMDQ3NzQ2LDcuNzQyMDIzMTIgQzE3LjQzMzIxNTgsNy4zODcwMTIzMiAxOC4wOTc4NjA3LDcuNDEwOTI2MjQgMTguNDgwNzQ0NCw3Ljc4NzAzMTc1IEwxNy43ODA1MzYsNy4wOTkyMTkxOSBDMTguMTY3MjUwNCw3LjQ3OTA4NzU4IDE4LjE2Nzg2NTQsOC4wOTMyOTg5OSAxNy43NjEzMzQsOC40OTEyMzk2OSBMMTAuNDA5MDgxOSwxNS42ODgxMjUzIEMxMC4wMTE3NjI1LDE2LjA3NzA0ODYgOS4zNzc4NjM2OSwxNi4wNzEzNTk0IDguOTg1OTQzOTUsMTUuNjY3OTE4NSBMNi4yNDQ5NTE3MywxMi44NDYzNTA0IFoiIGlkPSJGaWxsLSIgZmlsbD0iI0ZGRkZGRiI+PC9wYXRoPg0KICAgICAgICAgICAgICAgIDwvZz4NCiAgICAgICAgICAgIDwvZz4NCiAgICAgICAgPC9nPg0KICAgIDwvZz4NCjwvc3ZnPg=="
-
-/***/ }),
-
-/***/ "x1Ol":
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
 
 /***/ }),
 

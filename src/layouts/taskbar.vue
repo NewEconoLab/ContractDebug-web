@@ -184,6 +184,8 @@ export default class TaskBar extends Vue {
       ? parseInt(sessionStorage.getItem("newTaskNumber"))
       : 0;
     services.taskManager.calcStack.push(this.taskHistory);
+    services.taskManager.calcStack.push(this.getHeight);
+    services.taskManager.calcStack.push(this.getBalance);
   }
   mounted() {
     this.getHeight();
