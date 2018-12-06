@@ -4,6 +4,8 @@ import Vue from "vue";
 import { tools } from "../../tools/importpack";
 import { LoginInfo } from "../../tools/entity";
 import { ContractDeployInfo } from 'entity/ContractEntitys';
+import { services } from "../../services/index";
+import { TaskType, ConfirmType } from "../../entity/TaskEntitys";
 @Component({
     components: {}
 })
@@ -112,6 +114,7 @@ export default class Deploy extends Vue
             this.avmhex,
             amount
         );
+        services.taskManager.addTask(TaskType.deploy, ConfirmType.tranfer, result.txid, {});
         if (result.sendrawtransactionresult)
         {
             const res = await tools.wwwtool.storageContractFile(

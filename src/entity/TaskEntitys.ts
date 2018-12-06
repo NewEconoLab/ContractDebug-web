@@ -60,12 +60,14 @@ export class TaskView extends Task
 {
     txidhref: string;
     simpleTxid: string;
+    timeStr: string;
     constructor(task: Task)
     {
         let href = "https://scan.nel.group/test/";
         super(task.taskType, task.type, task.txid, task.message);
         this.state = task.state;
         this.txidhref = href + "transaction/" + task.txid;
+        this.timeStr = tools.timetool.getTime(task.startTime)
         this.simpleTxid =
             [ task.txid.substring(0, 6),
             task.txid.substring(task.txid.length - 6) ]

@@ -51,29 +51,37 @@
                       <div class="th-typename">{{$t('operation.transfer')}}</div>
                       <div class="th-other">
                         <div class="th-number">
-                          <span>test</span>
+                          <span>{{task.simpleTxid}}</span>
                         </div>
                       </div>
                     </div>
                     <div class="th-block-txid">
                       <span class="th-txid" style="padding-right:10px">
-                        {{$t('operation.txid')}}
+                        {{task.timeStr}}
+                        <!-- {{$t('operation.txid')}}
                         <a
                           class="green-text"
                           target="_blank"
-                        >{{task.simpleTxid}}</a>
+                        >{{task.simpleTxid}}</a>-->
                       </span>
                       <!-- <span class="red-text">{{$t('operation.waiting')}} tttt</span>
                       <span class="th-txid"></span>
                       <span class="red-text">{{$t('operation.fail')}}</span>-->
                       <span class="th-state">
                         <span>状态：</span>
-                        <span class="green-text">成功</span>
+                        <span v-if="task.state==0" class>等待</span>
+                        <span v-if="task.state==1" class="green-text">成功</span>
+                        <span v-if="task.state==2" class="red-text">失败</span>
                       </span>
                     </div>
                   </div>
                   <div v-if="task.state==1" class="btn-right">
-                    <v-btn>test</v-btn>
+                    <div v-if="task.taskType === 1">
+                      <v-btn>合约调用</v-btn>
+                    </div>
+                    <div v-if="task.taskType === 2">
+                      <v-btn>合约部署</v-btn>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -143,7 +151,7 @@ import Component from "vue-class-component";
 import { LoginInfo } from "../tools/entity";
 import Store from "../tools/StorageMap";
 import { tools } from "../tools/importpack";
-import { Task, TaskView } from "../entity/TaskEntitys";
+import { Task, TaskView, TaskType } from "../entity/TaskEntitys";
 import { services } from "../services/index";
 import { store } from "../store/index";
 @Component({

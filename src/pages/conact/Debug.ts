@@ -60,7 +60,7 @@ export default class Debug extends Vue
     {
         const result = await tools.wwwtool.getDumpInfoByTxid(this.txid);
         this.dumpinfo = result[ 'dimpInfo' ];
-        let lzma: nid.LZMA = new nid.LZMA();
+        var lzma: nid.LZMA = new nid.LZMA();
         // console.log("new LZMA");
         var srcbytes = this.dumpinfo.hexToBytes();
         var unpackjsonstr: string = "";
@@ -76,7 +76,7 @@ export default class Debug extends Vue
         }
         catch (e)
         {
-            // console.log("decode error." + e);
+            console.log("decode error." + e);
             return;
         }
 
@@ -118,7 +118,7 @@ export default class Debug extends Vue
             this.showStack(op);
             // console.log("script hash : " + script.hash);
 
-            if (this.addr)
+            if (this.contractFiles[ script.hash ] && this.addr)
             {
                 var line = this.addr.GetLineBack(op.addr);//尽量倒着取到对应的代码
                 this.cEditor.setCursor(line);
@@ -197,6 +197,10 @@ export default class Debug extends Vue
                 this.oplist = ThinNeo.Compiler.Avm2Asm.Trans(coderesult.avm.hexToBytes());
                 this.addr = ThinNeo.Debug.Helper.AddrMap.FromJson(JSON.parse(coderesult.map));
                 this.cEditor.setValue(coderesult.cs);
+            }
+            else
+            {
+                this.cEditor.setValue("");
             }
         } catch (error)
         {

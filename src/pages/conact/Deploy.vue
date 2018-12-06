@@ -58,31 +58,31 @@
               <div class="panel-form">
                 <div class="form-lable">合约名称（必填）</div>
                 <div class="form-content">
-                  <input type="text" name id v-model="name">
+                  <input type="text" v-model="name">
                 </div>
               </div>
               <div class="panel-form">
                 <div class="form-lable">版本</div>
                 <div class="form-content">
-                  <input type="text" name id v-model="version">
+                  <input type="text" v-model="version">
                 </div>
               </div>
               <div class="panel-form">
                 <div class="form-lable">作者</div>
                 <div class="form-content">
-                  <input type="text" name id v-model="author">
+                  <input type="text" v-model="author">
                 </div>
               </div>
               <div class="panel-form">
                 <div class="form-lable">邮件</div>
                 <div class="form-content">
-                  <input type="text" name id v-model="email">
+                  <input type="text" v-model="email">
                 </div>
               </div>
               <div class="panel-form">
                 <div class="form-lable">合约描述</div>
                 <div class="form-content">
-                  <input type="text" name id v-model="description">
+                  <input type="text" v-model="description">
                 </div>
               </div>
               <div class="panel-form">

@@ -199,6 +199,7 @@ a.green-text {
 .th-number a {
   display: block;
   font-size: 14px;
+  padding-left: 30px;
 }
 .th-number img {
   width: 15px;
