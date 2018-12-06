@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import { tools } from "./tools/importpack";
-import { TaskManager } from './tools/taskmanager';
 import components from './components/index';
 import { TaskFunction } from './entity/TaskEntitys';
 import App from './pages/app.vue'
 import router from './config/router'
 import i18n from './config/I18n'
+import { services } from './services/index';
 
 Vue.use(components);
 
@@ -48,7 +48,7 @@ setInterval(() =>
                     {
                         TaskFunction.heightRefresh();
                     }
-                    TaskManager.update();
+                    services.taskManager.update();
                 }
             } else
             {

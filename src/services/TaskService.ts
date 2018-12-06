@@ -9,7 +9,7 @@ export class TaskService
         let task = new Task(type, confirm, txid, message)
         store.taskStore.pushTask(task);
     }
-
+    public calcStack: Function[] = [];
     public async update()
     {
         let list = store.taskStore.getTaskList();
@@ -25,6 +25,10 @@ export class TaskService
             return task;
         });
         store.taskStore.setTasklist(tasklist);
+        for (const task of this.calcStack)
+        {
+            task();
+        }
     }
 
     public showTaskList()
