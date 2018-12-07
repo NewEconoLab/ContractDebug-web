@@ -40,6 +40,8 @@ export default class Debug extends Vue
         option.theme = "monokai";
         this.cEditor = CodeMirror.fromTextArea(host, option);
         this.fulllogEditor = CodeMirror.fromTextArea(avm, option);
+        this.fulllogEditor.setSize("auto", "100%")
+        this.cEditor.setSize("auto", "100%")
         this.initHashList();
         if (services.routerParam[ "debug" ])
         {
@@ -68,7 +70,7 @@ export default class Debug extends Vue
         const result = await tools.wwwtool.getDumpInfoByTxid(this.txid);
         this.dumpinfo = result[ 'dimpInfo' ];
         var lzma: nid.LZMA = new nid.LZMA();
-        // console.log("new LZMA");
+        nid.utils.MEMORY.reset();
         var srcbytes = this.dumpinfo.hexToBytes();
         var unpackjsonstr: string = "";
         var unpackjson: {} = null;

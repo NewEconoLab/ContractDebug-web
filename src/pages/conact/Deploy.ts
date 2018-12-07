@@ -151,6 +151,8 @@ export default class Deploy extends Vue
     async loadHashList()
     {
         this.hashList = await tools.wwwtool.getContractRemarkByAddress(LoginInfo.getCurrentAddress())
+        console.log(this.hashList);
+
     }
 
     async selectedHash(scripthash: string)

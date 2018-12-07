@@ -595,6 +595,14 @@ var nid;
         var MEMORY = (function () {
             function MEMORY() {
             }
+            MEMORY.reset = function () {
+                MEMORY.u8Index = 0;
+                MEMORY.u16Index = 0;
+                MEMORY.u32Index = 0;
+                MEMORY.u8 = null;
+                MEMORY.u16 = null;
+                MEMORY.u32 = null;
+            };
             MEMORY.allocateUint8 = function (len) {
                 MEMORY.u8 = new Uint8Array(len);
             };
@@ -1933,8 +1941,8 @@ var Neo;
             configurable: true
         });
         Uint160.parse = function (str) {
-            if(str.length ===42)
-                str = str.replace("0x","");
+            if (str.length == 42)
+                str = str.replace("0x", "");
             if (str.length != 40)
                 throw new RangeError();
             var x = str.hexToBytes();
@@ -2411,7 +2419,7 @@ var ThinNeo;
             if (r === void 0) { r = 8; }
             if (p === void 0) { p = 8; }
             var pp = scrypt.getAvailableMod();
-            scrypt.setResPath('static/js/asset');
+            scrypt.setResPath('./static/js/asset');
             var addresshash = null;
             var ready = function () {
                 var param = {

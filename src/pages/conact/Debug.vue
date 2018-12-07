@@ -34,7 +34,7 @@
         </panel>
       </div>
       <div class="avm">
-        <panel>
+        <panel class="avm-panel">
           <p-title :title="'AVM'"></p-title>
           <div class="avm-content">
             <textarea id="avm-code"></textarea>
@@ -42,7 +42,7 @@
         </panel>
       </div>
       <div class="code">
-        <panel>
+        <panel class="code-panel">
           <div class="p-title">
             <div class="title">
               <div>
@@ -115,27 +115,29 @@
   .code {
     flex: 1;
     padding-right: 25px;
-    .code-content {
-      height: 100%;
-      max-height: 500px;
-      //   overflow: hidden;
-      overflow: auto;
-    }
-    .p-title {
-      border-bottom: 3px solid #3d3d3d;
-      width: 100%;
-      line-height: 55px;
-      .title {
-        padding-left: 25px;
-        font-family: NotoSansHans-Regular;
-        font-size: 14px;
-        color: #b5b5b5;
-        display: inline-block;
+    .code-panel {
+      height: 97%;
+      .code-content {
+        height: 100%;
+        height: ~"calc(100% - 59px)";
+        overflow: auto;
       }
-      .btn-list {
-        float: right;
-        margin-top: 15px;
-        margin-right: 25px;
+      .p-title {
+        border-bottom: 3px solid #3d3d3d;
+        width: 100%;
+        line-height: 55px;
+        .title {
+          padding-left: 25px;
+          font-family: NotoSansHans-Regular;
+          font-size: 14px;
+          color: #b5b5b5;
+          display: inline-block;
+        }
+        .btn-list {
+          float: right;
+          margin-top: 15px;
+          margin-right: 25px;
+        }
       }
     }
   }
@@ -188,24 +190,30 @@
     width: 400px;
     max-width: 400px;
     padding-right: 30px;
-    .panel-content {
-      margin-left: 20px;
-      margin-right: 20px;
-      margin-top: 20px;
-      margin-bottom: 20px;
-      color: #fff;
-      .content-btns {
-        padding-top: 20px;
-        justify-content: flex-end;
+    .avm-panel {
+      height: 97%;
+      .avm-content {
+        height: ~"calc(100% - 55px)";
       }
-      input {
-        width: 100%;
-        background: #292a30;
-        border: 1px solid #b5b5b5;
-        box-shadow: 0 2px 4px 0 #023169;
-        border-radius: 3px 0px 3px 3px 3px;
-        height: 30px;
+      .panel-content {
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-top: 20px;
+        margin-bottom: 20px;
         color: #fff;
+        .content-btns {
+          padding-top: 20px;
+          justify-content: flex-end;
+        }
+        input {
+          width: 100%;
+          background: #292a30;
+          border: 1px solid #b5b5b5;
+          box-shadow: 0 2px 4px 0 #023169;
+          border-radius: 3px 0px 3px 3px 3px;
+          height: 30px;
+          color: #fff;
+        }
       }
     }
   }

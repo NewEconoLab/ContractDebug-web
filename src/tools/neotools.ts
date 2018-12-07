@@ -1,5 +1,5 @@
+/// <reference path="../../static/js/neo-ts.d.ts" />
 import { Result, LoginInfo } from "./entity";
-import { tools } from "./importpack";
 
 export class neotools
 {

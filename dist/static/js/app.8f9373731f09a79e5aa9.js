@@ -3925,6 +3925,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+/// <reference path="../../static/js/neo-ts.d.ts" />
 var entity_1 = __webpack_require__("6nHw");
 var neotools = /** @class */ (function () {
     function neotools() {
