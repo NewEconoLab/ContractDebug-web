@@ -35,7 +35,11 @@
       </div>
       <div class="avm">
         <panel class="avm-panel">
-          <p-title :title="'AVM'"></p-title>
+          <div class="title-list">
+            <div class="title" :class="active==0?'active':''" @click="showAvm">AVM</div>
+            <div class="title" :class="active==1?'active':''" @click="showCareInfo">CareInfo</div>
+            <div class="title" :class="active==2?'active':''" @click="showNotify">log/notify</div>
+          </div>
           <div class="avm-content">
             <textarea id="avm-code"></textarea>
           </div>
@@ -128,6 +132,7 @@
         line-height: 55px;
         .title {
           padding-left: 25px;
+          padding-right: 25px;
           font-family: NotoSansHans-Regular;
           font-size: 14px;
           color: #b5b5b5;
@@ -195,6 +200,27 @@
     padding-right: 30px;
     .avm-panel {
       height: 100%;
+      .title-list {
+        border-bottom: 1px solid #3d3d3d;
+        width: 100%;
+        .title {
+          padding-left: 25px;
+          padding-right: 25px;
+          line-height: 55px;
+          font-family: NotoSansHans-Regular;
+          font-size: 14px;
+          color: #b5b5b5;
+          display: inline-block;
+        }
+        .active {
+          background: #343233;
+        }
+        .btn-list {
+          float: right;
+          margin-top: 13px;
+          margin-right: 25px;
+        }
+      }
       .avm-content {
         height: ~"calc(100% - 55px)";
       }

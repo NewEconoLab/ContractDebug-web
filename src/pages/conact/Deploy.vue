@@ -6,8 +6,8 @@
           <div class="p-title">
             <div class="title">
               <div class="title-menu">
-                <span class="title-active">文件</span>
-                <div class="titlemenu-list-wrap">
+                <span class="title-active" @mousemove="hashListShow=true">文件</span>
+                <div class="titlemenu-list-wrap" v-if="hashListShow">
                   <ul class="titlemenu-list">
                     <li @click="selectedHash('new')">新建</li>
                     <li class="active" @click="inputLoadHash=true">使用hash载入</li>
@@ -58,31 +58,31 @@
               <div class="panel-form">
                 <div class="form-lable">合约名称（必填）</div>
                 <div class="form-content">
-                  <input type="text" v-model="name">
+                  <input type="text" v-model="name" maxlength="30">
                 </div>
               </div>
               <div class="panel-form">
                 <div class="form-lable">版本</div>
                 <div class="form-content">
-                  <input type="text" v-model="version">
+                  <input type="text" v-model="version" maxlength="30">
                 </div>
               </div>
               <div class="panel-form">
                 <div class="form-lable">作者</div>
                 <div class="form-content">
-                  <input type="text" v-model="author">
+                  <input type="text" v-model="author" maxlength="30">
                 </div>
               </div>
               <div class="panel-form">
                 <div class="form-lable">邮件</div>
                 <div class="form-content">
-                  <input type="text" v-model="email">
+                  <input type="text" v-model="email" maxlength="30">
                 </div>
               </div>
               <div class="panel-form">
                 <div class="form-lable">合约描述</div>
                 <div class="form-content">
-                  <input type="text" v-model="description">
+                  <input type="text" v-model="description" maxlength="30">
                 </div>
               </div>
               <div class="panel-form">
@@ -163,7 +163,6 @@
             &:hover {
               .title-active {
                 color: #3791ff;
-
                 cursor: pointer;
               }
               .titlemenu-list-wrap {
@@ -221,10 +220,12 @@
     .panel-content {
       margin-left: 20px;
       margin-right: 20px;
-      margin-top: 20px;
       margin-bottom: 20px;
+      padding-bottom: 30px;
+      padding-top: 30px;
       .compile-result {
         color: #fff;
+        height: 20px;
       }
       .content-btns {
         padding-top: 20px;

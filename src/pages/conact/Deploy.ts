@@ -23,6 +23,7 @@ export default class Deploy extends Vue
     download_name: string = "";
     download_href: string = "";
     hashList: string[] = [];
+    hashListShow: boolean = false;
     avmhex: Uint8Array;
     isCall = false;
     isStore = false;
@@ -43,11 +44,9 @@ export default class Deploy extends Vue
         let hashstore = sessionStorage.getItem("neo-contract-hash");
         if (hashstore)
         {
-            // this.conactHash=hashstore;
             this.selectedHash(hashstore);
         }
     }
-
     initCodeEditor()
     {
         let codestore = sessionStorage.getItem("neo-contract-code");
@@ -72,11 +71,13 @@ export default class Deploy extends Vue
 
     async compile()
     {
-        console.log("进入了 compile 方法");
+        this.description = "";
+        this.email = "";
+        this.author = "";
+        this.version = "";
+        this.name = "";
 
         const code = this.cEditor.getValue();
-        console.log(code);
-
         const result = await tools.wwwtool.compileContractFile(
             LoginInfo.getCurrentAddress(),
             code
@@ -90,6 +91,7 @@ export default class Deploy extends Vue
         var blob = new Blob([ avm.hexToBytes() ]);
         this.download_href = URL.createObjectURL(blob);
         this.download_name = this.conactHash + ".avm";
+        sessionStorage.setItem("neo-contract-hash", this.conactHash);
     }
 
     /**
@@ -100,7 +102,6 @@ export default class Deploy extends Vue
         const amount = (this.isCall ? 500 : 0) + (this.isStore ? 400 : 0) + 90;
         const num =
             (this.isStore ? 1 : 0) | (this.isCall ? 2 : 0) | (this.feePay ? 4 : 0);
-        console.log(num);
 
         const result = await tools.contract.deployContract(
             this.description,
@@ -128,7 +129,6 @@ export default class Deploy extends Vue
                 this.isCall ? 1 : 0,
                 result.txid
             )
-            console.log(res);
             this.opneToast('success', "合约发布成功", 4000);
         } else
         {
@@ -151,8 +151,11 @@ export default class Deploy extends Vue
     async loadHashList()
     {
         this.hashList = await tools.wwwtool.getContractRemarkByAddress(LoginInfo.getCurrentAddress())
-        console.log(this.hashList);
+    }
 
+    async initHashContract()
+    {
+        const coderesult = await tools.wwwtool.getContractCodeByHash(this.conactHash, LoginInfo.getCurrentAddress());
     }
 
     async selectedHash(scripthash: string)
@@ -170,33 +173,43 @@ export default class Deploy extends Vue
             this.inputhash = "";
         }
         this.conactHash = scripthash;
-        const coderesult = await tools.wwwtool.getContractCodeByHash(this.conactHash, "");
-        const conactinfo: ContractDeployInfo = await tools.wwwtool.getContractDeployInfoByHash(this.conactHash);
-        if (coderesult)
+        try
         {
-            const avm: string = coderesult.avm;
-            this.avmhex = avm.hexToBytes();
-            var blob = new Blob([ avm.hexToBytes() ]);
-            this.download_href = URL.createObjectURL(blob);
-            this.download_name = this.conactHash + ".avm";
-            this.cEditor.setValue(coderesult.cs);
-        }
+            const coderesult = await tools.wwwtool.getContractCodeByHash(this.conactHash, "");
+            const conactinfo: ContractDeployInfo = await tools.wwwtool.getContractDeployInfoByHash(this.conactHash);
+            if (coderesult)
+            {
+                const avm: string = coderesult.avm;
+                this.avmhex = avm.hexToBytes();
+                var blob = new Blob([ avm.hexToBytes() ]);
+                this.download_href = URL.createObjectURL(blob);
+                this.download_name = this.conactHash + ".avm";
+                this.cEditor.setValue(coderesult.cs);
 
-        if (conactinfo)
+                if (conactinfo)
+                {
+                    this.name = conactinfo.name;
+                    this.description = conactinfo.desc
+                    this.author = conactinfo.author;
+                    this.email = conactinfo.email;
+                    this.version = conactinfo.version;
+                    this.isCall = conactinfo.dynamicCall == 0 ? false : true;
+                    this.isStore = conactinfo.createStorage == 0 ? false : true;
+                    this.feePay = conactinfo.acceptablePayment == 0 ? false : true;
+                }
+
+                sessionStorage.setItem("neo-contract-hash", this.conactHash);
+            }
+            else
+            {
+                this.opneToast('error', "为找到该hash对应的合约", 4000);
+            }
+
+        } catch (error)
         {
-            this.name = conactinfo.name;
-            this.description = conactinfo.desc
-            this.author = conactinfo.author;
-            this.email = conactinfo.email;
-            this.version = conactinfo.version;
-            this.isCall = conactinfo.dynamicCall == 0 ? false : true;
-            this.isStore = conactinfo.createStorage == 0 ? false : true;
-            this.feePay = conactinfo.acceptablePayment == 0 ? false : true;
-
+            this.opneToast('error', "为找到该hash对应的合约", 4000);
         }
-
-
-        // this.cEditor= 
+        this.hashListShow = false;
     }
 
 }
