@@ -15,7 +15,10 @@ export default class Debug extends Vue
     txid: string = "";
     dumpinfo: string = "";
     dumpstr: string = "";
+    active: number = 0;
     cEditor: CodeMirror.EditorFromTextArea;
+    careInfo: CodeMirror.EditorFromTextArea;
+    notify: CodeMirror.EditorFromTextArea;
     fulllogEditor: CodeMirror.EditorFromTextArea;
     addr: ThinNeo.Debug.Helper.AddrMap;
     oplist: ThinNeo.Compiler.Op[] = [];
@@ -40,9 +43,13 @@ export default class Debug extends Vue
         option.theme = "monokai";
         this.cEditor = CodeMirror.fromTextArea(host, option);
         this.fulllogEditor = CodeMirror.fromTextArea(avm, option);
+        option.mode = "application/ld+json";
+        this.careInfo = CodeMirror.fromTextArea(document.getElementById("careInfo-code") as HTMLTextAreaElement, option)
+        this.notify = CodeMirror.fromTextArea(document.getElementById("notify-code") as HTMLTextAreaElement, option)
         this.fulllogEditor.setSize("auto", "100%")
         this.cEditor.setSize("auto", "100%")
         this.initHashList();
+
         if (services.routerParam[ "debug" ])
         {
             this.txid = services.routerParam[ "debug" ].txid;
@@ -94,19 +101,14 @@ export default class Debug extends Vue
             let dumpinfo = ThinNeo.SmartContract.Debug.DumpInfo.FromJson(unpackjson);
             this.simVM = new ThinNeo.Debug.SimVM();
             this.simVM.Execute(dumpinfo);
-            // console.log("read fulllog struct.");
-            // console.log("run state:" + dumpinfo.states);
-            for (var i = 0; i < dumpinfo.states.length; i++)
-            {
-                // console.log("--->" + ThinNeo.SmartContract.Debug.VMState[ dumpinfo.states[ i ] ]);
-            }
             this.dumpstr = "";
-
-            let arr = [];
             //预先获得所有需要加载的 avm等信息
-            // console.log(dumpinfo.script.GetAllScriptName(arr));
-
-            // console.log(arr);
+            let careInfoStr = ""
+            for (const careInfo of this.simVM.careinfo)
+            {
+                careInfoStr += careInfo.ToString() + "\n";
+            }
+            this.careInfo.setValue(careInfoStr)
             this.dumpScript(this.simVM.regenScript, 1);
 
             this.fulllogEditor.on("cursorActivity", (res) =>
