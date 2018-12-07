@@ -51,13 +51,13 @@
               <li id="testnet-btn" class="active">
                 <a id="testa">{{$t('navbar.testnet')}}</a>
               </li>
-              <li id="mainnet-btn">
+              <!-- <li id="mainnet-btn">
                 <a
                   target="_blank"
                   href="https://wallet.nel.group"
                   id="maina"
                 >{{$t('navbar.mainnet')}}</a>
-              </li>
+              </li>-->
             </ul>
           </li>
           <li v-if="loginshow">
@@ -77,9 +77,9 @@
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu dropdown-nel">
-              <li id="testnet-btn" :class="currentLanguage=='English'?'active':''">
+              <!-- <li id="testnet-btn" :class="currentLanguage=='English'?'active':''">
                 <a @click="cutLanguage(1)">English</a>
-              </li>
+              </li>-->
               <li id="mainnet-btn" :class="currentLanguage!='English'?'active':''">
                 <a @click="cutLanguage(2)">中文</a>
               </li>
