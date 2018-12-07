@@ -1,5 +1,5 @@
 <template>
-  <div class="panel">
+  <div class="v-panel">
     <slot></slot>
   </div>
 </template>
@@ -19,7 +19,7 @@ export default class Valert extends Vue {
 </script>
 
 <style lang="less" scoped >
-.panel {
+.v-panel {
   background: #292a30;
   box-shadow: 0 2px 5px 0 #191919;
   border-radius: 5px;

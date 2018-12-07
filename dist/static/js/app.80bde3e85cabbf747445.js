@@ -3615,14 +3615,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var Panel = __webpack_require__("BBIN");
 var Panel_default = /*#__PURE__*/__webpack_require__.n(Panel);
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/template-compiler?{"id":"data-v-8cfb2a0e","hasScoped":true,"transformToRequire":{"video":"src","source":"src","img":"src","image":"xlink:href"},"buble":{"transforms":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./src/components/Panel.vue
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"panel"},[_vm._t("default")],2)}
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/template-compiler?{"id":"data-v-d34cf6ea","hasScoped":true,"transformToRequire":{"video":"src","source":"src","img":"src","image":"xlink:href"},"buble":{"transforms":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./src/components/Panel.vue
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"v-panel"},[_vm._t("default")],2)}
 var staticRenderFns = []
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ var components_Panel = (esExports);
 // CONCATENATED MODULE: ./src/components/Panel.vue
 function injectStyle (ssrContext) {
-  __webpack_require__("YdOH")
+  __webpack_require__("Z9vG")
 }
 var normalizeComponent = __webpack_require__("VU/8")
 /* script */
@@ -3634,7 +3634,7 @@ var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = "data-v-8cfb2a0e"
+var __vue_scopeId__ = "data-v-d34cf6ea"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -4891,7 +4891,7 @@ var Component = normalizeComponent(
 
 /***/ }),
 
-/***/ "YdOH":
+/***/ "Z9vG":
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

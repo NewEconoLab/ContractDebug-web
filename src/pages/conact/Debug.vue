@@ -18,11 +18,11 @@
     </div>
     <div class="debug-panel">
       <div class="debug-info">
-        <panel>
+        <panel class="stack-pael">
           <p-title :title="'CalcStack'"></p-title>
           <div class="panel-content" id="calcstack-content"></div>
         </panel>
-        <panel>
+        <panel class="stack-pael">
           <p-title :title="'AltStack'"></p-title>
           <div class="panel-content" id="altstack-content"></div>
         </panel>
@@ -112,15 +112,15 @@
 }
 .debug-panel {
   display: flex;
+  height: ~"calc(100% - 60px)";
   .code {
     flex: 1;
     padding-right: 25px;
+    height: 100%;
     .code-panel {
-      height: 97%;
+      height: 100%;
       .code-content {
-        height: 100%;
         height: ~"calc(100% - 59px)";
-        overflow: auto;
       }
       .p-title {
         border-bottom: 3px solid #3d3d3d;
@@ -145,6 +145,9 @@
     width: 400px;
     max-width: 400px;
     padding-right: 30px;
+    .stack-pael {
+      margin-bottom: 27px;
+    }
     .value-content {
       overflow: auto;
       max-width: 350px;
@@ -191,7 +194,7 @@
     max-width: 400px;
     padding-right: 30px;
     .avm-panel {
-      height: 97%;
+      height: 100%;
       .avm-content {
         height: ~"calc(100% - 55px)";
       }
