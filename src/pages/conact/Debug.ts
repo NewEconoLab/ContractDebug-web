@@ -72,6 +72,11 @@ export default class Debug extends Vue
         })
     }
 
+    timeShow(time: number)
+    {
+        return tools.timetool.getTime(time)
+    }
+
     async initDebugInfo()
     {
         const result = await tools.wwwtool.getDumpInfoByTxid(this.txid);
@@ -299,8 +304,11 @@ export default class Debug extends Vue
             {
                 let arr = [];
                 //预先获得所有需要加载的 avm等信息
-                script.ops[ i ].subScript.GetAllScriptName(arr)
-                this.initCode(arr);
+                if (script.ops[ i ].subScript)
+                {
+                    script.ops[ i ].subScript.GetAllScriptName(arr)
+                    this.initCode(arr);
+                }
             }
 
             if (script.ops[ i ].subScript != null)

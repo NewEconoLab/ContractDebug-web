@@ -36,11 +36,11 @@ export default class Invoke extends Vue
         this.editor = CodeMirror.fromTextArea(host, option);
         this.editor.setValue(codestore ? codestore : "");
         // this.editor.setSize("auto", height);
-        this.editor.on("change", function (Editor, change)
-        {
-            // 事件触发后执行事件
-            sessionStorage.setItem("invoke-json-code", Editor.getValue())
-        });
+        // this.editor.on("change", function (Editor, change)
+        // {
+        //     // 事件触发后执行事件
+        //     sessionStorage.setItem("invoke-json-code", Editor.getValue())
+        // });
         this.editor.setSize("auto", "245px");
         option.readOnly = true;
         this.resultEditor = CodeMirror.fromTextArea(host2, option);
@@ -72,7 +72,15 @@ export default class Invoke extends Vue
         }
         if (this.currentContract.scripthash != this.inputContract)
         {
-            this.currentContract = { name: "", scripthash: this.inputContract };
+            if (/^[0-9a-fA-F]{1,40}$/.test(this.inputContract.replace("0x", "")))
+            {
+                this.currentContract = { name: "", scripthash: this.inputContract };
+            }
+            else
+            {
+                this.opneToast('error', "非法合约hash，请重新检查。", 4000);
+                return;
+            }
         }
         this.openSelect = false;
         this.inputContract = "";
@@ -88,6 +96,8 @@ export default class Invoke extends Vue
             {
                 this.invokeResult = result;
                 this.resultEditor.setValue(JSON.stringify(result));
+                var totalLines = this.resultEditor.lineCount();
+                this.resultEditor.autoFormatRange({ line: 0, ch: 0 }, { line: totalLines });
             }
         } catch (error)
         {

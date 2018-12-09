@@ -99,40 +99,51 @@ export default class Deploy extends Vue
      */
     async deploy()
     {
+        if (!this.name)
+        {
+            this.opneToast('error', "合约名称为必填部署项", 4000);
+            return false;
+        }
         const amount = (this.isCall ? 500 : 0) + (this.isStore ? 400 : 0) + 90;
         const num =
             (this.isStore ? 1 : 0) | (this.isCall ? 2 : 0) | (this.feePay ? 4 : 0);
-
-        const result = await tools.contract.deployContract(
-            this.description,
-            this.email,
-            this.author,
-            this.version,
-            this.name,
-            new Neo.BigInteger(num),
-            this.avmhex,
-            amount
-        );
-        services.taskManager.addTask(TaskType.deploy, ConfirmType.tranfer, result.txid, { contract: this.conactHash });
-        if (result.sendrawtransactionresult)
+        const res = await tools.wwwtool.getContractDeployInfoByHash(this.conactHash);
+        if (res)
         {
-            const res = await tools.wwwtool.storageContractFile(
-                LoginInfo.getCurrentAddress(),
-                this.conactHash,
-                this.name,
-                this.version,
-                this.author,
-                this.email,
-                this.description,
-                this.feePay ? 1 : 0,
-                this.isStore ? 1 : 0,
-                this.isCall ? 1 : 0,
-                result.txid
-            )
-            this.opneToast('success', "合约发布成功", 4000);
+            this.opneToast('success', "此合约已部属，无法重复部署", 4000);
         } else
         {
-            this.opneToast('error', "合约发布失败", 4000);
+            const result = await tools.contract.deployContract(
+                this.description,
+                this.email,
+                this.author,
+                this.version,
+                this.name,
+                new Neo.BigInteger(num),
+                this.avmhex,
+                amount
+            );
+            services.taskManager.addTask(TaskType.deploy, ConfirmType.tranfer, result.txid, { contract: this.conactHash });
+            if (result.sendrawtransactionresult)
+            {
+                const res = await tools.wwwtool.storageContractFile(
+                    LoginInfo.getCurrentAddress(),
+                    this.conactHash,
+                    this.name,
+                    this.version,
+                    this.author,
+                    this.email,
+                    this.description,
+                    this.feePay ? 1 : 0,
+                    this.isStore ? 1 : 0,
+                    this.isCall ? 1 : 0,
+                    result.txid
+                )
+                this.opneToast('success', "合约发布成功", 4000);
+            } else
+            {
+                this.opneToast('error', "合约发布失败", 4000);
+            }
         }
     }
 

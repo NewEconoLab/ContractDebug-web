@@ -48,7 +48,7 @@
                 <div class="th-onelist" v-for="task in taskList" :key="task.txid">
                   <div>
                     <div class="th-type">
-                      <div class="th-typename">{{$t('operation.transfer')}}</div>
+                      <div class="th-typename">{{task.taskType===2?"合约部署":"合约调用"}}</div>
                       <div class="th-other">
                         <div class="th-number">
                           <span>{{task.simpleTxid}}</span>

@@ -4,7 +4,11 @@
       <div class="changehash-content">
         <div class="change-box">
           <select class="change-select" v-model="txid">
-            <option v-for="tx in txlist" :key="tx.id" :value="tx.txid">{{tx.txidstr}}</option>
+            <option
+              v-for="tx in txlist"
+              :key="tx.id"
+              :value="tx.txid"
+            >{{tx.txidstr}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{timeShow(tx.createTime)}}</option>
           </select>
           <input type="text" placeholder="选择历史交易" class="change-input" v-model="txid">
         </div>

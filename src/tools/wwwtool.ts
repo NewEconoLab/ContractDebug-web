@@ -347,14 +347,8 @@ export class WWW
         var postdata = WWW.makeRpcPostBody("getContractDeployInfoByHash", hash);
         var result = await fetch(WWW.apicontract, { "method": "post", "body": JSON.stringify(postdata) });
         var json = await result.json();
-        if (json[ "result" ])
-        {
-            var r = json[ "result" ][ 0 ];
-            return r;
-        } else
-        {
-            throw "not data";
-        }
+        var r = json[ "result" ] ? json[ "result" ][ 0 ] : undefined;
+        return r;
     }
 
     /**编译合约代码 */
