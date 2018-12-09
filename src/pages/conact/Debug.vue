@@ -44,7 +44,7 @@
             <textarea id="avm-code"></textarea>
           </div>
           <div class="avm-content" v-show="active==1">
-            <textarea id="careInfo-code"></textarea>
+            <div id="careInfo-msg"></div>
           </div>
           <div class="avm-content" v-show="active==2">
             <textarea id="notify-code"></textarea>
@@ -229,6 +229,17 @@
       }
       .avm-content {
         height: ~"calc(100% - 55px)";
+        #careInfo-msg {
+          overflow: auto;
+          max-width: 350px;
+          width: 400px;
+          height: 98%;
+          color: #fff;
+          margin-left: 5px;
+          margin-right: 5px;
+          margin-top: 5px;
+          margin-bottom: 5px;
+        }
       }
       .panel-content {
         margin-left: 20px;

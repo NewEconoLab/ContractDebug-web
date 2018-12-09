@@ -347,6 +347,8 @@ declare namespace CodeMirror
         /** This is similar to getTokenAt, but collects all tokens for a given line into an array. */
         getLineTokens(line: number, precise?: boolean): Token[];
 
+        lineCount();
+        autoFormatRange(a: any, b: any);
         /** 自己加上的说明 获得光标所在位置信息 */
         getCursor(): Position;
         /**

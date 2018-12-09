@@ -16,10 +16,6 @@ export class TreeViewItems
 
     showTree(pater: HTMLUListElement, data: TreeView, valueDiv: HTMLDivElement)
     {
-        // let pater = document.createElement("li");
-        // pater.textContent = data.title;
-        // paterul.appendChild(pater);
-        // pater.textContent = data.title;
         if (data.items.length > 0)
         {
             for (const tree of data.items)
@@ -36,7 +32,7 @@ export class TreeViewItems
                 else
                 {
                     let li = document.createElement("li")
-                    li.textContent = tree.title + ":" + tree.value;
+                    li.textContent = tree.value ? tree.title + ":" + tree.value : tree.title;
                     pater.appendChild(li);
                     if (tree.title === "ByteArray" && tree.value)
                     {

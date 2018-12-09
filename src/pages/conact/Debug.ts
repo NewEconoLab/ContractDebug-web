@@ -17,7 +17,6 @@ export default class Debug extends Vue
     dumpstr: string = "";
     active: number = 0;
     cEditor: CodeMirror.EditorFromTextArea;
-    careInfo: CodeMirror.EditorFromTextArea;
     notify: CodeMirror.EditorFromTextArea;
     fulllogEditor: CodeMirror.EditorFromTextArea;
     addr: ThinNeo.Debug.Helper.AddrMap;
@@ -43,12 +42,13 @@ export default class Debug extends Vue
         option.theme = "monokai";
         this.cEditor = CodeMirror.fromTextArea(host, option);
         this.fulllogEditor = CodeMirror.fromTextArea(avm, option);
-        option.mode = "application/ld+json";
-        this.careInfo = CodeMirror.fromTextArea(document.getElementById("careInfo-code") as HTMLTextAreaElement, option)
-        this.notify = CodeMirror.fromTextArea(document.getElementById("notify-code") as HTMLTextAreaElement, option)
         this.fulllogEditor.setSize("auto", "100%")
         this.cEditor.setSize("auto", "100%")
         this.initHashList();
+        // option.lineWrapping = true;
+        option.mode = "application/ld+json";
+        this.notify = CodeMirror.fromTextArea(document.getElementById("notify-code") as HTMLTextAreaElement, option)
+        this.notify.setSize("auto", "100%")
 
         if (services.routerParam[ "debug" ])
         {
@@ -75,6 +75,7 @@ export default class Debug extends Vue
     async initDebugInfo()
     {
         const result = await tools.wwwtool.getDumpInfoByTxid(this.txid);
+        this.showNotify(this.txid);
         this.dumpinfo = result[ 'dimpInfo' ];
         var lzma: nid.LZMA = new nid.LZMA();
         nid.utils.MEMORY.reset();
@@ -103,12 +104,8 @@ export default class Debug extends Vue
             this.simVM.Execute(dumpinfo);
             this.dumpstr = "";
             //预先获得所有需要加载的 avm等信息
-            let careInfoStr = ""
-            for (const careInfo of this.simVM.careinfo)
-            {
-                careInfoStr += careInfo.ToString() + "\n";
-            }
-            this.careInfo.setValue(careInfoStr)
+            this.showCareInfo(this.simVM.careinfo)
+            // this.careInfo.setValue(careInfoStr)
             this.dumpScript(this.simVM.regenScript, 1);
 
             this.fulllogEditor.on("cursorActivity", (res) =>
@@ -116,6 +113,44 @@ export default class Debug extends Vue
                 this.debug()
             })
         }
+    }
+
+    async showNotify(txid: string)
+    {
+        let result = await tools.wwwtool.getNotify(txid)
+        this.notify.setValue(JSON.stringify(result));
+        var totalLines = this.notify.lineCount();
+        this.notify.autoFormatRange({ line: 0, ch: 0 }, { line: totalLines });
+    }
+
+    showCareInfo(careArray: Array<ThinNeo.Debug.CareItem>)
+    {
+        let div = document.getElementById("careInfo-msg") as HTMLDivElement;
+        let div2 = document.getElementById("valuetool") as HTMLDivElement;
+        while (div.hasChildNodes())
+        {
+            div.removeChild(div.firstChild);
+        }
+        let tree = new TreeView("");
+        for (const careInfo of careArray)
+        {
+            let careview = new TreeView(careInfo.name)
+            tree.addChildren(careview);
+            if (!careInfo.item)
+            {
+                careview.title = careInfo.name + "()";
+            }
+            else if (careInfo.item.type == "Array")
+            {
+                this.calcStackShow(careInfo.item.subItems, careview);
+            } else
+            {
+                let chird = new TreeView(careInfo.item.type, careInfo.item.strvalue)
+                tree.addChildren(chird);
+            }
+        }
+        let view = new TreeViewItems(div);
+        view.showTree(view.ul, tree, div2);
     }
 
     debug()
@@ -175,25 +210,28 @@ export default class Debug extends Vue
 
     calcStackShow(item, tree: TreeView)
     {
-        for (const obj of item)
+        if (item)
         {
+            for (const obj of item)
+            {
 
-            if (obj[ "type" ] === "Array")
-            {
-                let view = new TreeView("Array");
-                tree.addChildren(view);
-                if (obj[ "subItems" ].length > 0)
+                if (obj[ "type" ] === "Array")
                 {
-                    this.calcStackShow(obj[ "subItems" ], view)
-                } else
-                {
-                    view.value = "[]"
+                    let view = new TreeView("Array");
+                    tree.addChildren(view);
+                    if (obj[ "subItems" ].length > 0)
+                    {
+                        this.calcStackShow(obj[ "subItems" ], view)
+                    } else
+                    {
+                        view.value = "[]"
+                    }
                 }
-            }
-            else
-            {
-                let view = new TreeView(obj[ "type" ], obj[ "strvalue" ])
-                tree.addChildren(view);
+                else if (obj[ "type" ])
+                {
+                    let view = new TreeView(obj[ "type" ], obj[ "strvalue" ])
+                    tree.addChildren(view);
+                }
             }
         }
     }
@@ -261,8 +299,7 @@ export default class Debug extends Vue
             {
                 let arr = [];
                 //预先获得所有需要加载的 avm等信息
-                console.log(script.ops[ i ].subScript.GetAllScriptName(arr));
-                console.log(arr);
+                script.ops[ i ].subScript.GetAllScriptName(arr)
                 this.initCode(arr);
             }
 
