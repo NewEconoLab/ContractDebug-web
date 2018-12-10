@@ -34,9 +34,9 @@ export default class Deploy extends Vue
     opneToast: Function;
     mounted()
     {
+        this.opneToast = this.$refs[ "toast" ][ "isShow" ];
         this.initConactInfo();
         this.initCodeEditor();
-        this.opneToast = this.$refs[ "toast" ][ "isShow" ];
     }
 
     initConactInfo()
@@ -218,7 +218,7 @@ export default class Deploy extends Vue
         this.conactHash = scripthash;
         try
         {
-            if (/^[0-9a-fA-F]{40,40}$/.test(this.conactHash.replace("0x", "")))
+            if (!/^[0-9a-fA-F]{40,40}$/.test(this.conactHash.replace("0x", "")))
             {
                 this.opneToast('error', "请输入正确格式的hash", 4000);
                 return;
