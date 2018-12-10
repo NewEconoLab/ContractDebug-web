@@ -41,6 +41,7 @@ export default class login extends Vue
   moudle_download: boolean = false;
   download_name: string = "";
   download_href: string = "";
+  opneToast: Function;
 
   constructor()
   {
@@ -68,6 +69,7 @@ export default class login extends Vue
 
   mounted()
   {
+    this.opneToast = this.$refs[ "toast" ][ "isShow" ];
     let arr = sessionStorage.getItem("login-info-arr");
     if (!!arr && arr.length > 0)
     {
@@ -92,9 +94,11 @@ export default class login extends Vue
     if (!this.filename)
     {
       // // mui.alert("" + this.$t("toast.msg3"));
+      this.opneToast('error', this.$t("toast.msg3").toString(), 3000);
       return;
     }
     // // mui.toast("" + this.$t("toast.msg1"));
+    this.opneToast('', this.$t("toast.msg1").toString(), 3000);
     if (!!this.wallet.accounts)
     {
       try
@@ -111,11 +115,11 @@ export default class login extends Vue
         sessionStorage.setItem('login-info-arr', JSON.stringify(data));
         LoginInfo.setCurrentAddress(this.wallet.accounts[ 0 ].address);
 
-        // // mui.toast("" + this.$t("toast.msg2"), { duration: 'long', type: 'div' })
+        this.opneToast('succes', this.$t("toast.msg2").toString(), 3000);
         this.$router.push("deploy");;
       } catch (error)
       {
-        // // mui.alert("" + this.$t("toast.msg3"));
+        this.opneToast('error', this.$t("toast.msg3").toString(), 3000);
       }
     }
     if (!!this.otcgo.address)
@@ -138,14 +142,17 @@ export default class login extends Vue
           LoginInfo.setCurrentAddress(info.address)
           sessionStorage.setItem('login-info-arr', JSON.stringify(data));
           // mui.toast("" + this.$t("toast.msg2"), { duration: 'long', type: 'div' })
+          this.opneToast('succes', this.$t("toast.msg2").toString(), 3000);
           this.$router.push("deploy");
         } else
         {
           // mui.alert("" + this.$t("toast.msg3"));
+          this.opneToast('error', this.$t("toast.msg3").toString(), 3000);
         }
       } catch (error)
       {
         // mui.alert("" + this.$t("toast.msg3"));
+        this.opneToast('error', this.$t("toast.msg3").toString(), 3000);
       }
 
     }
@@ -154,10 +161,12 @@ export default class login extends Vue
   async loginWif()
   {
     // mui.toast("" + this.$t("toast.msg1"));
+    this.opneToast('', this.$t("toast.msg1").toString(), 3000);
     var res = tools.neotool.wifDecode(this.wif);
     if (res.err)
     {
       // mui.toast("" + this.$t("toast.msg4"))
+      this.opneToast('error', this.$t("toast.msg4").toString(), 3000);
     } else
     {
       // var loginarray: LoginInfo[] = new Array<LoginInfo>();
@@ -180,6 +189,7 @@ export default class login extends Vue
     if (res.err)
     {
       // mui.toast("" + this.$t("toast.msg4"))
+      this.opneToast('error', this.$t("toast.msg4").toString(), 3000);
     } else
     {
       LoginInfo.info = res.info;
@@ -191,6 +201,7 @@ export default class login extends Vue
       sessionStorage.setItem('login-info-arr', JSON.stringify(data));
       LoginInfo.setCurrentAddress(login.address);
       // mui.toast("" + this.$t("toast.msg2"), { duration: 'long', type: 'div' })
+      this.opneToast('succes', this.$t("toast.msg2").toString(), 3000);
       this.$router.push("deploy");;
     }
   }

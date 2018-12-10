@@ -5,14 +5,14 @@ export class StorageTool
 {
     static getLoginArr(): LoginInfo[]
     {
-        var message = sessionStorage.getItem("login-info-arr");
+        var message = sessionStorage.getItem("login-prik-info-arr");
 
         var arr: LoginInfo[] = message ? LoginInfo.StringToArray(message) : [];
         return arr;
     }
     static setLoginArr(value: LoginInfo[])
     {
-        sessionStorage.setItem('login-info-arr', LoginInfo.ArrayToString(value));
+        sessionStorage.setItem('login-prik-info-arr', LoginInfo.ArrayToString(value));
     }
     static setStorage(key: string, value: string)
     {

@@ -4,24 +4,39 @@
     <div class="container-box">
       <div class="row login-container">
         <div class="container-left">
-          <div class="container-icon"><img src="../../static/img/NeoLogo.svg" alt=""></div>
-          <div class="container-title" @click="cutModual('nep6')" :class="{'active':!(moudle_generate||moudle_download)}">
+          <div class="container-icon">
+            <img src="../../static/img/NeoLogo.svg" alt>
+          </div>
+          <div
+            class="container-title"
+            @click="cutModual('nep6')"
+            :class="{'active':!(moudle_generate||moudle_download)}"
+          >
             <span ref="login">{{$t("login.login")}}</span>
           </div>
-          <div class="container-title" @click="cutModual('generate')" :class="{'active':(moudle_generate || moudle_download)}">
+          <div
+            class="container-title"
+            @click="cutModual('generate')"
+            :class="{'active':(moudle_generate || moudle_download)}"
+          >
             <span ref="login">{{$t("generate.generate")}}</span>
           </div>
         </div>
         <div class="container-right">
           <div v-if="moudle_nep6" class="nep6-imp">
             <div class="title-login">
-              <span>
-                {{$t("login.title")}}
-              </span>
+              <span>{{$t("login.title")}}</span>
             </div>
             <div class="input-login">
               <div class="input-group nel-input-blg">
-                <input type="text" class="form-control" :placeholder="$t('login.selectplaceholder')" disabled="true" v-model="filename" autocomplete="off">
+                <input
+                  type="text"
+                  class="form-control"
+                  :placeholder="$t('login.selectplaceholder')"
+                  disabled="true"
+                  v-model="filename"
+                  autocomplete="off"
+                >
                 <span class="input-group-addon">
                   <button class="btn btn-nel fileinput-button">
                     <span>{{$t("login.selectbtn")}}</span>
@@ -32,11 +47,19 @@
             </div>
             <div class="input-login" style="padding-top:40px;">
               <div class="input-group nel-input-blg">
-                <input class="form-control" :placeholder="$t('login.passwordholder')" type="password" v-model="password" @keyup.enter="loginFile" autocomplete="off">
+                <input
+                  class="form-control"
+                  :placeholder="$t('login.passwordholder')"
+                  type="password"
+                  v-model="password"
+                  @keyup.enter="loginFile"
+                  autocomplete="off"
+                >
                 <span class="input-group-addon">
-                  <button class="btn btn-nel fileinput-button" @click="loginFile">
-                    {{$t("login.login")}}
-                  </button>
+                  <button
+                    class="btn btn-nel fileinput-button"
+                    @click="loginFile"
+                  >{{$t("login.login")}}</button>
                 </span>
               </div>
             </div>
@@ -45,17 +68,30 @@
               <div class="hr-more">{{$t("login.cutlinemsg")}}</div>
             </div>
             <div style="width:417px; margin:0 auto; padding-top:30px">
-              <button class="btn btn-nel btn-import" @click="cutModual('wif')">{{$t("login.wifmsg")}}</button>
+              <button
+                class="btn btn-nel btn-import"
+                @click="cutModual('wif')"
+              >{{$t("login.wifmsg")}}</button>
             </div>
             <div style="width:417px; margin:0 auto; padding-top:20px;padding-bottom: 5.9%;">
-              <button class="btn btn-nel btn-import" @click="cutModual('nep2')">{{$t("login.nep2msg")}}</button>
+              <button
+                class="btn btn-nel btn-import"
+                @click="cutModual('nep2')"
+              >{{$t("login.nep2msg")}}</button>
             </div>
           </div>
           <div v-if="moudle_wif" class="wif_imp">
             <div class="title-login">
               <span>{{$t("wif.title")}}</span>
             </div>
-            <div class="nel-input-blg"><input type="text" :placeholder="$t('wif.wifplaceholder')" v-model="wif" autocomplete="off"></div>
+            <div class="nel-input-blg">
+              <input
+                type="text"
+                :placeholder="$t('wif.wifplaceholder')"
+                v-model="wif"
+                autocomplete="off"
+              >
+            </div>
             <div class="login-btn">
               <button class="btn btn-nel btn-import" @click="loginWif">{{$t("login.login")}}</button>
             </div>
@@ -67,8 +103,22 @@
             <div class="title-login">
               <span>Nep2</span>
             </div>
-            <div class="nel-input-blg"><input type="text" :placeholder="$t('nep2.placeholder')" v-model="nep2" autocomplete="off"></div>
-            <div class="nel-input-blg"><input type="password" :placeholder="$t('nep2.password')" v-model="nep2pwd" autocomplete="off"></div>
+            <div class="nel-input-blg">
+              <input
+                type="text"
+                :placeholder="$t('nep2.placeholder')"
+                v-model="nep2"
+                autocomplete="off"
+              >
+            </div>
+            <div class="nel-input-blg">
+              <input
+                type="password"
+                :placeholder="$t('nep2.password')"
+                v-model="nep2pwd"
+                autocomplete="off"
+              >
+            </div>
             <div class="login-btn">
               <button class="btn btn-nel btn-import" @click="loginNep2">{{$t("login.login")}}</button>
             </div>
@@ -81,36 +131,68 @@
               <span>{{$t("generate.title")}}</span>
             </div>
             <div :class="nameerr!=''?( nameerr == 'true' ?'err':'success') :''">
-              <div class="nel-input-blg"><input type="text" :placeholder="$t('generate.name')" @input="verifyName" @blur="verifyName" v-model="walletname" autocomplete="off">
+              <div class="nel-input-blg">
+                <input
+                  type="text"
+                  :placeholder="$t('generate.name')"
+                  @input="verifyName"
+                  @blur="verifyName"
+                  v-model="walletname"
+                  autocomplete="off"
+                >
               </div>
               <div class="message">
-                <p v-if="nameerr=='true'"><img src="../../static/img/wrong.svg" alt="">&nbsp;&nbsp; {{$t('generate.nameempty')}}</p>
-                <p v-if="nameerr=='false'"><img src="../../static/img/correct.svg" alt="">&nbsp;&nbsp; {{$t('generate.namepass')}}</p>
+                <p v-if="nameerr=='true'">
+                  <img src="../../static/img/wrong.svg" alt>
+                  &nbsp;&nbsp; {{$t('generate.nameempty')}}
+                </p>
+                <p v-if="nameerr=='false'">
+                  <img src="../../static/img/correct.svg" alt>
+                  &nbsp;&nbsp; {{$t('generate.namepass')}}
+                </p>
               </div>
             </div>
             <div :class="pwderr!=''?( pwderr == 'true' ?'err':'success') :''">
               <div class="nel-input-blg">
-                <input type="password" :placeholder="$t('generate.password')" @input="verifypwd" @blur="verifypwd" v-model="walletpwd" autocomplete="off">
+                <input
+                  type="password"
+                  :placeholder="$t('generate.password')"
+                  @input="verifypwd"
+                  @blur="verifypwd"
+                  v-model="walletpwd"
+                  autocomplete="off"
+                >
               </div>
               <div class="message">
                 <p v-if="pwderr=='true'">
-                  <img src="../../static/img/wrong.svg" alt="">&nbsp;&nbsp; {{pwdmsg}}
+                  <img src="../../static/img/wrong.svg" alt>
+                  &nbsp;&nbsp; {{pwdmsg}}
                 </p>
                 <p v-if="pwderr=='false'">
-                  <img src="../../static/img/correct.svg" alt="">&nbsp;&nbsp; {{$t('generate.namepass')}}
+                  <img src="../../static/img/correct.svg" alt>
+                  &nbsp;&nbsp; {{$t('generate.namepass')}}
                 </p>
               </div>
             </div>
             <div :class="confirmerr!=''?( confirmerr == 'true' ?'err':'success') :''">
               <div class="nel-input-blg">
-                <input type="password" :placeholder="$t('generate.passwordagain')" @input="verifyConfirm" @blur="verifyConfirm" v-model="confirmpwd" autocomplete="off">
+                <input
+                  type="password"
+                  :placeholder="$t('generate.passwordagain')"
+                  @input="verifyConfirm"
+                  @blur="verifyConfirm"
+                  v-model="confirmpwd"
+                  autocomplete="off"
+                >
               </div>
               <div class="message">
                 <p v-if="confirmerr=='true'">
-                  <img src="../../static/img/wrong.svg" alt="">&nbsp;&nbsp; {{$t('generate.pwderrmsg3')}}
+                  <img src="../../static/img/wrong.svg" alt>
+                  &nbsp;&nbsp; {{$t('generate.pwderrmsg3')}}
                 </p>
                 <p v-if="confirmerr=='false'">
-                  <img src="../../static/img/correct.svg" alt="">&nbsp;&nbsp; {{$t('generate.namepass')}}
+                  <img src="../../static/img/correct.svg" alt>
+                  &nbsp;&nbsp; {{$t('generate.namepass')}}
                 </p>
               </div>
             </div>
@@ -124,7 +206,11 @@
             </div>
             <p class="guide">{{$t("generate.downloadmsg")}}</p>
             <div class="login-btn">
-              <a class="btn btn-nel btn-import" :download="download_name" :href="download_href">{{$t("generate.download")}}</a>
+              <a
+                class="btn btn-nel btn-import"
+                :download="download_name"
+                :href="download_href"
+              >{{$t("generate.download")}}</a>
             </div>
             <div class="remind">
               <p class="title-remind">{{$t("generate.msg")}}</p>
@@ -134,6 +220,8 @@
         </div>
       </div>
     </div>
+
+    <v-toast ref="toast"></v-toast>
   </main-layout>
 </template>
 
