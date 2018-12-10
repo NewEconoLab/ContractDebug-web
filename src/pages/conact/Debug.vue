@@ -42,7 +42,7 @@
           <div class="title-list">
             <div class="title" :class="active==0?'active':''" @click="active=0">AVM</div>
             <div class="title" :class="active==1?'active':''" @click="active=1">CareInfo</div>
-            <div class="title" :class="active==2?'active':''" @click="active=2">log/notify</div>
+            <div class="title" :class="active==2?'active':''" @click="showNotify">log/notify</div>
           </div>
           <div class="avm-content" v-show="active==0">
             <textarea id="avm-code"></textarea>

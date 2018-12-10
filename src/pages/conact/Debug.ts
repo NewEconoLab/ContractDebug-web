@@ -84,7 +84,7 @@ export default class Debug extends Vue
     async initDebugInfo()
     {
         const result = await tools.wwwtool.getDumpInfoByTxid(this.txid);
-        this.showNotify(this.txid);
+        // await this.showNotify();
         this.dumpinfo = result[ 'dimpInfo' ];
         var lzma: nid.LZMA = new nid.LZMA();
         nid.utils.MEMORY.reset();
@@ -124,9 +124,10 @@ export default class Debug extends Vue
         }
     }
 
-    async showNotify(txid: string)
+    async showNotify()
     {
-        let result = await tools.wwwtool.getNotify(txid)
+        this.active = 2;
+        let result = await tools.wwwtool.getNotify(this.txid)
         this.notify.setValue(JSON.stringify(result));
         var totalLines = this.notify.lineCount();
         this.notify.autoFormatRange({ line: 0, ch: 0 }, { line: totalLines });
