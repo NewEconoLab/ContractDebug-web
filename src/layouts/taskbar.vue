@@ -176,6 +176,7 @@ export default class TaskBar extends Vue {
     services.taskManager.calcStack.push(this.taskHistory);
     services.taskManager.calcStack.push(this.getHeight);
     services.taskManager.calcStack.push(this.getBalance);
+    services.taskManager.calcStack.push(this.initClaimState);
   }
   mounted() {
     this.getHeight();
@@ -199,9 +200,19 @@ export default class TaskBar extends Vue {
   }
 
   async claimGas() {
-    let openToast: any = this.$refs["toast"]["openToast"];
+    if (
+      this.claimState == "3011" ||
+      this.claimState == "3003" ||
+      this.claimState == "3012" ||
+      this.claimState == "3004"
+    ) {
+      return;
+    }
+    let openToast = this.$refs["toast"]["isShow"];
     try {
       const result = await tools.wwwtool.claimGas(this.currentAddress, 500);
+      console.log(result);
+
       if (result ? result[0] : false) {
         this.claimState = result[0]["code"];
         openToast("success", "请求发送成功", 4000);

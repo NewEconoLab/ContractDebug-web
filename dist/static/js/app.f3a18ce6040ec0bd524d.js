@@ -2562,13 +2562,6 @@ var Component = normalizeComponent(
 
 /***/ }),
 
-/***/ "9sct":
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
 /***/ "9vCx":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3113,6 +3106,7 @@ var TaskBar = /** @class */ (function (_super) {
         index_1.services.taskManager.calcStack.push(_this.taskHistory);
         index_1.services.taskManager.calcStack.push(_this.getHeight);
         index_1.services.taskManager.calcStack.push(_this.getBalance);
+        index_1.services.taskManager.calcStack.push(_this.initClaimState);
         return _this;
     }
     TaskBar.prototype.mounted = function () {
@@ -3146,13 +3140,20 @@ var TaskBar = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        openToast = this.$refs["toast"]["openToast"];
+                        if (this.claimState == "3011" ||
+                            this.claimState == "3003" ||
+                            this.claimState == "3012" ||
+                            this.claimState == "3004") {
+                            return [2 /*return*/];
+                        }
+                        openToast = this.$refs["toast"]["isShow"];
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
                         return [4 /*yield*/, importpack_1.tools.wwwtool.claimGas(this.currentAddress, 500)];
                     case 2:
                         result = _a.sent();
+                        console.log(result);
                         if (result ? result[0] : false) {
                             this.claimState = result[0]["code"];
                             openToast("success", "请求发送成功", 4000);
@@ -5462,14 +5463,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var taskbar = __webpack_require__("HOkF");
 var taskbar_default = /*#__PURE__*/__webpack_require__.n(taskbar);
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/template-compiler?{"id":"data-v-b74000e2","hasScoped":true,"transformToRequire":{"video":"src","source":"src","img":"src","image":"xlink:href"},"buble":{"transforms":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./src/layouts/taskbar.vue
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/template-compiler?{"id":"data-v-6996072d","hasScoped":true,"transformToRequire":{"video":"src","source":"src","img":"src","image":"xlink:href"},"buble":{"transforms":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./src/layouts/taskbar.vue
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"navbar navbar-wallet"},[_c('div',{staticClass:"blockheight"},[_c('div',{staticClass:"main"},[_c('div',{staticClass:"balance"},[_c('span',{staticClass:"asset"},[_vm._v("GAS")]),_vm._v(" "),_c('span',{staticClass:"amount"},[_vm._v(_vm._s(_vm.balance.toString()))]),_vm._v(" "),(_vm.claimState==='3010')?_c('v-btn',{on:{"onclick":_vm.claimGas}},[_vm._v("索取500 GAS")]):(_vm.claimState==='3011'||_vm.claimState==='3000')?_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("排队中")]):(_vm.claimState==='3012'||_vm.claimState==='3003')?_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("已发放 GAS")]):_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("Gas不足")]),_vm._v(" "),_c('v-hint',[_c('div',{staticClass:"hint-img"},[_c('img',{attrs:{"src":__webpack_require__("dqMZ"),"alt":""}})]),_vm._v(" "),_c('div',{staticClass:"hint-content"},[_c('p',[_vm._v("每个钱包每日可索取一次500gas，需要更多请在论坛留言索取。")])])])],1),_vm._v(" "),_c('div',{staticClass:"task-btn"},[_c('span',{staticClass:"task-tab"},[_c('img',{attrs:{"src":__webpack_require__("R2WG"),"alt":""}}),_vm._v("\n          "+_vm._s(_vm.$t('transfer.title2')+"：")+"\n          "),_c('a',{attrs:{"href":_vm.href,"target":"_blank"}},[_vm._v(_vm._s(_vm.showaddr))])]),_vm._v(" "),_c('span',{staticClass:"task-tab"},[_c('img',{attrs:{"src":__webpack_require__("ECX6"),"alt":""}}),_vm._v("\n          "+_vm._s([_vm.$t('navbar.blockheight'),_vm.blockheight].join("："))+"\n        ")]),_vm._v(" "),_c('v-btn',{on:{"onclick":function($event){_vm.showHistory=true}}},[_vm._v("操作记录")])],1),_vm._v(" "),_c('div',{staticClass:"tranhistory-box"},[(_vm.showHistory)?_c('div',{staticClass:"tranhistory-wrap"},[_c('div',{staticClass:"tranhistory-listbox"},[_c('div',{staticClass:"tranhistory-title"},[_c('div',{staticClass:"tranhistory-close",on:{"click":function($event){_vm.showHistory=!_vm.showHistory}}},[_c('img',{attrs:{"src":__webpack_require__("fgqV"),"alt":""}})]),_vm._v(" "),_c('span',[_vm._v(_vm._s(_vm.$t('operation.title')))]),_vm._v(" "),_c('div',{staticClass:"tranhistory-tips"},[_vm._v(_vm._s(_vm.$t('operation.tips')))])]),_vm._v(" "),_c('div',{staticClass:"tranhistory-list"},_vm._l((_vm.taskList),function(task){return _c('div',{key:task.txid,staticClass:"th-onelist"},[_c('div',[_c('div',{staticClass:"th-type"},[_c('div',{staticClass:"th-typename"},[_vm._v(_vm._s(task.taskType===2?"合约部署":"合约调用"))]),_vm._v(" "),_c('div',{staticClass:"th-other"},[_c('div',{staticClass:"th-number"},[_c('span',[_vm._v(_vm._s(task.simpleTxid))])])])]),_vm._v(" "),_c('div',{staticClass:"th-block-txid"},[_c('span',{staticClass:"th-txid",staticStyle:{"padding-right":"10px"}},[_vm._v(_vm._s(task.timeStr))]),_vm._v(" "),_c('span',{staticClass:"th-state"},[_c('span',[_vm._v("状态：")]),_vm._v(" "),(task.state==0)?_c('span',{},[_vm._v("等待")]):_vm._e(),_vm._v(" "),(task.state==1)?_c('span',{staticClass:"green-text"},[_vm._v("成功")]):_vm._e(),_vm._v(" "),(task.state==2)?_c('span',{staticClass:"red-text"},[_vm._v("失败")]):_vm._e()])])]),_vm._v(" "),(task.state==1)?_c('div',{staticClass:"btn-right"},[(task.taskType === 2)?_c('div',[_c('v-btn',{on:{"onclick":function($event){_vm.skipPage('invoke',task.message)}}},[_vm._v("合约调用")])],1):_vm._e(),_vm._v(" "),(task.taskType === 1)?_c('div',[_c('v-btn',{on:{"onclick":function($event){_vm.skipPage('debug',task.message)}}},[_vm._v("合约调试")])],1):_vm._e()]):_vm._e()])})),_vm._v(" "),(_vm.taskList.length == 0)?_c('div',{staticClass:"notask"},[_vm._v(_vm._s(_vm.$t('operation.nodata')))]):_vm._e()])]):_vm._e()])])]),_vm._v(" "),_c('v-toast',{ref:"toast"})],1)}
 var staticRenderFns = []
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ var layouts_taskbar = (esExports);
 // CONCATENATED MODULE: ./src/layouts/taskbar.vue
 function injectStyle (ssrContext) {
-  __webpack_require__("9sct")
+  __webpack_require__("qV31")
 }
 var normalizeComponent = __webpack_require__("VU/8")
 /* script */
@@ -5481,7 +5482,7 @@ var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = "data-v-b74000e2"
+var __vue_scopeId__ = "data-v-6996072d"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -6747,6 +6748,13 @@ var Transaction = /** @class */ (function (_super) {
 }(ThinNeo.Transaction));
 exports.Transaction = Transaction;
 
+
+/***/ }),
+
+/***/ "qV31":
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 
