@@ -196,7 +196,7 @@ export default class Deploy extends Vue
         }
         else
         {
-            this.opneToast('error', "为找到该hash对应的合约", 4000);
+            this.opneToast('error', "未找到该hash对应的合约", 4000);
         }
     }
 
@@ -249,12 +249,12 @@ export default class Deploy extends Vue
             }
             else
             {
-                this.opneToast('error', "为找到该hash对应的合约", 4000);
+                this.opneToast('error', "未找到该hash对应的合约", 4000);
             }
 
         } catch (error)
         {
-            this.opneToast('error', "为找到该hash对应的合约", 4000);
+            this.opneToast('error', "未找到该hash对应的合约", 4000);
         }
         this.hashListShow = false;
     }
