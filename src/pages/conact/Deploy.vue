@@ -15,7 +15,9 @@
                       v-for="hash in hashList"
                       :key="hash.scripthash"
                       @click="selectedHash(hash.scripthash)"
-                    >{{hash.name}}</li>
+                    >
+                      <nobr>{{hash.name}}</nobr>
+                    </li>
                   </ul>
                 </div>
               </div>

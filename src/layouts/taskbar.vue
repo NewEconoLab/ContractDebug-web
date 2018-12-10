@@ -6,8 +6,8 @@
           <span class="asset">GAS</span>
           <span class="amount">{{balance.toString()}}</span>
           <v-btn v-if="claimState==='3010'" @onclick="claimGas">索取500 GAS</v-btn>
-          <v-btn v-else-if="claimState==='3011'" :type="'disable'">排队中</v-btn>
-          <v-btn :type="'disable'" v-else-if="claimState==='3012'">已发放 GAS</v-btn>
+          <v-btn v-else-if="claimState==='3011'||claimState==='3000'" :type="'disable'">排队中</v-btn>
+          <v-btn :type="'disable'" v-else-if="claimState==='3012'||claimState==='3003'">已发放 GAS</v-btn>
           <v-btn :type="'disable'" v-else>Gas不足</v-btn>
           <v-hint>
             <div class="hint-img">
