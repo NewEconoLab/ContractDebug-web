@@ -77,7 +77,7 @@ export default class Invoke extends Vue
         }
         if (this.currentContract.scripthash != this.inputContract)
         {
-            if (/^[0-9a-fA-F]{1,40}$/.test(this.inputContract.replace("0x", "")))
+            if (/^[0-9a-fA-F]{40,40}$/.test(this.inputContract.replace("0x", "")))
             {
                 this.currentContract = { name: "", scripthash: this.inputContract };
             }
