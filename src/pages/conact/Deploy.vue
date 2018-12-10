@@ -223,8 +223,8 @@
       margin-left: 20px;
       margin-right: 20px;
       margin-bottom: 20px;
-      padding-bottom: 30px;
-      padding-top: 30px;
+      padding-bottom: 20px;
+      padding-top: 20px;
       .compile-result {
         color: #fff;
         height: 20px;
