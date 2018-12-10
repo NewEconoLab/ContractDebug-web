@@ -70,6 +70,10 @@ export default class Debug extends Vue
             ].join("...");
             return tx;
         })
+        this.txlist = this.txlist.sort((a, b) =>
+        {
+            return b.createTime - a.createTime;
+        })
     }
 
     timeShow(time: number)

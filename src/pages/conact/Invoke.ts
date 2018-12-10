@@ -50,6 +50,11 @@ export default class Invoke extends Vue
     async initContractList()
     {
         this.contractList = await tools.wwwtool.getContractRemarkByAddress(LoginInfo.getCurrentAddress())
+        this.contractList = this.contractList.map(contract =>
+        {
+            contract.name = contract.name.length > 20 ? contract.name.substr(0, 20) + "..." : contract.name;
+            return contract;
+        })
         if (services.routerParam[ "invoke" ])
         {
             this.currentContract.scripthash = services.routerParam[ "invoke" ][ "contract" ];
