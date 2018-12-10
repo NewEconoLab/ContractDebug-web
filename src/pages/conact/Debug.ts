@@ -24,6 +24,7 @@ export default class Debug extends Vue
     CalcStack = {};
     AltStack = {};
     contractFiles: { [ hash: string ]: { cs: string, avm: string, map: string } } = {};
+    opneToast: Function;
     //需要使用simVM来模拟执行一下，得到详细的情报
     simVM: ThinNeo.Debug.SimVM;//
     stackarr:
@@ -32,6 +33,7 @@ export default class Debug extends Vue
         }[] = [];
     mounted()
     {
+        this.opneToast = this.$refs[ "toast" ][ "isShow" ];
         const host = document.getElementById("csharp-code") as HTMLTextAreaElement;
         const avm = document.getElementById("avm-code") as HTMLTextAreaElement;
         const option: CodeMirror.EditorConfiguration = {}
@@ -84,6 +86,11 @@ export default class Debug extends Vue
     async initDebugInfo()
     {
         const result = await tools.wwwtool.getDumpInfoByTxid(this.txid);
+        if (!result)
+        {
+            this.opneToast('error', "交易未收录", 4000);
+            return false;
+        }
         // await this.showNotify();
         this.dumpinfo = result[ 'dimpInfo' ];
         var lzma: nid.LZMA = new nid.LZMA();

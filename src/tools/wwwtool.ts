@@ -430,14 +430,9 @@ export class WWW
         var postdata = WWW.makeRpcPostBody("getDumpInfoByTxid", txid);
         var result = await fetch(WWW.apicontract, { "method": "post", "body": JSON.stringify(postdata) });
         var json = await result.json();
-        if (json[ "result" ])
-        {
-            var r = json[ "result" ][ 0 ];
-            return r;
-        } else
-        {
-            throw "not data";
-        }
+
+        var r = json[ "result" ] ? json[ "result" ][ 0 ] : undefined;
+        return r;
     }
 
     static async getContractRemarkByAddress(address: string)

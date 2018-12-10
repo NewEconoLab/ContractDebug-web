@@ -1023,14 +1023,8 @@ var WWW = /** @class */ (function () {
                         return [4 /*yield*/, result.json()];
                     case 2:
                         json = _a.sent();
-                        if (json["result"]) {
-                            r = json["result"][0];
-                            return [2 /*return*/, r];
-                        }
-                        else {
-                            throw "not data";
-                        }
-                        return [2 /*return*/];
+                        r = json["result"] ? json["result"][0] : undefined;
+                        return [2 /*return*/, r];
                 }
             });
         });

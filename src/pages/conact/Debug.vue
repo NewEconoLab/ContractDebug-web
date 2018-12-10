@@ -70,6 +70,7 @@
         </panel>
       </div>
     </div>
+    <v-toast ref="toast"></v-toast>
   </div>
 </template>
 <style lang="less" scoped>
