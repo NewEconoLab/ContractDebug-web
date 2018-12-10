@@ -172,6 +172,32 @@ export default class Deploy extends Vue
     async initHashContract()
     {
         const coderesult = await tools.wwwtool.getContractCodeByHash(this.conactHash, LoginInfo.getCurrentAddress());
+        const conactinfo: ContractDeployInfo = await tools.wwwtool.getContractDeployInfoByHash(this.conactHash);
+        if (coderesult)
+        {
+            const avm: string = coderesult.avm;
+            this.avmhex = avm.hexToBytes();
+            var blob = new Blob([ avm.hexToBytes() ]);
+            this.download_href = URL.createObjectURL(blob);
+            this.download_name = this.conactHash + ".avm";
+            this.cEditor.setValue(coderesult.cs);
+            if (conactinfo)
+            {
+                this.name = conactinfo.name;
+                this.description = conactinfo.desc
+                this.author = conactinfo.author;
+                this.email = conactinfo.email;
+                this.version = conactinfo.version;
+                this.isCall = conactinfo.dynamicCall == 0 ? false : true;
+                this.isStore = conactinfo.createStorage == 0 ? false : true;
+                this.feePay = conactinfo.acceptablePayment == 0 ? false : true;
+            }
+            sessionStorage.setItem("neo-contract-hash", this.conactHash);
+        }
+        else
+        {
+            this.opneToast('error', "为找到该hash对应的合约", 4000);
+        }
     }
 
     async selectedHash(scripthash: string)
@@ -192,9 +218,14 @@ export default class Deploy extends Vue
         this.conactHash = scripthash;
         try
         {
+            if (/^[0-9a-fA-F]{40,40}$/.test(this.conactHash.replace("0x", "")))
+            {
+                this.opneToast('error', "请输入正确格式的hash", 4000);
+                return;
+            }
             const coderesult = await tools.wwwtool.getContractCodeByHash(this.conactHash, "");
             const conactinfo: ContractDeployInfo = await tools.wwwtool.getContractDeployInfoByHash(this.conactHash);
-            if (coderesult)
+            if (coderesult.abi)
             {
                 const avm: string = coderesult.avm;
                 this.avmhex = avm.hexToBytes();
