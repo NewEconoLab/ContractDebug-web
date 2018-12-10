@@ -181,6 +181,7 @@ export default class Deploy extends Vue
             this.cEditor.setValue("");
             this.conactHash = "";
             sessionStorage.setItem("neo-contract-hash", "")
+            this.hashListShow = false;
             return;
         }
         if (this.inputLoadHash || this.inputhash)
@@ -201,7 +202,6 @@ export default class Deploy extends Vue
                 this.download_href = URL.createObjectURL(blob);
                 this.download_name = this.conactHash + ".avm";
                 this.cEditor.setValue(coderesult.cs);
-
                 if (conactinfo)
                 {
                     this.name = conactinfo.name;
