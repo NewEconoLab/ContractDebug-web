@@ -22,7 +22,7 @@ export default class Deploy extends Vue
     conactHash: string = "";
     download_name: string = "";
     download_href: string = "";
-    hashList: string[] = [];
+    hashList: { name: string, scripthash: string }[] = [];
     hashListShow: boolean = false;
     avmhex: Uint8Array;
     isCall = false;
@@ -162,6 +162,11 @@ export default class Deploy extends Vue
     async loadHashList()
     {
         this.hashList = await tools.wwwtool.getContractRemarkByAddress(LoginInfo.getCurrentAddress())
+        this.hashList = this.hashList.map(hash =>
+        {
+            hash.name = hash.name.length > 20 ? hash.name.substr(0, 20) + "..." : hash.name;
+            return hash;
+        })
     }
 
     async initHashContract()
