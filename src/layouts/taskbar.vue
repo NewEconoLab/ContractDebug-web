@@ -244,6 +244,7 @@ export default class TaskBar extends Vue {
     if (key) {
       services.routerParam[key] = value;
       console.log(key);
+      console.log(value);
 
       this.$router.push(key);
       this.showHistory = false;

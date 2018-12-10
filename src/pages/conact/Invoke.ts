@@ -58,7 +58,7 @@ export default class Invoke extends Vue
         if (services.routerParam[ "invoke" ])
         {
             this.currentContract.scripthash = services.routerParam[ "invoke" ][ "contract" ];
-            this.currentContract.name = this.contractList[ this.currentContract.scripthash ];
+            this.currentContract.name = services.routerParam[ "invoke" ][ "name" ];
             services.routerParam.invoke = null;
         }
     }

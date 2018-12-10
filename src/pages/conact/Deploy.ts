@@ -123,7 +123,7 @@ export default class Deploy extends Vue
                 this.avmhex,
                 amount
             );
-            services.taskManager.addTask(TaskType.deploy, ConfirmType.tranfer, result.txid, { contract: this.conactHash });
+            services.taskManager.addTask(TaskType.deploy, ConfirmType.tranfer, result.txid, { contract: this.conactHash, name: this.name });
             if (result.sendrawtransactionresult)
             {
                 const res = await tools.wwwtool.storageContractFile(
