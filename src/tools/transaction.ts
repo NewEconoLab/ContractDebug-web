@@ -104,9 +104,10 @@ export class Transaction extends ThinNeo.Transaction
     {
         try
         {
-            let current = await LoginInfo.deblocking();
-            let addr = LoginInfo.getCurrentAddress();
+            // let current = await LoginInfo.deblocking();
+            let current = LoginInfo.getCurrentLogin();
             var msg = this.GetMessage().clone();
+            let addr = current.address;
             var pubkey = current.pubkey.clone();
             var prekey = current.prikey.clone();
             var signdata = ThinNeo.Helper.Sign(msg, prekey);

@@ -23,6 +23,9 @@ export default class Debug extends Vue
     oplist: ThinNeo.Compiler.Op[] = [];
     CalcStack = {};
     AltStack = {};
+    currentCodeHash: string = "";
+    currentHighlightLine: number = 0;
+    currentHighlightLine_avm: number = 0;
     contractFiles: { [ hash: string ]: { cs: string, avm: string, map: string } } = {};
     opneToast: Function;
     //需要使用simVM来模拟执行一下，得到详细的情报
@@ -182,12 +185,16 @@ export default class Debug extends Vue
             this.showCode(script.hash);
             this.showStack(op);
             // console.log("script hash : " + script.hash);
-
+            this.cEditor.removeLineClass(this.currentHighlightLine, "background", "cursor-line-highight")
+            this.fulllogEditor.removeLineClass(this.currentHighlightLine_avm, "background", "cursor-line-highight")
             if (this.contractFiles[ script.hash ] && this.addr)
             {
                 var line = this.addr.GetLineBack(op.addr);//尽量倒着取到对应的代码
                 this.cEditor.setCursor(line);
                 this.cEditor.addLineClass(line, "background", "cursor-line-highight");
+                this.currentHighlightLine = line;
+                this.fulllogEditor.addLineClass(codeline, "background", "cursor-line-highight");
+                this.currentHighlightLine_avm = codeline;
             }
         }
     }
@@ -259,16 +266,21 @@ export default class Debug extends Vue
     {
         try
         {
-            const coderesult = this.contractFiles[ hash ];
-            if (coderesult)
+            if (this.currentCodeHash != hash)
             {
-                this.oplist = ThinNeo.Compiler.Avm2Asm.Trans(coderesult.avm.hexToBytes());
-                this.addr = ThinNeo.Debug.Helper.AddrMap.FromJson(JSON.parse(coderesult.map));
-                this.cEditor.setValue(coderesult.cs);
-            }
-            else
-            {
-                this.cEditor.setValue("");
+                const coderesult = this.contractFiles[ hash ];
+                if (coderesult)
+                {
+                    this.oplist = ThinNeo.Compiler.Avm2Asm.Trans(coderesult.avm.hexToBytes());
+                    this.addr = ThinNeo.Debug.Helper.AddrMap.FromJson(JSON.parse(coderesult.map));
+                    this.cEditor.setValue(coderesult.cs);
+                    this.currentCodeHash = hash;
+                }
+                else
+                {
+                    this.cEditor.setValue("");
+                    this.currentCodeHash = "";
+                }
             }
         } catch (error)
         {

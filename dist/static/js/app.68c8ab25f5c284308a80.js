@@ -6696,27 +6696,23 @@ var Transaction = /** @class */ (function (_super) {
      */
     Transaction.prototype.signData = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var current, addr, msg, pubkey, prekey, signdata, data, error_1;
+            var current, msg, addr, pubkey, prekey, signdata, data;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, entity_1.LoginInfo.deblocking()];
-                    case 1:
-                        current = _a.sent();
-                        addr = entity_1.LoginInfo.getCurrentAddress();
-                        msg = this.GetMessage().clone();
-                        pubkey = current.pubkey.clone();
-                        prekey = current.prikey.clone();
-                        signdata = ThinNeo.Helper.Sign(msg, prekey);
-                        this.AddWitness(signdata, pubkey, addr);
-                        data = this.GetRawData();
-                        return [2 /*return*/, data];
-                    case 2:
-                        error_1 = _a.sent();
-                        throw "Signature interrupt";
-                    case 3: return [2 /*return*/];
+                try {
+                    current = entity_1.LoginInfo.getCurrentLogin();
+                    msg = this.GetMessage().clone();
+                    addr = current.address;
+                    pubkey = current.pubkey.clone();
+                    prekey = current.prikey.clone();
+                    signdata = ThinNeo.Helper.Sign(msg, prekey);
+                    this.AddWitness(signdata, pubkey, addr);
+                    data = this.GetRawData();
+                    return [2 /*return*/, data];
                 }
+                catch (error) {
+                    throw "Signature interrupt";
+                }
+                return [2 /*return*/];
             });
         });
     };
