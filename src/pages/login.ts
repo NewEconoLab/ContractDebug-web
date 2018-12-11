@@ -180,6 +180,9 @@ export default class login extends Vue
       data.msg = { wif: this.wif };
       sessionStorage.setItem('login-info-arr', JSON.stringify(data));
       LoginInfo.setCurrentAddress(login.address);
+      let arr = {}
+      arr[ login.address ] = login;
+      tools.storagetool.setLoginArr(arr)
       // mui.toast("" + this.$t("toast.msg2"), { duration: 'long', type: 'div' })
       this.$router.push("deploy");
     }
@@ -203,6 +206,9 @@ export default class login extends Vue
       data.msg[ login.address ] = this.nep2;
       sessionStorage.setItem('login-info-arr', JSON.stringify(data));
       LoginInfo.setCurrentAddress(login.address);
+      let arr = {}
+      arr[ login.address ] = login;
+      tools.storagetool.setLoginArr(arr)
       // mui.toast("" + this.$t("toast.msg2"), { duration: 'long', type: 'div' })
       this.opneToast('succes', this.$t("toast.msg2").toString(), 3000);
       this.$router.push("deploy");;
