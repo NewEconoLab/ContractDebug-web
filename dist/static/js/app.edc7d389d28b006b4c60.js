@@ -3017,202 +3017,6 @@ var Component = normalizeComponent(
 
 /***/ }),
 
-/***/ "HOkF":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [0, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var vue_1 = __webpack_require__("/5sW");
-var vue_class_component_1 = __webpack_require__("c+8m");
-var entity_1 = __webpack_require__("6nHw");
-var StorageMap_1 = __webpack_require__("slXE");
-var importpack_1 = __webpack_require__("VKSY");
-var index_1 = __webpack_require__("r84I");
-var TaskBar = /** @class */ (function (_super) {
-    __extends(TaskBar, _super);
-    function TaskBar() {
-        var _this = _super.call(this) || this;
-        _this.balance = Neo.Fixed8.Zero;
-        _this.blockheight = 0;
-        _this.showHistory = false;
-        _this.claimState = "3010";
-        _this.currentAddress = entity_1.LoginInfo.getCurrentAddress();
-        _this.showaddr = [
-            _this.currentAddress.substring(0, 4),
-            _this.currentAddress.substring(_this.currentAddress.length - 4)
-        ].join("...");
-        _this.href = "https://scan.nel.group/test/address/" + _this.currentAddress;
-        _this.taskList = [];
-        _this.taskNumber = sessionStorage.getItem("newTaskNumber")
-            ? parseInt(sessionStorage.getItem("newTaskNumber"))
-            : 0;
-        index_1.services.taskManager.calcStack.push(_this.taskHistory);
-        index_1.services.taskManager.calcStack.push(_this.getHeight);
-        index_1.services.taskManager.calcStack.push(_this.getBalance);
-        index_1.services.taskManager.calcStack.push(_this.initClaimState);
-        return _this;
-    }
-    TaskBar.prototype.mounted = function () {
-        this.getHeight();
-        // TaskFunction.heightRefresh = this.getHeight;
-        this.getBalance();
-        this.initClaimState();
-        this.taskList = index_1.services.taskManager.showTaskList();
-    };
-    TaskBar.prototype.getHeight = function () {
-        this.blockheight = StorageMap_1.default.blockheight.select("height");
-    };
-    TaskBar.prototype.getBalance = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var balance;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, importpack_1.tools.wwwtool.getUtxoBalance(this.currentAddress, importpack_1.tools.coinTool.id_GAS)];
-                    case 1:
-                        balance = _a.sent();
-                        this.balance = Neo.Fixed8.fromNumber(balance);
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    TaskBar.prototype.claimGas = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var openToast, result, error_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        if (this.claimState == "3011" ||
-                            this.claimState == "3003" ||
-                            this.claimState == "3012" ||
-                            this.claimState == "3004") {
-                            return [2 /*return*/];
-                        }
-                        openToast = this.$refs["toast"]["isShow"];
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, importpack_1.tools.wwwtool.claimGas(this.currentAddress, 500)];
-                    case 2:
-                        result = _a.sent();
-                        if (result ? result[0] : false) {
-                            this.claimState = result[0]["code"];
-                            openToast("success", "请求发送成功", 4000);
-                        }
-                        else {
-                            openToast("error", "gas不足领取失败，请在论坛留言索取。", 4000);
-                        }
-                        return [3 /*break*/, 4];
-                    case 3:
-                        error_1 = _a.sent();
-                        openToast("error", "gas不足领取失败，请在论坛留言索取。", 4000);
-                        console.log(error_1);
-                        return [3 /*break*/, 4];
-                    case 4: return [2 /*return*/];
-                }
-            });
-        });
-    };
-    TaskBar.prototype.initClaimState = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var result, error_2;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, importpack_1.tools.wwwtool.hasClaimGas(this.currentAddress)];
-                    case 1:
-                        result = _a.sent();
-                        this.claimState = result["code"];
-                        return [3 /*break*/, 3];
-                    case 2:
-                        error_2 = _a.sent();
-                        console.log(error_2);
-                        return [3 /*break*/, 3];
-                    case 3: return [2 /*return*/];
-                }
-            });
-        });
-    };
-    TaskBar.prototype.taskHistory = function () {
-        // this.clearTimer();
-        this.taskList = index_1.services.taskManager.showTaskList();
-    };
-    TaskBar.prototype.skipPage = function (key, value) {
-        if (key) {
-            index_1.services.routerParam[key] = value;
-            this.$router.push(key);
-            this.showHistory = false;
-        }
-    };
-    TaskBar = __decorate([
-        vue_class_component_1.default({
-            components: {}
-        }),
-        __metadata("design:paramtypes", [])
-    ], TaskBar);
-    return TaskBar;
-}(vue_1.default));
-exports.default = TaskBar;
-
-
-/***/ }),
-
 /***/ "HWxh":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4295,6 +4099,13 @@ var Selected = /** @class */ (function (_super) {
 }(vue_1.default));
 exports.default = Selected;
 
+
+/***/ }),
+
+/***/ "ThPo":
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 
@@ -5442,22 +5253,21 @@ exports.NNSTool = NNSTool;
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
-// EXTERNAL MODULE: ./node_modules/ts-loader!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./src/layouts/taskbar.vue
-var taskbar = __webpack_require__("HOkF");
+// EXTERNAL MODULE: ./node_modules/ts-loader!./src/layouts/taskbar.ts
+var taskbar = __webpack_require__("fM9o");
 var taskbar_default = /*#__PURE__*/__webpack_require__.n(taskbar);
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/template-compiler?{"id":"data-v-1b872525","hasScoped":true,"transformToRequire":{"video":"src","source":"src","img":"src","image":"xlink:href"},"buble":{"transforms":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./src/layouts/taskbar.vue
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"navbar navbar-wallet"},[_c('div',{staticClass:"blockheight"},[_c('div',{staticClass:"main"},[_c('div',{staticClass:"balance"},[_c('span',{staticClass:"asset"},[_vm._v("GAS")]),_vm._v(" "),_c('span',{staticClass:"amount"},[_vm._v(_vm._s(_vm.balance.toString()))]),_vm._v(" "),(_vm.claimState==='3010')?_c('v-btn',{on:{"onclick":_vm.claimGas}},[_vm._v("索取500 GAS")]):(_vm.claimState==='3011'||_vm.claimState==='3000')?_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("排队中")]):(_vm.claimState==='3012'||_vm.claimState==='3003')?_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("已发放 GAS")]):_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("Gas不足")]),_vm._v(" "),_c('v-hint',[_c('div',{staticClass:"hint-img"},[_c('img',{attrs:{"src":__webpack_require__("dqMZ"),"alt":""}})]),_vm._v(" "),_c('div',{staticClass:"hint-content"},[_c('p',[_vm._v("每个钱包每日可索取一次500gas，需要更多请在论坛留言索取。")])])])],1),_vm._v(" "),_c('div',{staticClass:"task-btn"},[_c('span',{staticClass:"task-tab"},[_c('img',{attrs:{"src":__webpack_require__("R2WG"),"alt":""}}),_vm._v("\n          "+_vm._s(_vm.$t('transfer.title2')+"：")+"\n          "),_c('a',{attrs:{"href":_vm.href,"target":"_blank"}},[_vm._v(_vm._s(_vm.showaddr))])]),_vm._v(" "),_c('span',{staticClass:"task-tab"},[_c('img',{attrs:{"src":__webpack_require__("ECX6"),"alt":""}}),_vm._v("\n          "+_vm._s([_vm.$t('navbar.blockheight'),_vm.blockheight].join("："))+"\n        ")]),_vm._v(" "),_c('v-btn',{on:{"onclick":function($event){_vm.showHistory=true}}},[_vm._v("操作记录")])],1),_vm._v(" "),_c('div',{staticClass:"tranhistory-box"},[(_vm.showHistory)?_c('div',{staticClass:"tranhistory-wrap"},[_c('div',{staticClass:"tranhistory-listbox"},[_c('div',{staticClass:"tranhistory-title"},[_c('div',{staticClass:"tranhistory-close",on:{"click":function($event){_vm.showHistory=!_vm.showHistory}}},[_c('img',{attrs:{"src":__webpack_require__("fgqV"),"alt":""}})]),_vm._v(" "),_c('span',[_vm._v(_vm._s(_vm.$t('operation.title')))]),_vm._v(" "),_c('div',{staticClass:"tranhistory-tips"},[_vm._v(_vm._s(_vm.$t('operation.tips')))])]),_vm._v(" "),_c('div',{staticClass:"tranhistory-list"},_vm._l((_vm.taskList),function(task){return _c('div',{key:task.txid,staticClass:"th-onelist"},[_c('div',[_c('div',{staticClass:"th-type"},[_c('div',{staticClass:"th-typename"},[_vm._v(_vm._s(task.taskType===2?"合约部署":"合约调用"))]),_vm._v(" "),_c('div',{staticClass:"th-other"},[_c('div',{staticClass:"th-number"},[_c('span',[_vm._v(_vm._s(task.simpleTxid))])])])]),_vm._v(" "),_c('div',{staticClass:"th-block-txid"},[_c('span',{staticClass:"th-txid",staticStyle:{"padding-right":"10px"}},[_vm._v(_vm._s(task.timeStr))]),_vm._v(" "),_c('span',{staticClass:"th-state"},[_c('span',[_vm._v("状态：")]),_vm._v(" "),(task.state==0)?_c('span',{},[_vm._v("等待")]):_vm._e(),_vm._v(" "),(task.state==1)?_c('span',{staticClass:"green-text"},[_vm._v("成功")]):_vm._e(),_vm._v(" "),(task.state==2)?_c('span',{staticClass:"red-text"},[_vm._v("失败")]):_vm._e()])])]),_vm._v(" "),(task.state==1)?_c('div',{staticClass:"btn-right"},[(task.taskType === 2)?_c('div',[_c('v-btn',{on:{"onclick":function($event){_vm.skipPage('invoke',task.message)}}},[_vm._v("合约调用")])],1):_vm._e(),_vm._v(" "),(task.taskType === 1)?_c('div',[_c('v-btn',{on:{"onclick":function($event){_vm.skipPage('debug',task.message)}}},[_vm._v("合约调试")])],1):_vm._e()]):_vm._e()])})),_vm._v(" "),(_vm.taskList.length == 0)?_c('div',{staticClass:"notask"},[_vm._v(_vm._s(_vm.$t('operation.nodata')))]):_vm._e()])]):_vm._e()])])]),_vm._v(" "),_c('v-toast',{ref:"toast"})],1)}
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/template-compiler?{"id":"data-v-29c2c493","hasScoped":true,"transformToRequire":{"video":"src","source":"src","img":"src","image":"xlink:href"},"buble":{"transforms":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./src/layouts/taskbar.vue
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"navbar navbar-wallet"},[_c('div',{staticClass:"blockheight"},[_c('div',{staticClass:"main"},[_c('div',{staticClass:"balance"},[_c('span',{staticClass:"asset"},[_vm._v("GAS")]),_vm._v(" "),_c('span',{staticClass:"amount"},[_vm._v(_vm._s(_vm.balance.toString()))]),_vm._v(" "),(_vm.claimState==='3010')?_c('v-btn',{on:{"onclick":_vm.claimGas}},[_vm._v("索取500 GAS")]):(_vm.claimState==='3011'||_vm.claimState==='3000')?_c('v-btn',{attrs:{"type":'disable'},on:{"onclick":null}},[_vm._v("排队中")]):(_vm.claimState==='3012'||_vm.claimState==='3003')?_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("已发放 GAS")]):_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("Gas不足")]),_vm._v(" "),_c('v-hint',[_c('div',{staticClass:"hint-img"},[_c('img',{attrs:{"src":__webpack_require__("dqMZ"),"alt":""}})]),_vm._v(" "),_c('div',{staticClass:"hint-content"},[_c('p',[_vm._v("每个钱包每日可索取一次500gas，需要更多请在论坛留言索取。")])])])],1),_vm._v(" "),_c('div',{staticClass:"task-btn"},[_c('span',{staticClass:"task-tab"},[_c('img',{attrs:{"src":__webpack_require__("R2WG"),"alt":""}}),_vm._v("\n          "+_vm._s(_vm.$t('transfer.title2')+"：")+"\n          "),_c('a',{attrs:{"href":_vm.href,"target":"_blank"}},[_vm._v(_vm._s(_vm.showaddr))])]),_vm._v(" "),_c('span',{staticClass:"task-tab"},[_c('img',{attrs:{"src":__webpack_require__("ECX6"),"alt":""}}),_vm._v("\n          "+_vm._s([_vm.$t('navbar.blockheight'),_vm.blockheight].join("："))+"\n        ")]),_vm._v(" "),_c('v-btn',{on:{"onclick":function($event){_vm.showHistory=true}}},[_vm._v("操作记录")])],1),_vm._v(" "),_c('div',{staticClass:"tranhistory-box"},[(_vm.showHistory)?_c('div',{staticClass:"tranhistory-wrap"},[_c('div',{staticClass:"tranhistory-listbox"},[_c('div',{staticClass:"tranhistory-title"},[_c('div',{staticClass:"tranhistory-close",on:{"click":function($event){_vm.showHistory=!_vm.showHistory}}},[_c('img',{attrs:{"src":__webpack_require__("fgqV"),"alt":""}})]),_vm._v(" "),_c('span',[_vm._v(_vm._s(_vm.$t('operation.title')))]),_vm._v(" "),_c('div',{staticClass:"tranhistory-tips"},[_vm._v(_vm._s(_vm.$t('operation.tips')))])]),_vm._v(" "),_c('div',{staticClass:"tranhistory-list"},_vm._l((_vm.taskList),function(task){return _c('div',{key:task.txid,staticClass:"th-onelist"},[_c('div',[_c('div',{staticClass:"th-type"},[_c('div',{staticClass:"th-typename"},[_vm._v(_vm._s(task.taskType===2?"合约部署":"合约调用"))]),_vm._v(" "),_c('div',{staticClass:"th-other"},[_c('div',{staticClass:"th-number"},[_c('span',[_vm._v(_vm._s(task.simpleTxid))])])])]),_vm._v(" "),_c('div',{staticClass:"th-block-txid"},[_c('span',{staticClass:"th-txid",staticStyle:{"padding-right":"10px"}},[_vm._v(_vm._s(task.timeStr))]),_vm._v(" "),_c('span',{staticClass:"th-state"},[_c('span',[_vm._v("状态：")]),_vm._v(" "),(task.state==0)?_c('span',{},[_vm._v("等待")]):_vm._e(),_vm._v(" "),(task.state==1)?_c('span',{staticClass:"green-text"},[_vm._v("成功")]):_vm._e(),_vm._v(" "),(task.state==2)?_c('span',{staticClass:"red-text"},[_vm._v("失败")]):_vm._e()])])]),_vm._v(" "),(task.state==1)?_c('div',{staticClass:"btn-right"},[(task.taskType === 2)?_c('div',[_c('v-btn',{on:{"onclick":function($event){_vm.skipPage('invoke',task.message)}}},[_vm._v("合约调用")])],1):_vm._e(),_vm._v(" "),(task.taskType === 1)?_c('div',[_c('v-btn',{on:{"onclick":function($event){_vm.skipPage('debug',task.message)}}},[_vm._v("合约调试")])],1):_vm._e()]):_vm._e()])})),_vm._v(" "),(_vm.taskList.length == 0)?_c('div',{staticClass:"notask"},[_vm._v(_vm._s(_vm.$t('operation.nodata')))]):_vm._e()])]):_vm._e()])])]),_vm._v(" "),_c('v-toast',{ref:"toast"})],1)}
 var staticRenderFns = []
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ var layouts_taskbar = (esExports);
 // CONCATENATED MODULE: ./src/layouts/taskbar.vue
 function injectStyle (ssrContext) {
-  __webpack_require__("r8nX")
+  __webpack_require__("ThPo")
 }
 var normalizeComponent = __webpack_require__("VU/8")
 /* script */
-
 /* template */
 
 /* template functional */
@@ -5465,7 +5275,7 @@ var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = "data-v-1b872525"
+var __vue_scopeId__ = "data-v-29c2c493"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -5486,6 +5296,199 @@ var Component = normalizeComponent(
 /***/ (function(module, exports) {
 
 module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAflBMVEUAAAAbduUbd+Ucd+UcduYcd+UbducceecfeOoffOgbd+YcduYbduYbduX////5/P72+v5Mk+tFj+plo+0pf+by9/1Sl+s4h+gje+bh7fva6frK3/nA2fiwz/aix/SAs/BAjeno8fzX5/qz0fapy/Wcw/N/svBzq+9bnOwzhOfJk/7vAAAADXRSTlMA2ezHvoFUPzEh8/ryKD27+QAAAOtJREFUKM+Fk+mSwiAQhEEhkrg0IYdZb3e93/8FLRWGI1X6/QlDFzMD02GEkoJXFRdSsZyCa4IXiVROdcK0DNpsojMmM9LmesTcqSWd+21sR2ffmX294WgArK2v++rTBW2N/91pCdO4jWfP3KVc9u3zs8HG34gx5Yvc3ycser+jmNQpA4xfSiYycY+1XwpXkljUtdVUtMo0c6OgSsWmN22IftK0K1yjiCcNLbDSESK5SottLEqmoqhrhlhU9HxjuHt4h93tI7GIR6a7GrgEq6TDPgA4h2FnNtni70A2GRmsCwb7ZM3vpv74OzwAZ0kg+dZauW8AAAAASUVORK5CYII="
+
+/***/ }),
+
+/***/ "fM9o":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var vue_1 = __webpack_require__("/5sW");
+var vue_class_component_1 = __webpack_require__("c+8m");
+var entity_1 = __webpack_require__("6nHw");
+var StorageMap_1 = __webpack_require__("slXE");
+var importpack_1 = __webpack_require__("VKSY");
+var index_1 = __webpack_require__("r84I");
+var TaskBar = /** @class */ (function (_super) {
+    __extends(TaskBar, _super);
+    function TaskBar() {
+        var _this = _super.call(this) || this;
+        _this.balance = Neo.Fixed8.Zero;
+        _this.blockheight = 0;
+        _this.showHistory = false;
+        _this.claimState = "3010";
+        _this.currentAddress = entity_1.LoginInfo.getCurrentAddress();
+        _this.showaddr = [
+            _this.currentAddress.substring(0, 4),
+            _this.currentAddress.substring(_this.currentAddress.length - 4)
+        ].join("...");
+        _this.href = "https://scan.nel.group/test/address/" + _this.currentAddress;
+        _this.taskList = [];
+        _this.taskNumber = sessionStorage.getItem("newTaskNumber")
+            ? parseInt(sessionStorage.getItem("newTaskNumber"))
+            : 0;
+        index_1.services.taskManager.calcStack.push(_this.taskHistory);
+        index_1.services.taskManager.calcStack.push(_this.getHeight);
+        index_1.services.taskManager.calcStack.push(_this.getBalance);
+        index_1.services.taskManager.calcStack.push(_this.initClaimState);
+        return _this;
+    }
+    TaskBar.prototype.mounted = function () {
+        this.getHeight();
+        // TaskFunction.heightRefresh = this.getHeight;
+        this.getBalance();
+        this.initClaimState();
+        this.taskList = index_1.services.taskManager.showTaskList();
+    };
+    TaskBar.prototype.getHeight = function () {
+        this.blockheight = StorageMap_1.default.blockheight.select("height");
+    };
+    TaskBar.prototype.getBalance = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var balance;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, importpack_1.tools.wwwtool.getUtxoBalance(this.currentAddress, importpack_1.tools.coinTool.id_GAS)];
+                    case 1:
+                        balance = _a.sent();
+                        this.balance = Neo.Fixed8.fromNumber(balance);
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    TaskBar.prototype.claimGas = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var openToast, result, error_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        console.log(this.claimState);
+                        if (!(this.claimState == "3010")) return [3 /*break*/, 4];
+                        console.log(this.claimState);
+                        openToast = this.$refs["toast"]["isShow"];
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, importpack_1.tools.wwwtool.claimGas(this.currentAddress, 500)];
+                    case 2:
+                        result = _a.sent();
+                        if (result ? result[0] : false) {
+                            this.claimState = result[0]["code"];
+                            openToast("success", "请求发送成功", 4000);
+                        }
+                        else {
+                            openToast("error", "gas不足领取失败，请在论坛留言索取。", 4000);
+                        }
+                        return [3 /*break*/, 4];
+                    case 3:
+                        error_1 = _a.sent();
+                        openToast("error", "gas不足领取失败，请在论坛留言索取。", 4000);
+                        console.log(error_1);
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    TaskBar.prototype.initClaimState = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var result, error_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, importpack_1.tools.wwwtool.hasClaimGas(this.currentAddress)];
+                    case 1:
+                        result = _a.sent();
+                        this.claimState = result["code"];
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_2 = _a.sent();
+                        console.log(error_2);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    TaskBar.prototype.taskHistory = function () {
+        // this.clearTimer();
+        this.taskList = index_1.services.taskManager.showTaskList();
+    };
+    TaskBar.prototype.skipPage = function (key, value) {
+        if (key) {
+            index_1.services.routerParam[key] = value;
+            this.$router.push(key);
+            this.showHistory = false;
+        }
+    };
+    TaskBar = __decorate([
+        vue_class_component_1.default({
+            components: {}
+        }),
+        __metadata("design:paramtypes", [])
+    ], TaskBar);
+    return TaskBar;
+}(vue_1.default));
+exports.default = TaskBar;
+
 
 /***/ }),
 
@@ -6783,13 +6786,6 @@ var services;
     services.routerParam = {};
 })(services = exports.services || (exports.services = {}));
 
-
-/***/ }),
-
-/***/ "r8nX":
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
 
 /***/ }),
 

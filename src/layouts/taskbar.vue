@@ -6,7 +6,11 @@
           <span class="asset">GAS</span>
           <span class="amount">{{balance.toString()}}</span>
           <v-btn v-if="claimState==='3010'" @onclick="claimGas">索取500 GAS</v-btn>
-          <v-btn v-else-if="claimState==='3011'||claimState==='3000'" :type="'disable'">排队中</v-btn>
+          <v-btn
+            v-else-if="claimState==='3011'||claimState==='3000'"
+            :type="'disable'"
+            @onclick="null"
+          >排队中</v-btn>
           <v-btn :type="'disable'" v-else-if="claimState==='3012'||claimState==='3003'">已发放 GAS</v-btn>
           <v-btn :type="'disable'" v-else>Gas不足</v-btn>
           <v-hint>
@@ -84,6 +88,9 @@
     <v-toast ref="toast"></v-toast>
   </div>
 </template>
+
+<script lang="ts" src="./taskbar.ts">
+</script>
 <style lang="less" scoped>
 .main {
   display: flex;
@@ -134,114 +141,3 @@
   }
 }
 </style>
-
-<script lang="ts">
-import Vue from "vue";
-import Component from "vue-class-component";
-import { LoginInfo } from "../tools/entity";
-import Store from "../tools/StorageMap";
-import { tools } from "../tools/importpack";
-import { Task, TaskView, TaskType } from "../entity/TaskEntitys";
-import { services } from "../services/index";
-import { store } from "../store/index";
-@Component({
-  components: {}
-})
-export default class TaskBar extends Vue {
-  currentAddress: string;
-  showaddr: string;
-  href: string;
-  blockheight: number;
-  showHistory: boolean;
-  taskList: TaskView[];
-  taskNumber: number;
-  balance: Neo.Fixed8;
-  claimState: string;
-  constructor() {
-    super();
-    this.balance = Neo.Fixed8.Zero;
-    this.blockheight = 0;
-    this.showHistory = false;
-    this.claimState = "3010";
-    this.currentAddress = LoginInfo.getCurrentAddress();
-    this.showaddr = [
-      this.currentAddress.substring(0, 4),
-      this.currentAddress.substring(this.currentAddress.length - 4)
-    ].join("...");
-    this.href = "https://scan.nel.group/test/address/" + this.currentAddress;
-    this.taskList = [];
-    this.taskNumber = sessionStorage.getItem("newTaskNumber")
-      ? parseInt(sessionStorage.getItem("newTaskNumber"))
-      : 0;
-    services.taskManager.calcStack.push(this.taskHistory);
-    services.taskManager.calcStack.push(this.getHeight);
-    services.taskManager.calcStack.push(this.getBalance);
-    services.taskManager.calcStack.push(this.initClaimState);
-  }
-  mounted() {
-    this.getHeight();
-    // TaskFunction.heightRefresh = this.getHeight;
-    this.getBalance();
-    this.initClaimState();
-    this.taskList = services.taskManager.showTaskList();
-  }
-
-  getHeight() {
-    this.blockheight = Store.blockheight.select("height");
-  }
-
-  async getBalance() {
-    const balance = await tools.wwwtool.getUtxoBalance(
-      this.currentAddress,
-      tools.coinTool.id_GAS
-    );
-    this.balance = Neo.Fixed8.fromNumber(balance);
-  }
-
-  async claimGas() {
-    if (
-      this.claimState == "3011" ||
-      this.claimState == "3003" ||
-      this.claimState == "3012" ||
-      this.claimState == "3004"
-    ) {
-      return;
-    }
-    let openToast = this.$refs["toast"]["isShow"];
-    try {
-      const result = await tools.wwwtool.claimGas(this.currentAddress, 500);
-      if (result ? result[0] : false) {
-        this.claimState = result[0]["code"];
-        openToast("success", "请求发送成功", 4000);
-      } else {
-        openToast("error", "gas不足领取失败，请在论坛留言索取。", 4000);
-      }
-    } catch (error) {
-      openToast("error", "gas不足领取失败，请在论坛留言索取。", 4000);
-      console.log(error);
-    }
-  }
-
-  async initClaimState() {
-    try {
-      const result = await tools.wwwtool.hasClaimGas(this.currentAddress);
-      this.claimState = result["code"];
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  taskHistory() {
-    // this.clearTimer();
-    this.taskList = services.taskManager.showTaskList();
-  }
-
-  skipPage(key: string, value: string) {
-    if (key) {
-      services.routerParam[key] = value;
-      this.$router.push(key);
-      this.showHistory = false;
-    }
-  }
-}
-</script>
