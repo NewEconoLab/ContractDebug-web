@@ -42,12 +42,14 @@ export default class Debug extends Vue
         option.dragDrop = true;
         option.readOnly = true;
         option.theme = "monokai";
-        this.cEditor = CodeMirror.fromTextArea(host, option);
         this.fulllogEditor = CodeMirror.fromTextArea(avm, option);
         this.fulllogEditor.setSize("auto", "100%")
+        option.lineWrapping = true;
+        this.cEditor = CodeMirror.fromTextArea(host, option);
         this.cEditor.setSize("auto", "100%")
         this.initHashList();
         // option.lineWrapping = true;
+        option.lineWrapping = false;
         option.mode = "application/ld+json";
         this.notify = CodeMirror.fromTextArea(document.getElementById("notify-code") as HTMLTextAreaElement, option)
         this.notify.setSize("auto", "100%")
