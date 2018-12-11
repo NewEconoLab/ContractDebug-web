@@ -201,40 +201,45 @@ export class LoginInfo
         }
     }
 
-    static ArrayToString(array: LoginInfo[]): string
+    static ArrayToString(array: { [ address: string ]: LoginInfo }): string
     {
-        var obj = [];
-        for (var i = 0; i < array.length; i++)
+        var obj = {};
+        for (const addr in array)
         {
-            obj.push({});
-            obj[ i ].pubkey = array[ i ].pubkey.toHexString();
-            obj[ i ].prikey = array[ i ].prikey.toHexString();
-            obj[ i ].address = array[ i ].address;
+            if (array.hasOwnProperty(addr))
+            {
+                var wallet = array[ addr ];
+                obj[ addr ] = {};
+                obj[ addr ].address = wallet.address;
+                obj[ addr ].pubkey = wallet.pubkey.toHexString();
+                obj[ addr ].prikey = wallet.prikey.toHexString();
+            }
         }
         return JSON.stringify(obj);
     }
-    static StringToArray(str: string): LoginInfo[]
+    static StringToArray(str: string)
     {
         var obj = JSON.parse(str);
-        var arr: LoginInfo[] = [];
-        for (var i = 0; i < obj.length; i++)
+        var wallet: { [ addr: string ]: LoginInfo } = {};
+        for (const addr in obj)
         {
-
-            arr.push(new LoginInfo());
-            var str: string = obj[ i ].prikey;
-            var str2: string = obj[ i ].pubkey;
-            arr[ i ].prikey = str.hexToBytes();
-            arr[ i ].pubkey = str2.hexToBytes();
-            arr[ i ].address = obj[ i ].address;
+            if (obj.hasOwnProperty(addr))
+            {
+                var str: string = obj[ addr ].prikey;
+                var str2: string = obj[ addr ].pubkey;
+                wallet[ addr ] = new LoginInfo();
+                wallet[ addr ].address = addr;
+                wallet[ addr ].prikey = str.hexToBytes();
+                wallet[ addr ].pubkey = str2.hexToBytes();
+            }
         }
-        return arr;
+        return wallet;
     }
     static getCurrentLogin(): LoginInfo
     {
         var address: string = LoginInfo.getCurrentAddress();
-        var arr: LoginInfo[] = tools.storagetool.getLoginArr();
-        var n: number = arr.findIndex(info => info.address == address);
-        return arr[ n ];
+        var arr = tools.storagetool.getLoginArr();
+        return arr[ address ];
     }
     static getCurrentAddress(): string
     {

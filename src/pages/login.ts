@@ -93,11 +93,9 @@ export default class login extends Vue
   {
     if (!this.filename)
     {
-      // // mui.alert("" + this.$t("toast.msg3"));
       this.opneToast('error', this.$t("toast.msg3").toString(), 3000);
       return;
     }
-    // // mui.toast("" + this.$t("toast.msg1"));
     this.opneToast('', this.$t("toast.msg1").toString(), 3000);
     if (!!this.wallet.accounts)
     {
@@ -114,6 +112,7 @@ export default class login extends Vue
         LoginInfo.info = loginarray[ this.wallet.accounts[ 0 ].address ];
         sessionStorage.setItem('login-info-arr', JSON.stringify(data));
         LoginInfo.setCurrentAddress(this.wallet.accounts[ 0 ].address);
+        tools.storagetool.setLoginArr(loginarray)
 
         this.opneToast('succes', this.$t("toast.msg2").toString(), 3000);
         this.$router.push("deploy");;
@@ -141,6 +140,10 @@ export default class login extends Vue
           LoginInfo.info = info;
           LoginInfo.setCurrentAddress(info.address)
           sessionStorage.setItem('login-info-arr', JSON.stringify(data));
+          LoginInfo.setCurrentAddress(this.wallet.accounts[ 0 ].address);
+          let arr = {}
+          arr[ info.address ] = info;
+          tools.storagetool.setLoginArr(arr)
           // mui.toast("" + this.$t("toast.msg2"), { duration: 'long', type: 'div' })
           this.opneToast('succes', this.$t("toast.msg2").toString(), 3000);
           this.$router.push("deploy");

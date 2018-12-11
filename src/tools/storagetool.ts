@@ -3,14 +3,14 @@ import { UTXO, LoginInfo } from "./entity";
 
 export class StorageTool
 {
-    static getLoginArr(): LoginInfo[]
+    static getLoginArr()
     {
         var message = sessionStorage.getItem("login-prik-info-arr");
 
-        var arr: LoginInfo[] = message ? LoginInfo.StringToArray(message) : [];
+        var arr: { [ addr: string ]: LoginInfo } = message ? LoginInfo.StringToArray(message) : {};
         return arr;
     }
-    static setLoginArr(value: LoginInfo[])
+    static setLoginArr(value: { [ addr: string ]: LoginInfo })
     {
         sessionStorage.setItem('login-prik-info-arr', LoginInfo.ArrayToString(value));
     }

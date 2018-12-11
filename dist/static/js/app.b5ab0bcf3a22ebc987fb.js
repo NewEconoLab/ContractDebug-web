@@ -1131,12 +1131,12 @@ var StorageTool = /** @class */ (function () {
     function StorageTool() {
     }
     StorageTool.getLoginArr = function () {
-        var message = sessionStorage.getItem("login-info-arr");
-        var arr = message ? entity_1.LoginInfo.StringToArray(message) : [];
+        var message = sessionStorage.getItem("login-prik-info-arr");
+        var arr = message ? entity_1.LoginInfo.StringToArray(message) : {};
         return arr;
     };
     StorageTool.setLoginArr = function (value) {
-        sessionStorage.setItem('login-info-arr', entity_1.LoginInfo.ArrayToString(value));
+        sessionStorage.setItem('login-prik-info-arr', entity_1.LoginInfo.ArrayToString(value));
     };
     StorageTool.setStorage = function (key, value) {
         sessionStorage.setItem(key, value);
@@ -1788,33 +1788,37 @@ var LoginInfo = /** @class */ (function () {
         };
     };
     LoginInfo.ArrayToString = function (array) {
-        var obj = [];
-        for (var i = 0; i < array.length; i++) {
-            obj.push({});
-            obj[i].pubkey = array[i].pubkey.toHexString();
-            obj[i].prikey = array[i].prikey.toHexString();
-            obj[i].address = array[i].address;
+        var obj = {};
+        for (var addr in array) {
+            if (array.hasOwnProperty(addr)) {
+                var wallet = array[addr];
+                obj[addr] = {};
+                obj[addr].address = wallet.address;
+                obj[addr].pubkey = wallet.pubkey.toHexString();
+                obj[addr].prikey = wallet.prikey.toHexString();
+            }
         }
         return JSON.stringify(obj);
     };
     LoginInfo.StringToArray = function (str) {
         var obj = JSON.parse(str);
-        var arr = [];
-        for (var i = 0; i < obj.length; i++) {
-            arr.push(new LoginInfo());
-            var str = obj[i].prikey;
-            var str2 = obj[i].pubkey;
-            arr[i].prikey = str.hexToBytes();
-            arr[i].pubkey = str2.hexToBytes();
-            arr[i].address = obj[i].address;
+        var wallet = {};
+        for (var addr in obj) {
+            if (obj.hasOwnProperty(addr)) {
+                var str = obj[addr].prikey;
+                var str2 = obj[addr].pubkey;
+                wallet[addr] = new LoginInfo();
+                wallet[addr].address = addr;
+                wallet[addr].prikey = str.hexToBytes();
+                wallet[addr].pubkey = str2.hexToBytes();
+            }
         }
-        return arr;
+        return wallet;
     };
     LoginInfo.getCurrentLogin = function () {
         var address = LoginInfo.getCurrentAddress();
         var arr = importpack_1.tools.storagetool.getLoginArr();
-        var n = arr.findIndex(function (info) { return info.address == address; });
-        return arr[n];
+        return arr[address];
     };
     LoginInfo.getCurrentAddress = function () {
         return importpack_1.tools.storagetool.getStorage("current-address");
@@ -3109,7 +3113,6 @@ var TaskBar = /** @class */ (function (_super) {
         this.getBalance();
         this.initClaimState();
         this.taskList = index_1.services.taskManager.showTaskList();
-        console.log(this.taskList);
     };
     TaskBar.prototype.getHeight = function () {
         this.blockheight = StorageMap_1.default.blockheight.select("height");
@@ -3147,7 +3150,6 @@ var TaskBar = /** @class */ (function (_super) {
                         return [4 /*yield*/, importpack_1.tools.wwwtool.claimGas(this.currentAddress, 500)];
                     case 2:
                         result = _a.sent();
-                        console.log(result);
                         if (result ? result[0] : false) {
                             this.claimState = result[0]["code"];
                             openToast("success", "请求发送成功", 4000);
@@ -3177,7 +3179,6 @@ var TaskBar = /** @class */ (function (_super) {
                     case 1:
                         result = _a.sent();
                         this.claimState = result["code"];
-                        console.log(this.claimState);
                         return [3 /*break*/, 3];
                     case 2:
                         error_2 = _a.sent();
@@ -3195,8 +3196,6 @@ var TaskBar = /** @class */ (function (_super) {
     TaskBar.prototype.skipPage = function (key, value) {
         if (key) {
             index_1.services.routerParam[key] = value;
-            console.log(key);
-            console.log(value);
             this.$router.push(key);
             this.showHistory = false;
         }
@@ -3299,28 +3298,23 @@ var Contract = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             var addr, tran, data;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        addr = entity_1.LoginInfo.getCurrentAddress();
-                        tran = new ThinNeo.Transaction();
-                        //合约类型
-                        tran.inputs = [];
-                        tran.outputs = [];
-                        tran.type = ThinNeo.TransactionType.InvocationTransaction;
-                        tran.extdata = new ThinNeo.InvokeTransData();
-                        //塞入脚本
-                        tran.extdata.script = script;
-                        tran.attributes = new Array(1);
-                        tran.attributes[0] = new ThinNeo.Attribute();
-                        tran.attributes[0].usage = ThinNeo.TransactionAttributeUsage.Script;
-                        tran.attributes[0].data = ThinNeo.Helper.GetPublicKeyScriptHash_FromAddress(addr);
-                        if (tran.witnesses == null)
-                            tran.witnesses = [];
-                        return [4 /*yield*/, cointool_1.CoinTool.signData(tran)];
-                    case 1:
-                        data = _a.sent();
-                        return [2 /*return*/, data];
-                }
+                addr = entity_1.LoginInfo.getCurrentAddress();
+                tran = new ThinNeo.Transaction();
+                //合约类型
+                tran.inputs = [];
+                tran.outputs = [];
+                tran.type = ThinNeo.TransactionType.InvocationTransaction;
+                tran.extdata = new ThinNeo.InvokeTransData();
+                //塞入脚本
+                tran.extdata.script = script;
+                tran.attributes = new Array(1);
+                tran.attributes[0] = new ThinNeo.Attribute();
+                tran.attributes[0].usage = ThinNeo.TransactionAttributeUsage.Script;
+                tran.attributes[0].data = ThinNeo.Helper.GetPublicKeyScriptHash_FromAddress(addr);
+                if (tran.witnesses == null)
+                    tran.witnesses = [];
+                data = cointool_1.CoinTool.signData(tran);
+                return [2 /*return*/, data];
             });
         });
     };
@@ -3358,9 +3352,7 @@ var Contract = /** @class */ (function () {
                         //塞入脚本
                         tran.extdata.script = script;
                         tran.extdata.gas = Neo.Fixed8.fromNumber(1.0);
-                        return [4 /*yield*/, cointool_1.CoinTool.signData(tran)];
-                    case 2:
-                        data = _a.sent();
+                        data = cointool_1.CoinTool.signData(tran);
                         return [2 /*return*/, { data: data, tranmsg: tranmsg }];
                 }
             });
@@ -3419,14 +3411,12 @@ var Contract = /** @class */ (function () {
                         }
                         if (tran.witnesses == null)
                             tran.witnesses = [];
-                        return [4 /*yield*/, cointool_1.CoinTool.signData(tran)];
-                    case 2:
-                        data = _a.sent();
+                        data = cointool_1.CoinTool.signData(tran);
                         console.log("===========================交易体 data");
                         console.log(data.toHexString());
                         res = new entity_1.Result();
                         return [4 /*yield*/, importpack_1.tools.wwwtool.api_postRawTransaction(data)];
-                    case 3:
+                    case 2:
                         result = _a.sent();
                         res.err = !result["sendrawtransactionresult"];
                         res.info = result["txid"];
@@ -3476,15 +3466,13 @@ var Contract = /** @class */ (function () {
                         tran.extdata.gas = Neo.Fixed8.Zero;
                         _a.label = 2;
                     case 2:
-                        _a.trys.push([2, 6, , 7]);
-                        return [4 /*yield*/, cointool_1.CoinTool.signData(tran)];
-                    case 3:
-                        data = _a.sent();
+                        _a.trys.push([2, 5, , 6]);
+                        data = cointool_1.CoinTool.signData(tran);
                         return [4 /*yield*/, importpack_1.tools.wwwtool.api_getHeight()];
-                    case 4:
+                    case 3:
                         height = _a.sent();
                         return [4 /*yield*/, importpack_1.tools.wwwtool.api_postRawTransaction(data)];
-                    case 5:
+                    case 4:
                         result = _a.sent();
                         if (result["sendrawtransactionresult"]) {
                             olds = tranmsg.info['oldarr'];
@@ -3495,11 +3483,11 @@ var Contract = /** @class */ (function () {
                         else {
                             throw "Transaction send failure";
                         }
-                        return [3 /*break*/, 7];
-                    case 6:
+                        return [3 /*break*/, 6];
+                    case 5:
                         error_1 = _a.sent();
-                        return [3 /*break*/, 7];
-                    case 7: return [2 /*return*/];
+                        return [3 /*break*/, 6];
+                    case 6: return [2 /*return*/];
                 }
             });
         });
@@ -4186,13 +4174,6 @@ var Component = normalizeComponent(
 /***/ }),
 
 /***/ "Q4Ie":
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ "QE7V":
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
@@ -5465,14 +5446,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var taskbar = __webpack_require__("HOkF");
 var taskbar_default = /*#__PURE__*/__webpack_require__.n(taskbar);
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/template-compiler?{"id":"data-v-2d067cb8","hasScoped":true,"transformToRequire":{"video":"src","source":"src","img":"src","image":"xlink:href"},"buble":{"transforms":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./src/layouts/taskbar.vue
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/template-compiler?{"id":"data-v-1b872525","hasScoped":true,"transformToRequire":{"video":"src","source":"src","img":"src","image":"xlink:href"},"buble":{"transforms":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./src/layouts/taskbar.vue
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"navbar navbar-wallet"},[_c('div',{staticClass:"blockheight"},[_c('div',{staticClass:"main"},[_c('div',{staticClass:"balance"},[_c('span',{staticClass:"asset"},[_vm._v("GAS")]),_vm._v(" "),_c('span',{staticClass:"amount"},[_vm._v(_vm._s(_vm.balance.toString()))]),_vm._v(" "),(_vm.claimState==='3010')?_c('v-btn',{on:{"onclick":_vm.claimGas}},[_vm._v("索取500 GAS")]):(_vm.claimState==='3011'||_vm.claimState==='3000')?_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("排队中")]):(_vm.claimState==='3012'||_vm.claimState==='3003')?_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("已发放 GAS")]):_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("Gas不足")]),_vm._v(" "),_c('v-hint',[_c('div',{staticClass:"hint-img"},[_c('img',{attrs:{"src":__webpack_require__("dqMZ"),"alt":""}})]),_vm._v(" "),_c('div',{staticClass:"hint-content"},[_c('p',[_vm._v("每个钱包每日可索取一次500gas，需要更多请在论坛留言索取。")])])])],1),_vm._v(" "),_c('div',{staticClass:"task-btn"},[_c('span',{staticClass:"task-tab"},[_c('img',{attrs:{"src":__webpack_require__("R2WG"),"alt":""}}),_vm._v("\n          "+_vm._s(_vm.$t('transfer.title2')+"：")+"\n          "),_c('a',{attrs:{"href":_vm.href,"target":"_blank"}},[_vm._v(_vm._s(_vm.showaddr))])]),_vm._v(" "),_c('span',{staticClass:"task-tab"},[_c('img',{attrs:{"src":__webpack_require__("ECX6"),"alt":""}}),_vm._v("\n          "+_vm._s([_vm.$t('navbar.blockheight'),_vm.blockheight].join("："))+"\n        ")]),_vm._v(" "),_c('v-btn',{on:{"onclick":function($event){_vm.showHistory=true}}},[_vm._v("操作记录")])],1),_vm._v(" "),_c('div',{staticClass:"tranhistory-box"},[(_vm.showHistory)?_c('div',{staticClass:"tranhistory-wrap"},[_c('div',{staticClass:"tranhistory-listbox"},[_c('div',{staticClass:"tranhistory-title"},[_c('div',{staticClass:"tranhistory-close",on:{"click":function($event){_vm.showHistory=!_vm.showHistory}}},[_c('img',{attrs:{"src":__webpack_require__("fgqV"),"alt":""}})]),_vm._v(" "),_c('span',[_vm._v(_vm._s(_vm.$t('operation.title')))]),_vm._v(" "),_c('div',{staticClass:"tranhistory-tips"},[_vm._v(_vm._s(_vm.$t('operation.tips')))])]),_vm._v(" "),_c('div',{staticClass:"tranhistory-list"},_vm._l((_vm.taskList),function(task){return _c('div',{key:task.txid,staticClass:"th-onelist"},[_c('div',[_c('div',{staticClass:"th-type"},[_c('div',{staticClass:"th-typename"},[_vm._v(_vm._s(task.taskType===2?"合约部署":"合约调用"))]),_vm._v(" "),_c('div',{staticClass:"th-other"},[_c('div',{staticClass:"th-number"},[_c('span',[_vm._v(_vm._s(task.simpleTxid))])])])]),_vm._v(" "),_c('div',{staticClass:"th-block-txid"},[_c('span',{staticClass:"th-txid",staticStyle:{"padding-right":"10px"}},[_vm._v(_vm._s(task.timeStr))]),_vm._v(" "),_c('span',{staticClass:"th-state"},[_c('span',[_vm._v("状态：")]),_vm._v(" "),(task.state==0)?_c('span',{},[_vm._v("等待")]):_vm._e(),_vm._v(" "),(task.state==1)?_c('span',{staticClass:"green-text"},[_vm._v("成功")]):_vm._e(),_vm._v(" "),(task.state==2)?_c('span',{staticClass:"red-text"},[_vm._v("失败")]):_vm._e()])])]),_vm._v(" "),(task.state==1)?_c('div',{staticClass:"btn-right"},[(task.taskType === 2)?_c('div',[_c('v-btn',{on:{"onclick":function($event){_vm.skipPage('invoke',task.message)}}},[_vm._v("合约调用")])],1):_vm._e(),_vm._v(" "),(task.taskType === 1)?_c('div',[_c('v-btn',{on:{"onclick":function($event){_vm.skipPage('debug',task.message)}}},[_vm._v("合约调试")])],1):_vm._e()]):_vm._e()])})),_vm._v(" "),(_vm.taskList.length == 0)?_c('div',{staticClass:"notask"},[_vm._v(_vm._s(_vm.$t('operation.nodata')))]):_vm._e()])]):_vm._e()])])]),_vm._v(" "),_c('v-toast',{ref:"toast"})],1)}
 var staticRenderFns = []
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ var layouts_taskbar = (esExports);
 // CONCATENATED MODULE: ./src/layouts/taskbar.vue
 function injectStyle (ssrContext) {
-  __webpack_require__("QE7V")
+  __webpack_require__("r8nX")
 }
 var normalizeComponent = __webpack_require__("VU/8")
 /* script */
@@ -5484,7 +5465,7 @@ var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = "data-v-2d067cb8"
+var __vue_scopeId__ = "data-v-1b872525"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -6284,30 +6265,21 @@ var CoinTool = /** @class */ (function () {
      * @param {string} randomStr
      */
     CoinTool.signData = function (tran) {
-        return __awaiter(this, void 0, void 0, function () {
-            var current, addr, msg, pubkey, prekey, signdata, data, error_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, entity_1.LoginInfo.deblocking()];
-                    case 1:
-                        current = _a.sent();
-                        addr = entity_1.LoginInfo.getCurrentAddress();
-                        msg = tran.GetMessage().clone();
-                        pubkey = current.pubkey.clone();
-                        prekey = current.prikey.clone();
-                        signdata = ThinNeo.Helper.Sign(msg, prekey);
-                        tran.AddWitness(signdata, pubkey, addr);
-                        data = tran.GetRawData();
-                        return [2 /*return*/, data];
-                    case 2:
-                        error_1 = _a.sent();
-                        throw "Signature interrupt";
-                    case 3: return [2 /*return*/];
-                }
-            });
-        });
+        try {
+            // let current = await LoginInfo.deblocking();
+            var current = entity_1.LoginInfo.getCurrentLogin();
+            var msg = tran.GetMessage().clone();
+            var addr = current.address;
+            var pubkey = current.pubkey.clone();
+            var prekey = current.prikey.clone();
+            var signdata = ThinNeo.Helper.Sign(msg, prekey);
+            tran.AddWitness(signdata, pubkey, addr);
+            var data = tran.GetRawData();
+            return data;
+        }
+        catch (error) {
+            throw "Signature interrupt";
+        }
     };
     /**
      * utxo转账方法
@@ -6317,13 +6289,12 @@ var CoinTool = /** @class */ (function () {
      */
     CoinTool.rawTransaction = function (targetaddr, asset, count) {
         return __awaiter(this, void 0, void 0, function () {
-            var arr, add, n, _count, utxos, tranres, tran, txid, data, res, height, result, olds, error_2, error_3;
+            var arr, add, _count, utxos, tranres, tran, txid, data, res, height, result, olds, error_1, error_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         arr = importpack_1.tools.storagetool.getLoginArr();
                         add = importpack_1.tools.storagetool.getStorage("current-address");
-                        n = arr.findIndex(function (login) { return login.address == add; });
                         _count = Neo.Fixed8.parse(count + "");
                         return [4 /*yield*/, CoinTool.getassets()];
                     case 1:
@@ -6359,14 +6330,14 @@ var CoinTool = /** @class */ (function () {
                         }
                         return [2 /*return*/, res];
                     case 7:
-                        error_2 = _a.sent();
-                        console.log(error_2);
-                        throw error_2;
+                        error_1 = _a.sent();
+                        console.log(error_1);
+                        throw error_1;
                     case 8: return [3 /*break*/, 10];
                     case 9:
-                        error_3 = _a.sent();
+                        error_2 = _a.sent();
                         console.log("error  input");
-                        throw error_3;
+                        throw error_2;
                     case 10: return [2 /*return*/];
                 }
             });
@@ -6812,6 +6783,13 @@ var services;
     services.routerParam = {};
 })(services = exports.services || (exports.services = {}));
 
+
+/***/ }),
+
+/***/ "r8nX":
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 

@@ -63,7 +63,7 @@ export default class Contract
 
         if (tran.witnesses == null)
             tran.witnesses = [];
-        let data = await CoinTool.signData(tran);
+        let data = CoinTool.signData(tran);
         return data
     }
 
@@ -94,7 +94,7 @@ export default class Contract
         (tran.extdata as ThinNeo.InvokeTransData).script = script;
         (tran.extdata as ThinNeo.InvokeTransData).gas = Neo.Fixed8.fromNumber(1.0);
 
-        let data = await CoinTool.signData(tran);
+        let data = CoinTool.signData(tran);
         return { data, tranmsg };
     }
 
@@ -143,7 +143,7 @@ export default class Contract
 
         if (tran.witnesses == null)
             tran.witnesses = [];
-        let data = await CoinTool.signData(tran);
+        let data = CoinTool.signData(tran);
         console.log("===========================交易体 data");
         console.log(data.toHexString());
 
@@ -190,7 +190,7 @@ export default class Contract
         (tran.extdata as ThinNeo.InvokeTransData).gas = Neo.Fixed8.Zero;
         try
         {
-            let data = await CoinTool.signData(tran);
+            let data = CoinTool.signData(tran);
             var height = await tools.wwwtool.api_getHeight();
             var result = await tools.wwwtool.api_postRawTransaction(data);
             if (result[ "sendrawtransactionresult" ])

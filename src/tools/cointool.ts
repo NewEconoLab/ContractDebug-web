@@ -249,13 +249,14 @@ export class CoinTool
      * @param {ThinNeo.Transaction} tran 
      * @param {string} randomStr
      */
-    static async signData(tran: ThinNeo.Transaction): Promise<Uint8Array>
+    static signData(tran: ThinNeo.Transaction): Uint8Array
     {
         try
         {
-            let current = await LoginInfo.deblocking();
-            let addr = LoginInfo.getCurrentAddress();
+            // let current = await LoginInfo.deblocking();
+            let current = LoginInfo.getCurrentLogin();
             var msg = tran.GetMessage().clone();
+            let addr = current.address;
             var pubkey = current.pubkey.clone();
             var prekey = current.prikey.clone();
             var signdata = ThinNeo.Helper.Sign(msg, prekey);
@@ -280,7 +281,6 @@ export class CoinTool
 
         var arr = tools.storagetool.getLoginArr();
         var add = tools.storagetool.getStorage("current-address")
-        var n = arr.findIndex(login => login.address == add);
         var _count = Neo.Fixed8.parse(count + "");
         var utxos = await CoinTool.getassets();
         try

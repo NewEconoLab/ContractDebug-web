@@ -117,7 +117,7 @@ export default class Invoke extends Vue
         let result = await tools.wwwtool.setTxCallContract(LoginInfo.getCurrentAddress(), data.data.toHexString());
         if (result)  
         {
-            this.opneToast("succes", "invoke 交易发送成功，等待区块确认", 4000)
+            this.opneToast("success", "invoke 交易发送成功，等待区块确认", 4000)
             services.taskManager.addTask(TaskType.invoke, ConfirmType.tranfer, result.txid, { txid: result.txid })
             // this.resultEditor.setValue(JSON.stringify(result));
         }
