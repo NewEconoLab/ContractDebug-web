@@ -33,14 +33,16 @@ export default class Invoke extends Vue
         option.lineWrapping = true;
         // option.readOnly = true;
         let codestore = sessionStorage.getItem("invoke-json-code");
+        let hashstore = sessionStorage.getItem("invoke-contract-hash");
+        this.currentContract = hashstore ? JSON.parse(hashstore) : { name: "", scripthash: "" };
         this.editor = CodeMirror.fromTextArea(host, option);
         this.editor.setValue(codestore ? codestore : "");
         // this.editor.setSize("auto", height);
-        // this.editor.on("change", function (Editor, change)
-        // {
-        //     // 事件触发后执行事件
-        //     sessionStorage.setItem("invoke-json-code", Editor.getValue())
-        // });
+        this.editor.on("change", function (Editor, change)
+        {
+            // 事件触发后执行事件
+            sessionStorage.setItem("invoke-json-code", Editor.getValue())
+        });
         this.editor.setSize("auto", "245px");
         option.readOnly = true;
         this.resultEditor = CodeMirror.fromTextArea(host2, option);
@@ -73,6 +75,7 @@ export default class Invoke extends Vue
             if (con.scripthash == this.inputContract)
             {
                 this.currentContract = con;
+                sessionStorage.setItem("invoke-contract-hash", JSON.stringify(this.currentContract))
             }
         }
         if (this.currentContract.scripthash != this.inputContract)
@@ -80,6 +83,7 @@ export default class Invoke extends Vue
             if (/^[0-9a-fA-F]{40,40}$/.test(this.inputContract.replace("0x", "")))
             {
                 this.currentContract = { name: "", scripthash: this.inputContract };
+                sessionStorage.setItem("invoke-contract-hash", JSON.stringify(this.currentContract))
             }
             else
             {
