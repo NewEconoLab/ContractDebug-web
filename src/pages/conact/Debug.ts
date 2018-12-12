@@ -266,7 +266,8 @@ export default class Debug extends Vue
     {
         try
         {
-            if (this.currentCodeHash != hash)
+            let code = this.cEditor.getValue();
+            if (this.currentCodeHash != hash || !code)
             {
                 const coderesult = this.contractFiles[ hash ];
                 if (coderesult)
@@ -290,6 +291,7 @@ export default class Debug extends Vue
 
     async initCode(hasharr: string[])
     {
+        this.cEditor.setValue("");
         for (const hash of hasharr)
         {
             const cs = await tools.wwwtool.readOssFile(hash, "cs", false);
