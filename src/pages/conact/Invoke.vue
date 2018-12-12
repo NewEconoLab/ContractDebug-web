@@ -5,7 +5,9 @@
         <panel>
           <p-title :title="currentContract.name+'  '+currentContract.scripthash">
             <v-btn @onclick="openSelect=true">更换合约</v-btn>
-            <v-btn :type="'warn'">帮助</v-btn>
+            <a href="https://bbs.neldev.net/thread-146.htm" target="_blank">
+              <v-btn :type="'warn'">帮助</v-btn>
+            </a>
           </p-title>
           <div class="code-content" id="code-content">
             <textarea id="invoke-json-code" rows="25" cols="20"></textarea>

@@ -17,7 +17,9 @@
         <v-btn @onclick="initDebugInfo">查询</v-btn>
       </div>
       <div class="btn-list">
-        <v-btn :type="'warn'">帮助</v-btn>
+        <a href="https://bbs.neldev.net/thread-147.htm" target="_blank">
+          <v-btn :type="'warn'">帮助</v-btn>
+        </a>
       </div>
     </div>
     <div class="debug-panel">
