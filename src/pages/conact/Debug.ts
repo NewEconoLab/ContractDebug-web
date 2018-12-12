@@ -316,6 +316,7 @@ export default class Debug extends Vue
     }
     dumpScript(script: ThinNeo.SmartContract.Debug.LogScript, level: number)
     {
+        this.stackarr = [];
         var space = "";
         for (var i = 0; i < level; i++)
             space += "\t";
