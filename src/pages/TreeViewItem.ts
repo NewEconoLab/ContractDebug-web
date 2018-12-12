@@ -40,7 +40,14 @@ export class TreeViewItems
                         value.textContent = tree.value;
                         let bts = tree.value.hexToBytes();
                         let asstr = document.createElement("li");
-                        let str = ThinNeo.Helper.Bytes2String(bts);
+                        let str = ""
+                        try
+                        {
+                            str = ThinNeo.Helper.Bytes2String(bts);
+                        } catch (error)
+                        {
+                            str = "不可转换 utf8字符串"
+                        }
                         asstr.textContent = "asStr : " + str;
                         value.appendChild(asstr);
                         if (tree.value.length <= 8)
