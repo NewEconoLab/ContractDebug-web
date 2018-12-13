@@ -193,9 +193,9 @@ export default class Debug extends Vue
                 console.log("op");
                 console.log(op);
 
-                console.log("addr----------" + op.addr);
+                // console.log("addr----------" + op.addr);
                 var line = this.addr.GetLineBack(op.addr);//尽量倒着取到对应的代码 codemirro 塞入的时候多往下了
-                console.log("line==============" + line);
+                // console.log("line==============" + line);
                 console.log(line);
                 if (line >= 0)
                 {
@@ -283,7 +283,7 @@ export default class Debug extends Vue
                 if (coderesult)
                 {
                     this.oplist = ThinNeo.Compiler.Avm2Asm.Trans(coderesult.avm.hexToBytes());
-                    console.log(JSON.parse(coderesult.map));
+                    // console.log(JSON.parse(coderesult.map));
 
                     this.addr = ThinNeo.Debug.Helper.AddrMap.FromJson(JSON.parse(coderesult.map));
                     this.cEditor.setValue(coderesult.cs);
