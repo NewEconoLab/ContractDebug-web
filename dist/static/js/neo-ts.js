@@ -5951,7 +5951,9 @@ var ThinNeo;
                     this.hash = hash;
                 }
                 LogScript.prototype.GetAllScriptName = function (names) {
-                    names.push(this.hash);
+                    if (names.indexOf(this.hash) == -1) {
+                        names.push(this.hash);
+                    }
                     var scount = 1;
                     for (var i = 0; i < this.ops.length; i++) {
                         var op = this.ops[i];

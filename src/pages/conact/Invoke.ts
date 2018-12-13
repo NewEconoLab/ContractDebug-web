@@ -117,13 +117,18 @@ export default class Invoke extends Vue
     async invoking()
     {
         let script = this.paresInvokeJson()
-        let data = await tools.contract.buildInvokeTransData(script);
-        let result = await tools.wwwtool.setTxCallContract(LoginInfo.getCurrentAddress(), data.data.toHexString());
-        if (result)  
+        tools.contract.buildScript_random
+        let data = await tools.contract.buildInvokeTransData_attributes(script);
+        let result = await tools.wwwtool.setTxCallContract(LoginInfo.getCurrentAddress(), data.toHexString());
+        if (result && result.txid)  
         {
             this.opneToast("success", "invoke 交易发送成功，等待区块确认", 4000)
             services.taskManager.addTask(TaskType.invoke, ConfirmType.tranfer, result.txid, { txid: result.txid })
             // this.resultEditor.setValue(JSON.stringify(result));
+        }
+        else
+        {
+            this.opneToast('error', "交易发送失败", 4000);
         }
 
     }
@@ -134,6 +139,12 @@ export default class Invoke extends Vue
         let json = this.editor.getValue();
         let arr = JSON.parse(json) as any[];
         var sb = new ThinNeo.ScriptBuilder();
+        //生成随机数
+        let random_uint8 = Neo.Cryptography.RandomNumberGenerator.getRandomValues<Uint8Array>(new Uint8Array(32));
+        let random_int = Neo.BigInteger.fromUint8Array(random_uint8);
+        //塞入随机数
+        sb.EmitPushNumber(random_int);
+        sb.Emit(ThinNeo.OpCode.DROP);
         for (var i = arr.length - 1; i >= 0; i--)
         {
             sb.EmitParamJson(arr[ i ]);

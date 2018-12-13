@@ -455,10 +455,16 @@ export class WWW
         var str = WWW.apioss + "/" + (temp ? "_temp" : "") + name + "." + filename;
         var result = await fetch(str, { "method": "get" });
         console.log(result);
+        console.log(result.status)
+        if (result.status == 200)
+        {
+            var text = await result.text();
+            return text;
+        }
+        else
+        {
+            throw "请求失败状态码为：" + result.status + "。状态内容: " + result.statusText;
+        }
 
-        var text = await result.text();
-        console.log(text);
-
-        return text;
     }
 }

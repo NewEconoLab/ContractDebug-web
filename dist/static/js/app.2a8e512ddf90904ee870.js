@@ -1065,11 +1065,13 @@ var WWW = /** @class */ (function () {
                     case 1:
                         result = _a.sent();
                         console.log(result);
+                        console.log(result.status);
+                        if (!(result.status == 200)) return [3 /*break*/, 3];
                         return [4 /*yield*/, result.text()];
                     case 2:
                         text = _a.sent();
-                        console.log(text);
                         return [2 /*return*/, text];
+                    case 3: throw "请求失败状态码为：" + result.status + "。状态内容: " + result.statusText;
                 }
             });
         });

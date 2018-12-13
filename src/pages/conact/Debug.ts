@@ -178,7 +178,10 @@ export default class Debug extends Vue
 
     debug()
     {
-        let codeline = this.fulllogEditor.getCursor().line
+        let codeline = this.fulllogEditor.getCursor().line;
+        this.fulllogEditor.removeLineClass(this.currentHighlightLine_avm, "background", "cursor-line-highight")
+        this.fulllogEditor.addLineClass(codeline, "background", "cursor-line-highight");
+        this.currentHighlightLine_avm = codeline;
         if (this.stackarr[ codeline ])
         {
             let script = this.stackarr[ codeline ].script;
@@ -187,23 +190,20 @@ export default class Debug extends Vue
             this.showStack(op);
             // console.log("script hash : " + script.hash);
             this.cEditor.removeLineClass(this.currentHighlightLine, "background", "cursor-line-highight")
-            this.fulllogEditor.removeLineClass(this.currentHighlightLine_avm, "background", "cursor-line-highight")
             if (this.contractFiles[ script.hash ] && this.addr)
             {
-                console.log("op");
-                console.log(op);
+                // console.log("op");
+                // console.log(op);
 
                 // console.log("addr----------" + op.addr);
                 var line = this.addr.GetLineBack(op.addr);//尽量倒着取到对应的代码 codemirro 塞入的时候多往下了
                 // console.log("line==============" + line);
-                console.log(line);
+                // console.log(line);
                 if (line >= 0)
                 {
                     this.currentHighlightLine = line - 1;
                     this.cEditor.setCursor(this.currentHighlightLine);
                     this.cEditor.addLineClass(this.currentHighlightLine, "background", "cursor-line-highight");
-                    this.fulllogEditor.addLineClass(codeline, "background", "cursor-line-highight");
-                    this.currentHighlightLine_avm = codeline;
                 }
             }
         }
@@ -277,7 +277,7 @@ export default class Debug extends Vue
         try
         {
             let code = this.cEditor.getValue();
-            if (this.currentCodeHash != hash || !code)
+            if (this.currentCodeHash != hash || !code || !this.addr)
             {
                 const coderesult = this.contractFiles[ hash ];
                 if (coderesult)
@@ -294,10 +294,12 @@ export default class Debug extends Vue
                     this.cEditor.setValue("");
                     this.currentCodeHash = "";
                 }
+
             }
         }
         catch (error)
         {
+            this.cEditor.setValue("");
             this.addr = undefined;
         }
     }
