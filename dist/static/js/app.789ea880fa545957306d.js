@@ -1064,9 +1064,11 @@ var WWW = /** @class */ (function () {
                         return [4 /*yield*/, fetch(str, { "method": "get" })];
                     case 1:
                         result = _a.sent();
+                        console.log(result);
                         return [4 /*yield*/, result.text()];
                     case 2:
                         text = _a.sent();
+                        console.log(text);
                         return [2 /*return*/, text];
                 }
             });

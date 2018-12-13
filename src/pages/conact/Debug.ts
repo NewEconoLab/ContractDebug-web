@@ -127,6 +127,7 @@ export default class Debug extends Vue
             //预先获得所有需要加载的 avm等信息
             this.showCareInfo(this.simVM.careinfo)
             // this.careInfo.setValue(careInfoStr)
+            this.stackarr = [];
             this.dumpScript(this.simVM.regenScript, 1);
 
             this.fulllogEditor.on("cursorActivity", (res) =>
@@ -283,7 +284,8 @@ export default class Debug extends Vue
                     this.currentCodeHash = "";
                 }
             }
-        } catch (error)
+        }
+        catch (error)
         {
             this.addr = undefined;
         }
@@ -294,11 +296,18 @@ export default class Debug extends Vue
         this.cEditor.setValue("");
         for (const hash of hasharr)
         {
-            const cs = await tools.wwwtool.readOssFile(hash, "cs", false);
-            const avm = await tools.wwwtool.readOssFile(hash, "avm", false);
-            const map = await tools.wwwtool.readOssFile(hash, "map.json", false);
-            this.contractFiles[ hash ] = {
-                cs, avm, map
+            try
+            {
+                const cs = await tools.wwwtool.readOssFile(hash, "cs", false);
+                const avm = await tools.wwwtool.readOssFile(hash, "avm", false);
+                const map = await tools.wwwtool.readOssFile(hash, "map.json", false);
+                this.contractFiles[ hash ] = {
+                    cs, avm, map
+                }
+            } catch (error)
+            {
+                console.log(error);
+
             }
         }
 
@@ -316,7 +325,6 @@ export default class Debug extends Vue
     }
     dumpScript(script: ThinNeo.SmartContract.Debug.LogScript, level: number)
     {
-        this.stackarr = [];
         var space = "";
         for (var i = 0; i < level; i++)
             space += "\t";

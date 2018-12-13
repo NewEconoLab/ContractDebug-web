@@ -454,7 +454,11 @@ export class WWW
     {
         var str = WWW.apioss + "/" + (temp ? "_temp" : "") + name + "." + filename;
         var result = await fetch(str, { "method": "get" });
+        console.log(result);
+
         var text = await result.text();
+        console.log(text);
+
         return text;
     }
 }
