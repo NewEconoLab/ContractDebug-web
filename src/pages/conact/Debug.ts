@@ -190,7 +190,9 @@ export default class Debug extends Vue
             this.fulllogEditor.removeLineClass(this.currentHighlightLine_avm, "background", "cursor-line-highight")
             if (this.contractFiles[ script.hash ] && this.addr)
             {
+                console.log(op.addr);
                 var line = this.addr.GetLineBack(op.addr);//尽量倒着取到对应的代码
+                console.log(line);
                 this.cEditor.setCursor(line);
                 this.cEditor.addLineClass(line, "background", "cursor-line-highight");
                 this.currentHighlightLine = line;
@@ -274,6 +276,8 @@ export default class Debug extends Vue
                 if (coderesult)
                 {
                     this.oplist = ThinNeo.Compiler.Avm2Asm.Trans(coderesult.avm.hexToBytes());
+                    console.log(JSON.parse(coderesult.map));
+
                     this.addr = ThinNeo.Debug.Helper.AddrMap.FromJson(JSON.parse(coderesult.map));
                     this.cEditor.setValue(coderesult.cs);
                     this.currentCodeHash = hash;
