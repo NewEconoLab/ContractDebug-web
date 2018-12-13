@@ -195,8 +195,8 @@ export default class Debug extends Vue
 
                 console.log("addr----------" + op.addr);
                 var line = this.addr.GetLineBack(op.addr);//尽量倒着取到对应的代码 codemirro 塞入的时候多往下了
-                line = line > 1 ? line : 1;
                 console.log("line----------" + line);
+                line = line > 1 ? line : 1;
                 this.cEditor.setCursor(line);
                 this.cEditor.addLineClass(line, "background", "cursor-line-highight");
                 this.currentHighlightLine = line;
