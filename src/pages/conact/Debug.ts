@@ -197,7 +197,7 @@ export default class Debug extends Vue
                 var line = this.addr.GetLineBack(op.addr);//尽量倒着取到对应的代码 codemirro 塞入的时候多往下了
                 console.log("line==============" + line);
                 console.log(line);
-                if (line > 0)
+                if (line >= 0)
                 {
                     this.currentHighlightLine = line - 1;
                     this.cEditor.setCursor(this.currentHighlightLine);
