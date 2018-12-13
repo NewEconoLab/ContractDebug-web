@@ -190,9 +190,12 @@ export default class Debug extends Vue
             this.fulllogEditor.removeLineClass(this.currentHighlightLine_avm, "background", "cursor-line-highight")
             if (this.contractFiles[ script.hash ] && this.addr)
             {
-                console.log(op.addr);
+                console.log("op");
+                console.log(op);
+
+                console.log("addr----------" + op.addr);
                 var line = this.addr.GetLineBack(op.addr);//尽量倒着取到对应的代码
-                console.log(line);
+                console.log("line----------" + line);
                 this.cEditor.setCursor(line);
                 this.cEditor.addLineClass(line, "background", "cursor-line-highight");
                 this.currentHighlightLine = line;
