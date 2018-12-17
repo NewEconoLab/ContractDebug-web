@@ -268,9 +268,6 @@
     label {
       box-sizing: border-box;
       display: inline-block;
-      // width: 75px;
-      //   min-width: 69px;
-      //   height: 30px;
       padding: 0 10px;
       margin-bottom: 10px;
       text-align: center;
