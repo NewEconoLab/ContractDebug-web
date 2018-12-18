@@ -202,8 +202,40 @@ export default class Debug extends Vue
                 if (line >= 0)
                 {
                     this.currentHighlightLine = line - 1;
-                    this.cEditor.setCursor(this.currentHighlightLine);
+
+                    console.log(this.cEditor.getViewport());
+                    // this.cEditor.scrollIntoView({from:{line:1,ch:1},to:100},)
+                    this.cEditor.scrollIntoView({ line: this.currentHighlightLine, ch: 0 });
+                    // this.cEditor.scrollIntoView({ line: 44, ch: 10 });
                     this.cEditor.addLineClass(this.currentHighlightLine, "background", "cursor-line-highight");
+                    let codeContent = document.getElementById("code-div") as HTMLDivElement;
+                    let arr = codeContent.getElementsByClassName("CodeMirror-code");
+                    let code = arr[ 0 ] as HTMLDivElement;
+                    let codelines = code.getElementsByTagName("div");
+                    console.log("childElementCount");
+                    console.log(code.childElementCount)
+                    // console.log(codelines.length)
+                    // console.log(codelines);
+                    let highightLine = 0;
+                    for (let index = 0; index < codelines.length; index++)
+                    {
+                        const element = codelines[ index ];
+                        if (element.className.includes("cursor-line-highight"))
+                        {
+                            highightLine = index;
+                        }
+                    }
+                    this.cEditor.setCursor(this.currentHighlightLine + parseInt((highightLine / 3) - ((codelines.length / 3) / 2) + ""))
+                    console.log(codelines.length);
+                    console.log(parseInt((highightLine) - ((codelines.length) / 2) + ""));
+                    console.log(((codelines.length) / 2));
+
+
+                    console.log(this.currentHighlightLine + parseInt((highightLine / 3) - ((codelines.length / 3) / 2) + ""));
+                    this.debug();
+
+                    // console.log(this.cEditor.heightAtLine(this.currentHighlightLine))
+                    // console.log(this.cEditor.getViewport());
                 }
             }
         }

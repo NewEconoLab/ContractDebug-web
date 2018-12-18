@@ -66,7 +66,7 @@
               </div>
             </div>
           </div>
-          <div class="code-content">
+          <div class="code-content" id="code-div">
             <textarea id="csharp-code"></textarea>
           </div>
         </panel>
