@@ -77,9 +77,9 @@
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu dropdown-nel">
-              <!-- <li id="testnet-btn" :class="currentLanguage=='English'?'active':''">
+              <li id="testnet-btn" :class="currentLanguage=='English'?'active':''">
                 <a @click="cutLanguage(1)">English</a>
-              </li>-->
+              </li>
               <li id="mainnet-btn" :class="currentLanguage!='English'?'active':''">
                 <a @click="cutLanguage(2)">中文</a>
               </li>

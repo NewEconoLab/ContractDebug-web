@@ -331,5 +331,43 @@ export default {
     notify: {
         utxo: "您的UTXO过于分散，将可能造成CGAS兑换失败（GAS也会损失），请先对自己的地址执行一次不小于兑换金额的转账，待转账操作生效后再行兑换",
         fee: "注意：当您的钱包有足够的Gas时，我们会自动添加一笔 0.00000001 Gas 的手续费，确保交易快速确认"
+    },
+    deploy: {
+        file: "文件",
+        new: "新建",
+        loadingHash: "使用hash载入",
+        compileResult: "编译结果",
+        download: "下载 AVM",
+        copy: "复制合约 hash",
+        deployContract: "部署合约",
+        name: "合约名称（必填）",
+        version: "版本",
+        author: "作者",
+        email: "邮件",
+        describe: "合约描述",
+        call: "动态调用",
+        storage: "创建存储区",
+        payment: "可接受付款",
+        deployConfirm: "确认部署",
+        confirm: "确认",
+        consume: "花费GAS："
+    },
+    invoke: {
+        change: "更换合约",
+        select: "选择合约",
+        help: "帮助",
+        invoke: "调用交易",
+        testrun: "试运行",
+        testresult: "试运行结果",
+        result: "执行结果",
+        return: "方法返回",
+        consume: "GAS消耗",
+        resultCode: "结果返回"
+    },
+    debug: {
+        selectTx: "选择交易",
+        query: "查询",
+        help: "帮助",
+        code: "代码",
     }
 }

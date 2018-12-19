@@ -6,11 +6,11 @@
           <div class="p-title">
             <div class="title">
               <div class="title-menu">
-                <span class="title-active" @mousemove="hashListShow=true">文件</span>
+                <span class="title-active" @mousemove="hashListShow=true">{{$t('deploy.file')}}</span>
                 <div class="titlemenu-list-wrap" v-if="hashListShow">
                   <ul class="titlemenu-list">
-                    <li @click="selectedHash('new')">新建</li>
-                    <li class="active" @click="inputLoadHash=true">使用hash载入</li>
+                    <li @click="selectedHash('new')">{{$t('deploy.new')}}</li>
+                    <li class="active" @click="inputLoadHash=true">{{$t('deploy.loadingHash')}}</li>
                     <li
                       v-for="hash in hashList"
                       :key="hash.scripthash"
@@ -27,13 +27,13 @@
             <textarea id="csharp-code" rows="25" cols="20"></textarea>
           </div>
           <p-foot>
-            <v-btn :type="'primary'" @onclick="compile">编译代码</v-btn>
+            <v-btn :type="'primary'" @onclick="compile">{{$t('deploy.compileResult')}}</v-btn>
           </p-foot>
         </panel>
       </div>
       <div class="result">
         <panel>
-          <p-title :title="'编译结果'">
+          <p-title :title="$t('deploy.compileResult')">
             <!-- <v-selected :list="selectList" @selected="onSelect"></v-selected> -->
             <!-- <v-btn :type="'primary'" @onclick="test">操作记录</v-btn> -->
           </p-title>
@@ -47,9 +47,9 @@
               <input type="text" id="hash-input" v-model="conactHash">
               <div class="content-btns">
                 <v-btn>
-                  <a :download="download_name" :href="download_href">下载 AVM</a>
+                  <a :download="download_name" :href="download_href">{{$t('deploy.download')}}</a>
                 </v-btn>
-                <v-btn @onclick="copyHash">复制合约hash</v-btn>
+                <v-btn @onclick="copyHash">{{$t('deploy.copy')}}</v-btn>
               </div>
             </div>
           </panel>
@@ -58,31 +58,31 @@
             <p-title :title="'部署当前合约'"></p-title>
             <div class="panel-content">
               <div class="panel-form">
-                <div class="form-lable">合约名称（必填）</div>
+                <div class="form-lable">{{$t('deploy.name')}}</div>
                 <div class="form-content">
                   <input type="text" v-model="name" maxlength="30">
                 </div>
               </div>
               <div class="panel-form">
-                <div class="form-lable">版本</div>
+                <div class="form-lable">{{$t('deploy.version')}}</div>
                 <div class="form-content">
                   <input type="text" v-model="version" maxlength="30">
                 </div>
               </div>
               <div class="panel-form">
-                <div class="form-lable">作者</div>
+                <div class="form-lable">{{$t('deploy.author')}}</div>
                 <div class="form-content">
                   <input type="text" v-model="author" maxlength="30">
                 </div>
               </div>
               <div class="panel-form">
-                <div class="form-lable">邮件</div>
+                <div class="form-lable">{{$t('deploy.email')}}</div>
                 <div class="form-content">
                   <input type="text" v-model="email" maxlength="30">
                 </div>
               </div>
               <div class="panel-form">
-                <div class="form-lable">合约描述</div>
+                <div class="form-lable">{{$t('deploy.describe')}}</div>
                 <div class="form-content">
                   <input type="text" v-model="description" maxlength="30">
                 </div>
@@ -93,7 +93,7 @@
                     <span class="select-img">
                       <img src="../../assets/selected.png" alt>
                     </span>
-                    <span>动态调用</span>
+                    <span>{{$t('deploy.call')}}</span>
                   </span>
                 </label>
                 <label for :class="isStore?'checked-input':''">
@@ -101,7 +101,7 @@
                     <span class="select-img">
                       <img src="../../assets/selected.png" alt>
                     </span>
-                    <span>创建存储区</span>
+                    <span>{{$t('deploy.storage')}}</span>
                   </span>
                 </label>
                 <label for :class="feePay?'checked-input':''">
@@ -109,13 +109,13 @@
                     <span class="select-img">
                       <img src="../../assets/selected.png" alt>
                     </span>
-                    <span>可接受付款</span>
+                    <span>{{$t('deploy.payment')}}</span>
                   </span>
                 </label>
               </div>
             </div>
-            <p-foot :title="'花费GAS：'+(90+(isCall*500+isStore*400))">
-              <v-btn :type="'primary'" @onclick="deploy">确认部署</v-btn>
+            <p-foot :title="$t('deploy.consume')+(90+(isCall*500+isStore*400))">
+              <v-btn :type="'primary'" @onclick="deploy">{{$t('deploy.deployConfirm')}}</v-btn>
             </p-foot>
           </panel>
         </div>
@@ -123,14 +123,14 @@
     </div>
     <div class="usehash-wrapper" v-if="inputLoadHash">
       <div class="usehash-content">
-        <p-title :title="'使用hash载入'">
+        <p-title :title="$t('deploy.consume')">
           <img src="../../assets/close.png" alt @click="inputLoadHash=false">
         </p-title>
         <div class="usehash-input">
           <input type="text" placeholder="请输入hash" v-model="inputhash">
         </div>
         <div class="usehash-btn">
-          <v-btn @onclick="selectedHash(inputhash)">确认</v-btn>
+          <v-btn @onclick="selectedHash(inputhash)">{{$t('deploy.confirm')}}</v-btn>
         </div>
       </div>
     </div>

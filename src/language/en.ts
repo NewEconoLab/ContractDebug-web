@@ -334,5 +334,43 @@ export default {
     notify: {
         utxo: "Your UTXO is too scattered, which may cause the CGAS conversion to fail (GAS will also be lost). Please transfer some GAS( the amount shall be no less than your conversion amount) to your own address first and then convert GAS into CGAS after the transfer operation is confirmed.",
         fee: "Note: When there is enough GAS in your wallet, we will automatically add a fee to ensure your operation will be confirmed fast. "
+    },
+    deploy: {
+        file: "file",
+        new: "new",
+        loadingHash: "loading hash",
+        compileResult: "编译结果",
+        download: "download AVM",
+        copy: "复制合约 hash",
+        deployContract: "部署合约",
+        name: "合约名称（必填）",
+        version: "version",
+        author: "author",
+        email: "email",
+        describe: "describe",
+        call: "call",
+        storage: "storage",
+        payment: "payment",
+        deployConfirm: "确认部署",
+        confirm: "confirm",
+        consume: "花费GAS："
+    },
+    invoke: {
+        change: "更换合约",
+        select: "选择合约",
+        help: "帮助",
+        invoke: "调用交易",
+        testrun: "试运行",
+        testresult: "试运行结果",
+        result: "执行结果",
+        return: "方法返回",
+        consume: "GAS消耗",
+        resultCode: "结果返回"
+    },
+    debug: {
+        selectTx: "选择交易",
+        query: "查询",
+        help: "帮助",
+        code: "代码",
     }
 }
