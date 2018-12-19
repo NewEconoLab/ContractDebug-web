@@ -133,6 +133,35 @@ export default class Debug extends Vue
             this.fulllogEditor.on("cursorActivity", (res) =>
             {
                 this.debug()
+                setTimeout(() =>
+                {
+
+                    let codeContent = document.getElementById("code-div") as HTMLDivElement;
+                    let arr = codeContent.getElementsByClassName("CodeMirror-code");
+                    let code = arr[ 0 ] as HTMLDivElement;
+                    // console.log(code.children);
+
+                    // console.log("~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~. 华丽的分割线 .~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~.~");
+
+                    for (let index = 0; index < code.childElementCount; index++)
+                    {
+                        const element = code.childNodes.item(index) as HTMLDivElement;
+                        let chdiv = element.childNodes.item(0) as HTMLDivElement
+                        // console.log(chdiv.className);
+
+                        if (chdiv.className.includes("fixed-position"))
+                        {
+                            // console.log("index: " + index);
+                            // console.log("count: " + code.childElementCount);
+                            // console.log("index-count/2: " + (index - parseInt((code.childElementCount / 2).toString())));
+                            // console.log("currentLine: " + this.currentHighlightLine);
+                            // console.log("new line: " + (this.currentHighlightLine + (index - parseInt((code.childElementCount / 2).toString()))));
+                            this.cEditor.setCursor(this.currentHighlightLine + (index - parseInt((code.childElementCount / 2).toString())))
+                        }
+                    }
+
+                    this.cEditor.addLineClass(this.currentHighlightLine, "background", "cursor-line-highight");
+                }, 100);
             })
         }
     }
@@ -190,52 +219,17 @@ export default class Debug extends Vue
             this.showStack(op);
             // console.log("script hash : " + script.hash);
             this.cEditor.removeLineClass(this.currentHighlightLine, "background", "cursor-line-highight")
+            this.cEditor.removeLineClass(this.currentHighlightLine, "background", "fixed-position")
             if (this.contractFiles[ script.hash ] && this.addr)
             {
-                // console.log("op");
-                // console.log(op);
-
-                // console.log("addr----------" + op.addr);
                 var line = this.addr.GetLineBack(op.addr);//尽量倒着取到对应的代码 codemirro 塞入的时候多往下了
-                // console.log("line==============" + line);
-                // console.log(line);
                 if (line >= 0)
                 {
                     this.currentHighlightLine = line - 1;
 
-                    console.log(this.cEditor.getViewport());
-                    // this.cEditor.scrollIntoView({from:{line:1,ch:1},to:100},)
-                    this.cEditor.scrollIntoView({ line: this.currentHighlightLine, ch: 0 });
-                    // this.cEditor.scrollIntoView({ line: 44, ch: 10 });
-                    this.cEditor.addLineClass(this.currentHighlightLine, "background", "cursor-line-highight");
-                    let codeContent = document.getElementById("code-div") as HTMLDivElement;
-                    let arr = codeContent.getElementsByClassName("CodeMirror-code");
-                    let code = arr[ 0 ] as HTMLDivElement;
-                    let codelines = code.getElementsByTagName("div");
-                    console.log("childElementCount");
-                    console.log(code.childElementCount)
-                    // console.log(codelines.length)
-                    // console.log(codelines);
-                    let highightLine = 0;
-                    for (let index = 0; index < codelines.length; index++)
-                    {
-                        const element = codelines[ index ];
-                        if (element.className.includes("cursor-line-highight"))
-                        {
-                            highightLine = index;
-                        }
-                    }
-                    this.cEditor.setCursor(this.currentHighlightLine + parseInt((highightLine / 3) - ((codelines.length / 3) / 2) + ""))
-                    console.log(codelines.length);
-                    console.log(parseInt((highightLine) - ((codelines.length) / 2) + ""));
-                    console.log(((codelines.length) / 2));
-
-
-                    console.log(this.currentHighlightLine + parseInt((highightLine / 3) - ((codelines.length / 3) / 2) + ""));
-                    this.debug();
-
-                    // console.log(this.cEditor.heightAtLine(this.currentHighlightLine))
                     // console.log(this.cEditor.getViewport());
+                    this.cEditor.setCursor(this.currentHighlightLine)
+                    this.cEditor.addLineClass(this.currentHighlightLine, "background", "fixed-position");
                 }
             }
         }

@@ -113,13 +113,14 @@
   position: absolute;
   right: 0;
   top: 124px;
-  z-index: 2;
+  z-index: 5;
   opacity: 1;
   width: 640px;
   max-height: 500px;
   overflow-y: auto;
 }
 .tranhistory-title {
+  z-index: 999;
   position: fixed;
   top: 124px;
   right: 0;

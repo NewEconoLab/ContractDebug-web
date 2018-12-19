@@ -1064,8 +1064,6 @@ var WWW = /** @class */ (function () {
                         return [4 /*yield*/, fetch(str, { "method": "get" })];
                     case 1:
                         result = _a.sent();
-                        console.log(result);
-                        console.log(result.status);
                         if (!(result.status == 200)) return [3 /*break*/, 3];
                         return [4 /*yield*/, result.text()];
                     case 2:
@@ -3946,14 +3944,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var wallet = __webpack_require__("YRcM");
 var wallet_default = /*#__PURE__*/__webpack_require__.n(wallet);
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/template-compiler?{"id":"data-v-2f7cac49","hasScoped":false,"transformToRequire":{"video":"src","source":"src","img":"src","image":"xlink:href"},"buble":{"transforms":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./src/layouts/wallet.vue
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/template-compiler?{"id":"data-v-0fc1bdee","hasScoped":false,"transformToRequire":{"video":"src","source":"src","img":"src","image":"xlink:href"},"buble":{"transforms":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./src/layouts/wallet.vue
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('main-layout',{staticClass:"contract-debug"},[_c('taskbar-layout'),_vm._v(" "),_c('div',{staticClass:"wallet-content"},[_c('router-view',{staticClass:"router-view"})],1)],1)}
 var staticRenderFns = []
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ var layouts_wallet = (esExports);
 // CONCATENATED MODULE: ./src/layouts/wallet.vue
 function injectStyle (ssrContext) {
-  __webpack_require__("Q4Ie")
+  __webpack_require__("gwvS")
 }
 var normalizeComponent = __webpack_require__("VU/8")
 /* script */
@@ -3978,13 +3976,6 @@ var Component = normalizeComponent(
 
 /* harmony default export */ var src_layouts_wallet = __webpack_exports__["default"] = (Component.exports);
 
-
-/***/ }),
-
-/***/ "Q4Ie":
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
 
 /***/ }),
 
@@ -5552,6 +5543,13 @@ var Utxo = /** @class */ (function () {
 }());
 exports.Utxo = Utxo;
 
+
+/***/ }),
+
+/***/ "gwvS":
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 

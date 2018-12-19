@@ -313,7 +313,7 @@ export class WWW
      */
     static async hascontract(txid: string)
     {
-        var postdata = WWW.makeRpcPostBody("hascontract", "0x" + txid);
+        var postdata = WWW.makeRpcPostBody("hascontract", txid);
         var result = await fetch(WWW.apiaggr, { "method": "post", "body": JSON.stringify(postdata) });
         var json = await result.json();
         var r = json[ "result" ][ 0 ];
