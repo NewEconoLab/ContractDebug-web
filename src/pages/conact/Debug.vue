@@ -4,11 +4,10 @@
       <div class="changehash-content">
         <div class="change-box">
           <select class="change-select" v-model="txid">
-            <option
-              v-for="tx in txlist"
-              :key="tx.id"
-              :value="tx.txid"
-            >{{tx.txidstr}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{timeShow(tx.createTime)}}</option>
+            <option v-for="tx in txlist" :key="tx.id" :value="tx.txid">
+              <span class="change-txid">{{tx.txidstr}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <span class="change-txid">{{timeShow(tx.createTime)}}</span>
+            </option>
           </select>
           <input
             type="text"
@@ -107,6 +106,10 @@
         option {
           background: #292a30;
           color: #fff;
+          display: flex;
+          .change-txid {
+            flex: 1;
+          }
         }
       }
       .change-input {
