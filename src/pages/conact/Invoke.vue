@@ -4,42 +4,42 @@
       <div class="code-top">
         <panel>
           <p-title :title="currentContract.name+'  '+currentContract.scripthash">
-            <v-btn @onclick="openSelect=true">更换合约</v-btn>
-            <a href="https://bbs.neldev.net/thread-146.htm" target="_blank">
-              <v-btn :type="'warn'">帮助</v-btn>
+            <v-btn @onclick="openSelect=true">{{$t('invoke.change')}}</v-btn>
+            <a :href="$t('invoke.href')" target="_blank">
+              <v-btn :type="'warn'">{{$t('invoke.help')}}</v-btn>
             </a>
           </p-title>
           <div class="code-content" id="code-content">
             <textarea id="invoke-json-code" rows="25" cols="20"></textarea>
           </div>
         </panel>
-        <v-btn @onclick="invoking">调用交易</v-btn>
-        <v-btn @onclick="testRun">试运行</v-btn>
+        <v-btn @onclick="invoking">{{$t('invoke.invoke')}}</v-btn>
+        <v-btn @onclick="testRun">{{$t('invoke.testrun')}}</v-btn>
       </div>
       <div class="result-bottom">
         <div class="result-left">
-          <p-title :title="'试运行结果'"></p-title>
+          <p-title :title="$t('invoke.testresult')"></p-title>
           <div class="panel-content">
             <div class="panel-form">
-              <div class="form-lable">参数Script hash</div>
+              <div class="form-lable">{{$t('invoke.scripthash')}}</div>
               <div class="form-content">
                 <input class="input" :value="invokeResult.script">
               </div>
             </div>
             <div class="panel-form">
-              <div class="form-lable">执行结果</div>
+              <div class="form-lable">{{$t('invoke.result')}}</div>
               <div class="form-content">
                 <input class="input" :value="invokeResult.state">
               </div>
             </div>
             <div class="panel-form">
-              <div class="form-lable">方法返回</div>
+              <div class="form-lable">{{$t('invoke.return')}}</div>
               <div class="form-content">
                 <input class="input" :value="JSON.stringify(invokeResult.stack)">
               </div>
             </div>
             <div class="panel-form">
-              <div class="form-lable">GAS消耗</div>
+              <div class="form-lable">{{$t('invoke.consume')}}</div>
               <div class="form-content">
                 <input class="input" :value="invokeResult.gas_consumed">
               </div>
@@ -47,7 +47,7 @@
           </div>
         </div>
         <div class="result-right">
-          <p-title :title="'结果代码'"></p-title>
+          <p-title :title="$t('invoke.resultCode')"></p-title>
           <div class="content">
             <textarea id="invoke-result-code"></textarea>
           </div>
@@ -56,7 +56,7 @@
       <!-- 更换合约的弹筐 -->
       <div class="changehash-dialog" v-if="openSelect">
         <div class="changhash-wrapper">
-          <p-title :title="'更换合约'">
+          <p-title :title="$t('invoke.change')">
             <img src="../../assets/close.png" alt @click="openSelect=false">
           </p-title>
           <div class="changehash-content">
@@ -68,10 +68,15 @@
                   :value="contract.scripthash"
                 >{{contract.name}}</option>
               </select>
-              <input type="text" placeholder="选择合约" class="change-input" v-model="inputContract">
+              <input
+                type="text"
+                :placeholder="$t('invoke.select')"
+                class="change-input"
+                v-model="inputContract"
+              >
             </div>
             <div class="changehash-btn">
-              <v-btn @onclick="changeContract">更换合约</v-btn>
+              <v-btn @onclick="changeContract">{{$t('invoke.change')}}</v-btn>
             </div>
           </div>
         </div>

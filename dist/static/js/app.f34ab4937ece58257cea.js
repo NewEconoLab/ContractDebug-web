@@ -204,13 +204,6 @@ exports.default = DateTool;
 
 /***/ }),
 
-/***/ "4NyZ":
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
 /***/ "50aY":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2740,6 +2733,13 @@ exports.default = Valert;
 
 /***/ }),
 
+/***/ "CgVe":
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ "CveJ":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3536,10 +3536,10 @@ var vue_1 = __webpack_require__("/5sW");
 var vue_router_1 = __webpack_require__("/ocq");
 var wallet_vue_1 = __webpack_require__("PPZq");
 vue_1.default.use(vue_router_1.default);
-var Login = function (resolve) { return __webpack_require__.e/* require */(0).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__("Luci")]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe); };
-var Deploy = function (resolve) { return __webpack_require__.e/* require */(1).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__("Do0Z")]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe); };
+var Login = function (resolve) { return __webpack_require__.e/* require */(1).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__("Luci")]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe); };
+var Deploy = function (resolve) { return __webpack_require__.e/* require */(2).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__("Do0Z")]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe); };
 var Debug = function (resolve) { return __webpack_require__.e/* require */(3).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__("qfqf")]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe); };
-var Invoke = function (resolve) { return __webpack_require__.e/* require */(2).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__("ev4o")]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe); };
+var Invoke = function (resolve) { return __webpack_require__.e/* require */(0).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__("ev4o")]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe); };
 exports.default = new vue_router_1.default({
     mode: 'hash',
     routes: [
@@ -4039,6 +4039,13 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAMAAAC7
 
 /***/ }),
 
+/***/ "SO6P":
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ "TaBq":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4094,13 +4101,6 @@ var Selected = /** @class */ (function (_super) {
 }(vue_1.default));
 exports.default = Selected;
 
-
-/***/ }),
-
-/***/ "ThPo":
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
 
 /***/ }),
 
@@ -5252,14 +5252,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var taskbar = __webpack_require__("fM9o");
 var taskbar_default = /*#__PURE__*/__webpack_require__.n(taskbar);
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/template-compiler?{"id":"data-v-29c2c493","hasScoped":true,"transformToRequire":{"video":"src","source":"src","img":"src","image":"xlink:href"},"buble":{"transforms":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./src/layouts/taskbar.vue
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"navbar navbar-wallet"},[_c('div',{staticClass:"blockheight"},[_c('div',{staticClass:"main"},[_c('div',{staticClass:"balance"},[_c('span',{staticClass:"asset"},[_vm._v("GAS")]),_vm._v(" "),_c('span',{staticClass:"amount"},[_vm._v(_vm._s(_vm.balance.toString()))]),_vm._v(" "),(_vm.claimState==='3010')?_c('v-btn',{on:{"onclick":_vm.claimGas}},[_vm._v("索取500 GAS")]):(_vm.claimState==='3011'||_vm.claimState==='3000')?_c('v-btn',{attrs:{"type":'disable'},on:{"onclick":null}},[_vm._v("排队中")]):(_vm.claimState==='3012'||_vm.claimState==='3003')?_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("已发放 GAS")]):_c('v-btn',{attrs:{"type":'disable'}},[_vm._v("Gas不足")]),_vm._v(" "),_c('v-hint',[_c('div',{staticClass:"hint-img"},[_c('img',{attrs:{"src":__webpack_require__("dqMZ"),"alt":""}})]),_vm._v(" "),_c('div',{staticClass:"hint-content"},[_c('p',[_vm._v("每个钱包每日可索取一次500gas，需要更多请在论坛留言索取。")])])])],1),_vm._v(" "),_c('div',{staticClass:"task-btn"},[_c('span',{staticClass:"task-tab"},[_c('img',{attrs:{"src":__webpack_require__("R2WG"),"alt":""}}),_vm._v("\n          "+_vm._s(_vm.$t('transfer.title2')+"：")+"\n          "),_c('a',{attrs:{"href":_vm.href,"target":"_blank"}},[_vm._v(_vm._s(_vm.showaddr))])]),_vm._v(" "),_c('span',{staticClass:"task-tab"},[_c('img',{attrs:{"src":__webpack_require__("ECX6"),"alt":""}}),_vm._v("\n          "+_vm._s([_vm.$t('navbar.blockheight'),_vm.blockheight].join("："))+"\n        ")]),_vm._v(" "),_c('v-btn',{on:{"onclick":function($event){_vm.showHistory=true}}},[_vm._v("操作记录")])],1),_vm._v(" "),_c('div',{staticClass:"tranhistory-box"},[(_vm.showHistory)?_c('div',{staticClass:"tranhistory-wrap"},[_c('div',{staticClass:"tranhistory-listbox"},[_c('div',{staticClass:"tranhistory-title"},[_c('div',{staticClass:"tranhistory-close",on:{"click":function($event){_vm.showHistory=!_vm.showHistory}}},[_c('img',{attrs:{"src":__webpack_require__("fgqV"),"alt":""}})]),_vm._v(" "),_c('span',[_vm._v(_vm._s(_vm.$t('operation.title')))]),_vm._v(" "),_c('div',{staticClass:"tranhistory-tips"},[_vm._v(_vm._s(_vm.$t('operation.tips')))])]),_vm._v(" "),_c('div',{staticClass:"tranhistory-list"},_vm._l((_vm.taskList),function(task){return _c('div',{key:task.txid,staticClass:"th-onelist"},[_c('div',[_c('div',{staticClass:"th-type"},[_c('div',{staticClass:"th-typename"},[_vm._v(_vm._s(task.taskType===2?"合约部署":"合约调用"))]),_vm._v(" "),_c('div',{staticClass:"th-other"},[_c('div',{staticClass:"th-number"},[_c('span',[_vm._v(_vm._s(task.simpleTxid))])])])]),_vm._v(" "),_c('div',{staticClass:"th-block-txid"},[_c('span',{staticClass:"th-txid",staticStyle:{"padding-right":"10px"}},[_vm._v(_vm._s(task.timeStr))]),_vm._v(" "),_c('span',{staticClass:"th-state"},[_c('span',[_vm._v("状态：")]),_vm._v(" "),(task.state==0)?_c('span',{},[_vm._v("等待")]):_vm._e(),_vm._v(" "),(task.state==1)?_c('span',{staticClass:"green-text"},[_vm._v("成功")]):_vm._e(),_vm._v(" "),(task.state==2)?_c('span',{staticClass:"red-text"},[_vm._v("失败")]):_vm._e()])])]),_vm._v(" "),(task.state==1)?_c('div',{staticClass:"btn-right"},[(task.taskType === 2)?_c('div',[_c('v-btn',{on:{"onclick":function($event){_vm.skipPage('invoke',task.message)}}},[_vm._v("合约调用")])],1):_vm._e(),_vm._v(" "),(task.taskType === 1)?_c('div',[_c('v-btn',{on:{"onclick":function($event){_vm.skipPage('debug',task.message)}}},[_vm._v("合约调试")])],1):_vm._e()]):_vm._e()])})),_vm._v(" "),(_vm.taskList.length == 0)?_c('div',{staticClass:"notask"},[_vm._v(_vm._s(_vm.$t('operation.nodata')))]):_vm._e()])]):_vm._e()])])]),_vm._v(" "),_c('v-toast',{ref:"toast"})],1)}
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/template-compiler?{"id":"data-v-04bd6020","hasScoped":true,"transformToRequire":{"video":"src","source":"src","img":"src","image":"xlink:href"},"buble":{"transforms":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./src/layouts/taskbar.vue
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"navbar navbar-wallet"},[_c('div',{staticClass:"blockheight"},[_c('div',{staticClass:"main"},[_c('div',{staticClass:"balance"},[_c('span',{staticClass:"asset"},[_vm._v("GAS")]),_vm._v(" "),_c('span',{staticClass:"amount"},[_vm._v(_vm._s(_vm.balance.toString()))]),_vm._v(" "),(_vm.claimState==='3010')?_c('v-btn',{on:{"onclick":_vm.claimGas}},[_vm._v(_vm._s(_vm.$t('taskbar.getGas')))]):(_vm.claimState==='3011'||_vm.claimState==='3000')?_c('v-btn',{attrs:{"type":'disable'},on:{"onclick":null}},[_vm._v(_vm._s(_vm.$t('taskbar.getingGas')))]):(_vm.claimState==='3012'||_vm.claimState==='3003')?_c('v-btn',{attrs:{"type":'disable'}},[_vm._v(_vm._s(_vm.$t('taskbar.getedGas')))]):_c('v-btn',{attrs:{"type":'disable'}},[_vm._v(_vm._s(_vm.$t('taskbar.shortage')))]),_vm._v(" "),_c('v-hint',[_c('div',{staticClass:"hint-img"},[_c('img',{attrs:{"src":__webpack_require__("dqMZ"),"alt":""}})]),_vm._v(" "),_c('div',{staticClass:"hint-content"},[_c('p',[_vm._v(_vm._s(_vm.$t('taskbar.getGasMsg')))])])])],1),_vm._v(" "),_c('div',{staticClass:"task-btn"},[_c('span',{staticClass:"task-tab"},[_c('img',{attrs:{"src":__webpack_require__("R2WG"),"alt":""}}),_vm._v("\n          "+_vm._s(_vm.$t('transfer.title2')+"：")+"\n          "),_c('a',{attrs:{"href":_vm.href,"target":"_blank"}},[_vm._v(_vm._s(_vm.showaddr))])]),_vm._v(" "),_c('span',{staticClass:"task-tab"},[_c('img',{attrs:{"src":__webpack_require__("ECX6"),"alt":""}}),_vm._v("\n          "+_vm._s([_vm.$t('navbar.blockheight'),_vm.blockheight].join("："))+"\n        ")]),_vm._v(" "),_c('v-btn',{on:{"onclick":function($event){_vm.showHistory=true}}},[_vm._v(_vm._s(_vm.$t('taskbar.history')))])],1),_vm._v(" "),_c('div',{staticClass:"tranhistory-box"},[(_vm.showHistory)?_c('div',{staticClass:"tranhistory-wrap"},[_c('div',{staticClass:"tranhistory-listbox"},[_c('div',{staticClass:"tranhistory-title"},[_c('div',{staticClass:"tranhistory-close",on:{"click":function($event){_vm.showHistory=!_vm.showHistory}}},[_c('img',{attrs:{"src":__webpack_require__("fgqV"),"alt":""}})]),_vm._v(" "),_c('span',[_vm._v(_vm._s(_vm.$t('operation.title')))]),_vm._v(" "),_c('div',{staticClass:"tranhistory-tips"},[_vm._v(_vm._s(_vm.$t('operation.tips')))])]),_vm._v(" "),_c('div',{staticClass:"tranhistory-list"},_vm._l((_vm.taskList),function(task){return _c('div',{key:task.txid,staticClass:"th-onelist"},[_c('div',[_c('div',{staticClass:"th-type"},[_c('div',{staticClass:"th-typename"},[_vm._v(_vm._s(task.taskType===2?_vm.$t('taskbar.deploy'):_vm.$t('taskbar.invoke')))]),_vm._v(" "),_c('div',{staticClass:"th-other"},[_c('div',{staticClass:"th-number"},[_c('span',[_vm._v(_vm._s(task.simpleTxid))])])])]),_vm._v(" "),_c('div',{staticClass:"th-block-txid"},[_c('span',{staticClass:"th-txid",staticStyle:{"padding-right":"10px"}},[_vm._v(_vm._s(task.timeStr))]),_vm._v(" "),_c('span',{staticClass:"th-state"},[_c('span',[_vm._v(_vm._s(_vm.$t('taskbar.state')))]),_vm._v(" "),(task.state==0)?_c('span',{},[_vm._v(_vm._s(_vm.$t('taskbar.wait')))]):_vm._e(),_vm._v(" "),(task.state==1)?_c('span',{staticClass:"green-text"},[_vm._v(_vm._s(_vm.$t('taskbar.success')))]):_vm._e(),_vm._v(" "),(task.state==2)?_c('span',{staticClass:"red-text"},[_vm._v(_vm._s(_vm.$t('taskbar.fail')))]):_vm._e()])])]),_vm._v(" "),(task.state==1)?_c('div',{staticClass:"btn-right"},[(task.taskType === 2)?_c('div',[_c('v-btn',{on:{"onclick":function($event){_vm.skipPage('invoke',task.message)}}},[_vm._v(_vm._s(_vm.$t('taskbar.invoke')))])],1):_vm._e(),_vm._v(" "),(task.taskType === 1)?_c('div',[_c('v-btn',{on:{"onclick":function($event){_vm.skipPage('debug',task.message)}}},[_vm._v(_vm._s(_vm.$t('taskbar.debug')))])],1):_vm._e()]):_vm._e()])})),_vm._v(" "),(_vm.taskList.length == 0)?_c('div',{staticClass:"notask"},[_vm._v(_vm._s(_vm.$t('operation.nodata')))]):_vm._e()])]):_vm._e()])])]),_vm._v(" "),_c('v-toast',{ref:"toast"})],1)}
 var staticRenderFns = []
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ var layouts_taskbar = (esExports);
 // CONCATENATED MODULE: ./src/layouts/taskbar.vue
 function injectStyle (ssrContext) {
-  __webpack_require__("ThPo")
+  __webpack_require__("CgVe")
 }
 var normalizeComponent = __webpack_require__("VU/8")
 /* script */
@@ -5270,7 +5270,7 @@ var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = "data-v-29c2c493"
+var __vue_scopeId__ = "data-v-04bd6020"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -5563,14 +5563,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var Main = __webpack_require__("Gc41");
 var Main_default = /*#__PURE__*/__webpack_require__.n(Main);
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/template-compiler?{"id":"data-v-36b34b4e","hasScoped":false,"transformToRequire":{"video":"src","source":"src","img":"src","image":"xlink:href"},"buble":{"transforms":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./src/layouts/Main.vue
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('nav',{staticClass:"main navbar navbar-nel navbar-fixed-top"},[_c('div',{staticClass:"navbar-header"},[_c('button',{staticClass:"navbar-toggle collapsed",attrs:{"type":"button","data-toggle":"collapse","data-target":"#navbar","aria-expanded":"false","aria-controls":"navbar"}},[_c('span',{staticClass:"sr-only"},[_vm._v(_vm._s(_vm.$t('navbar.toggle')))]),_vm._v(" "),_c('span',{staticClass:"icon-bar"}),_vm._v(" "),_c('span',{staticClass:"icon-bar"}),_vm._v(" "),_c('span',{staticClass:"icon-bar"})])]),_vm._v(" "),_c('div',{staticClass:"navbar-collapse collapse",attrs:{"id":"navbar"}},[_c('div',{staticClass:"logo"}),_vm._v(" "),_c('ul',{staticClass:"nav navbar-nav navbar-left"},[_c('li',[_c('router-link',{attrs:{"to":"deploy"}},[_vm._v("合约部署")])],1),_vm._v(" "),_c('li',[_c('router-link',{attrs:{"to":"invoke"}},[_vm._v("调用合约")])],1),_vm._v(" "),_c('li',[_c('router-link',{attrs:{"to":"debug"}},[_vm._v("合约调试")])],1),_vm._v(" "),_vm._m(0,false,false),_vm._v(" "),_c('li',[_c('a',{attrs:{"href":"https://scan.nel.group/test","target":"_blank"}},[_vm._v(_vm._s(_vm.$t('navbar.explorer')))])])]),_vm._v(" "),_c('ul',{staticClass:"nav navbar-nav navbar-right"},[_c('li',{staticClass:"dropdown"},[_c('a',{staticClass:"dropdown-toggle",attrs:{"data-toggle":"dropdown","role":"button","aria-haspopup":"true","aria-expanded":"false"}},[_c('span',{staticClass:"text",attrs:{"id":"network"}},[_vm._v(_vm._s(_vm.$t('navbar.testnet')))]),_vm._v(" "),_c('span',{staticClass:"caret"})]),_vm._v(" "),_c('ul',{staticClass:"dropdown-menu dropdown-nel"},[_c('li',{staticClass:"active",attrs:{"id":"testnet-btn"}},[_c('a',{attrs:{"id":"testa"}},[_vm._v(_vm._s(_vm.$t('navbar.testnet')))])])])]),_vm._v(" "),(_vm.loginshow)?_c('li',[_c('router-link',{attrs:{"to":"login"}},[_vm._v(_vm._s(_vm.$t('navbar.logout')))])],1):_vm._e()]),_vm._v(" "),_c('ul',{staticClass:"nav navbar-nav navbar-right"},[_c('li',{staticClass:"dropdown"},[_c('a',{staticClass:"dropdown-toggle",attrs:{"data-toggle":"dropdown","role":"button","aria-haspopup":"true","aria-expanded":"false"}},[_c('span',{staticClass:"text"},[_vm._v(_vm._s(_vm.currentLanguage))]),_vm._v(" "),_c('span',{staticClass:"caret"})]),_vm._v(" "),_c('ul',{staticClass:"dropdown-menu dropdown-nel"},[_c('li',{class:_vm.currentLanguage!='English'?'active':'',attrs:{"id":"mainnet-btn"}},[_c('a',{on:{"click":function($event){_vm.cutLanguage(2)}}},[_vm._v("中文")])])])])])])]),_vm._v(" "),_c('div',{staticClass:"main-content"},[_vm._t("default")],2)])}
-var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('li',[_c('a',{attrs:{"href":"https://bbs.neldev.net/","target":"_blank"}},[_vm._v("NEL开发者论坛")])])}]
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/template-compiler?{"id":"data-v-679af868","hasScoped":false,"transformToRequire":{"video":"src","source":"src","img":"src","image":"xlink:href"},"buble":{"transforms":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./src/layouts/Main.vue
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('nav',{staticClass:"main navbar navbar-nel navbar-fixed-top"},[_c('div',{staticClass:"navbar-header"},[_c('button',{staticClass:"navbar-toggle collapsed",attrs:{"type":"button","data-toggle":"collapse","data-target":"#navbar","aria-expanded":"false","aria-controls":"navbar"}},[_c('span',{staticClass:"sr-only"},[_vm._v(_vm._s(_vm.$t('navbar.toggle')))]),_vm._v(" "),_c('span',{staticClass:"icon-bar"}),_vm._v(" "),_c('span',{staticClass:"icon-bar"}),_vm._v(" "),_c('span',{staticClass:"icon-bar"})])]),_vm._v(" "),_c('div',{staticClass:"navbar-collapse collapse",attrs:{"id":"navbar"}},[_c('div',{staticClass:"logo"}),_vm._v(" "),_c('ul',{staticClass:"nav navbar-nav navbar-left"},[_c('li',[_c('router-link',{attrs:{"to":"deploy"}},[_vm._v(_vm._s(_vm.$t('taskbar.deploy')))])],1),_vm._v(" "),_c('li',[_c('router-link',{attrs:{"to":"invoke"}},[_vm._v(_vm._s(_vm.$t('taskbar.invoke')))])],1),_vm._v(" "),_c('li',[_c('router-link',{attrs:{"to":"debug"}},[_vm._v(_vm._s(_vm.$t('taskbar.debug')))])],1),_vm._v(" "),_c('li',[_c('a',{attrs:{"href":"https://bbs.neldev.net/","target":"_blank"}},[_vm._v(_vm._s(_vm.$t('navbar.forum')))])]),_vm._v(" "),_c('li',[_c('a',{attrs:{"href":"https://scan.nel.group/test","target":"_blank"}},[_vm._v(_vm._s(_vm.$t('navbar.explorer')))])])]),_vm._v(" "),_c('ul',{staticClass:"nav navbar-nav navbar-right"},[_c('li',{staticClass:"dropdown"},[_c('a',{staticClass:"dropdown-toggle",attrs:{"data-toggle":"dropdown","role":"button","aria-haspopup":"true","aria-expanded":"false"}},[_c('span',{staticClass:"text",attrs:{"id":"network"}},[_vm._v(_vm._s(_vm.$t('navbar.testnet')))]),_vm._v(" "),_c('span',{staticClass:"caret"})]),_vm._v(" "),_c('ul',{staticClass:"dropdown-menu dropdown-nel"},[_c('li',{staticClass:"active",attrs:{"id":"testnet-btn"}},[_c('a',{attrs:{"id":"testa"}},[_vm._v(_vm._s(_vm.$t('navbar.testnet')))])])])]),_vm._v(" "),(_vm.loginshow)?_c('li',[_c('router-link',{attrs:{"to":"login"}},[_vm._v(_vm._s(_vm.$t('navbar.logout')))])],1):_vm._e()]),_vm._v(" "),_c('ul',{staticClass:"nav navbar-nav navbar-right"},[_c('li',{staticClass:"dropdown"},[_c('a',{staticClass:"dropdown-toggle",attrs:{"data-toggle":"dropdown","role":"button","aria-haspopup":"true","aria-expanded":"false"}},[_c('span',{staticClass:"text"},[_vm._v(_vm._s(_vm.currentLanguage))]),_vm._v(" "),_c('span',{staticClass:"caret"})]),_vm._v(" "),_c('ul',{staticClass:"dropdown-menu dropdown-nel"},[_c('li',{class:_vm.currentLanguage=='English'?'active':'',attrs:{"id":"testnet-btn"}},[_c('a',{on:{"click":function($event){_vm.cutLanguage(1)}}},[_vm._v("English")])]),_vm._v(" "),_c('li',{class:_vm.currentLanguage!='English'?'active':'',attrs:{"id":"mainnet-btn"}},[_c('a',{on:{"click":function($event){_vm.cutLanguage(2)}}},[_vm._v("中文")])])])])])])]),_vm._v(" "),_c('div',{staticClass:"main-content"},[_vm._t("default")],2)])}
+var staticRenderFns = []
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ var layouts_Main = (esExports);
 // CONCATENATED MODULE: ./src/layouts/Main.vue
 function injectStyle (ssrContext) {
-  __webpack_require__("4NyZ")
+  __webpack_require__("SO6P")
 }
 var normalizeComponent = __webpack_require__("VU/8")
 /* script */
@@ -5677,7 +5677,8 @@ exports.default = {
         testnet: "TestNet",
         logout: "logout",
         blockheight: "Block Height",
-        toggle: "Toggle navigation"
+        toggle: "Toggle navigation",
+        forum: "NEL Developer forum "
     },
     btn: {
         confirm: "Confirm",
@@ -5796,29 +5797,6 @@ exports.default = {
         netfee: "Network fee",
         sysfee: "System fee"
     },
-    nns: {
-        nns: "NNS",
-        title1: "Register Neo Name",
-        placeholder1: "enter a name",
-        register: "Register",
-        title2: "My Neo Name",
-        msg1: "The testing has ended. Thanks for your participation. ",
-        msg2: 'You will be rewarded with 50 NNCs on Mainnet for the first time you map your wallet address to an ending in ".test"  name successfully.',
-        msg3: "Register your domain name and collect the reward.",
-        err1: "The domain name has been registered.",
-        text1: "Address resolver",
-        text2: "Address mapping",
-        text3: "Expiration Time",
-        text4: "Expiration",
-        waiting: "Try to refresh the page after the NEO block height is updated.",
-        edit: "Edit",
-        alerttitle: "Edit information",
-        alerttitle1: "Neo Name",
-        alerttitle2: "Adrress Resolver",
-        alerttitle3: "Adrress Mapping",
-        alertmessage1: "It is the official address resolver , you have to confirm this address resolver first to map your address.",
-        alertmessage2: "Please enter the correct format of the address.",
-    },
     setting: {
         settings: "Settings",
         title1: "My Wallet Address",
@@ -5833,145 +5811,10 @@ exports.default = {
         btn2: "Create",
         btn3: "download"
     },
-    nnsneo: {
-        auction: "Neo Name Auction",
-        myneoname: "Domain Management",
-        bonus: "Bonus",
-        tutorial: "Tutorial"
+    notify: {
+        utxo: "Your UTXO is too scattered, which may cause the CGAS conversion to fail (GAS will also be lost). Please transfer some GAS( the amount shall be no less than your conversion amount) to your own address first and then convert GAS into CGAS after the transfer operation is confirmed.",
+        fee: "Note: When there is enough GAS in your wallet, we will automatically add a fee to ensure your operation will be confirmed fast. "
     },
-    auction: {
-        title1: "Neo Name Auction",
-        title2: "My Auction",
-        title3: "Auction Information",
-        title4: "Raise my bid",
-        title5: "Timeline",
-        title6: "Claim domain",
-        title7: "Reclaim CGAS",
-        entername: "type a name",
-        checkavailable: "This name is available.",
-        checkbeing: 'This domain is currently under auction. Click "Join Auction" to bid for it.',
-        checkformat: "Domain names must be English characters or numbers, and can only be 6 to 32 characters in length",
-        checkbuyer: "This name is unavailable.",
-        sendingmsg: "We are currently opening the auction. Please wait.",
-        searchmsg: "Search by domain",
-        status: "Status",
-        lastauctionprice: "Highest bid price",
-        currentbidder: "Current bidder",
-        opentime: "Bid openting time",
-        fixedperiod: "Auction period",
-        randomperiod: "Overtime bidding",
-        ended: "Ended",
-        me: "Me",
-        other: "Other people",
-        buyer: "Buyer",
-        hammerprice: "Hammer price",
-        acutiontitle: "Auction",
-        domain: "Domain",
-        highest: "Highest bid price",
-        raisebid: "Raise my bid",
-        enterbid: "Enter a raise",
-        yourbidmsg: "Your cumulative bid",
-        mybidmsg: "My cumulative bid ",
-        mywillbid: "My cumulative bid will be",
-        price: "Price: ",
-        tips1: "Tip: The minimum bid increment is 0.1 CGAS. If your bid is lower than the current highest bid, your raise will be unsuccessful.",
-        isAvailable: "is available",
-        errmsg5: "Only",
-        errmsg1: "Only",
-        errmsg2: "CGAS is available.",
-        errmsg4: "Please enter the right format.",
-        errmsg6: "Your bid raise must not be less than 10% of the current highest bid price",
-        nobalance: "You have insufficient CGAS left in your auction account. Please top it up.",
-        goback: "Go back",
-        waitmsg1: "Waiting for confirmation",
-        waitmsg2: "Your raise will be confirmed after a new block is generated. Please wait.",
-        getdomaintips: "Tip: After successfully claiming your domain, you can modify its settings in Domain Management.",
-        waitgetdomain: "Your operation will be confirmed after the new block is generated. Please wait patiently...",
-        fee: "Fee",
-        remainingsgas: "Remaining CGAS",
-        timetips1: "Tips : If nobody bids on the last day of the auction period, the auction period end time will be the end of the auction.",
-        timetips2: "Tip: Once the auction moves into the overtime bidding, it may end at any time",
-        timetips3: "Tips : The auction may end at any point during the overtime bidding, so it’s better to bid as early as possible.",
-        bidstarttimemsg: "Bid start time",
-        endtimemsg: "Auction period end time",
-        randomtimemsg: "Overtime bidding start time",
-        maxtimemsg: "Maximum end time of overtime bidding",
-        tipsmsg1: "Tips: Before participating in an auction, you need to know the following:",
-        tipsmsg2: "The asset used for auctions is CGAS. You will need CGAS in your Auction Account to place a bid.",
-        tipsmsg3: 'GAS can be exchanged for CGAS at the rate of 1:1 using the CGAS Exchange page. Once you have CGAS in your wallet, you can use top-up function below to deposit CGAS into your Auction Account.',
-        titleaccount: "Your Auction Account",
-        withdraw: "Withdraw",
-        topup: "Top up",
-        from: "From: ",
-        to: "To",
-        topupamount: "Amount",
-        withdrawamount: "Amount",
-        amount: "Amount",
-        asset: "Asset",
-        errmsg3: "is available.",
-        tipsmsg4: "Tips: When you are using Gas to recharge, before being recharged into your Auction Account, GAS will be automatically switched to CGAS. The entire process takes two blocks of confirmation time. Please wait patiently. ",
-        yourbalance: "Your Balance",
-        waiting: "Waiting",
-        successwithdraw: "Your withdrawal request has been successfully submitted.",
-        successwithdraw2: "CGAS will be refunded to your address in the next block !",
-        successtop: "Successesfully toped up",
-        successtopup: "Your top-up request has been successfully submitted. ",
-        successtopup2: " CGAS will be in your auction account after 2 blocks are confirmed !",
-        successtopup3: " CGAS will be deposited into your Auction Account in the next block.",
-        failtopup: "Top up failed ! And your Gas has been exchanged into CGAS",
-        fail: "Operation failed !",
-        auctionopen: "Auction Opened",
-        domainname: "Domain name",
-        successbid: "Raise succesful!",
-        failbid: "Raise failed!",
-        failbid2: "Its auction has ended. Your raise is not executed.",
-        successbid1: "Your bid of ",
-        successbid2: " CGAS has been sent to the blockchain for confirmation.",
-        successgetdomain: "Domain acquired",
-        failgetdomain: "Please click again to acquire domain",
-        tips: "Tips: ",
-        statustips: "The auction period is the first stage of the auction and its duration is 3 days, during which all bids are valid. An overtime bidding of up to 2 days will be triggered when someone bids on the last day of the auction period. Otherwise the auction ends at the end of the auction period.",
-        statustips2: "The overtime bidding is the second stage of the auction. Its maximum duration is 2 days. During this period, any bid may trigger the end of the bidding of this domain and the bid will be invalid. The latter one bids, the more likely it triggers the end of the bidding. So it's advised to place a bid as early as possible to avoid missing this domain. ",
-        teststatustips: "The auction period is the first stage of the auction and its duration is 15 minutes, during which all bids are valid. An overtime bidding of up to 10 minutes will be triggered when someone bids on the last day of the auction period. Otherwise the auction ends at the end of the auction period.",
-        teststatustips2: "The overtime bidding is the second stage of the auction. Its maximum duration is 10 minutes. During this period, any bid may trigger the end of the bidding of this domain and the bid will be invalid. The latter one bids, the more likely it triggers the end of the bidding. So it's advised to place a bid as early as possible to avoid missing this domain.",
-        toptips: "Tips: When the system prompts you have successfully submited your CGAS top up transaction. It will be confirmed and added to your Auction Account in the next block. Please be patient.",
-        withdrawtips: "Tips: When the system prompts you have successfully submited your CGAS withdrawal transaction. It will be confirmed and added to your wallet in the next block. Please be patient.",
-        getall: "Max",
-        nodata: "No related data was found."
-    },
-    exchange: {
-        title: "CGAS Exchange",
-        tosgas: "Exchange Gas for CGAS",
-        togas: "Exchange CGAS for Gas",
-        tips: "Tips：CGAS is a NEP5 token，which is bound with NEO’s GAS at the ratio of 1:1 and they can be converted with each other freely. The exchange needs to be confirmed after one block. Please be patient. ",
-        spend: "Amount you will spend : ",
-        receive: "Amount you will receive : ",
-        warnmsg: "Insufficient balance.",
-        waittitle: "Waiting for transaction records",
-        balance: "Balance",
-        amount: "Amount"
-    },
-    myneoname: {
-        title: "My Neo Name",
-        resolver: "Address Resolver",
-        mapping: "Address Mapping",
-        time: "Expiration Time",
-        expiring: "Expiring soon",
-        edittitle: "Edit information",
-        neoname: "Neo Name",
-        owner: "Owner Address",
-        notconfigure: "not configured",
-        expired: "Expired",
-        tips: "Tips : Address mapping can only be performed after the address resolver is confirmed by you. "
-    },
-    bonus: {
-        title: "Bouns History",
-        mydividend: "My dividends: ",
-        distribution: "Distribution pool snapshot: ",
-        mytotal: "My total NNC holdings: ",
-        snapshot: "Snapshot time:"
-    },
-    tutorial: {},
     operation: {
         welcome: "Welcome!",
         title: "Operation record",
@@ -5995,11 +5838,70 @@ exports.default = {
         nodata: "There is no data",
         fail: "Operation failed",
         waitinggas: "Waiting for system confirmation",
-        sentok: "System sent"
+        sentok: "System sent",
+        list: "List",
+        delist: "Delist",
+        buy: "Buy",
+        claimnnc: "NNC Claim",
+        requestnnc: "Request NNC",
+        domaintransfer: "Domain transfer",
     },
-    notify: {
-        utxo: "Your UTXO is too scattered, which may cause the CGAS conversion to fail (GAS will also be lost). Please transfer some GAS( the amount shall be no less than your conversion amount) to your own address first and then convert GAS into CGAS after the transfer operation is confirmed.",
-        fee: "Note: When there is enough GAS in your wallet, we will automatically add a fee to ensure your operation will be confirmed fast. "
+    taskbar: {
+        getGas: "Request Gas",
+        getingGas: "Queueing",
+        getedGas: "Issued Gas",
+        getGasMsg: "Each wallet can request 500 GAS once a day. Please leave a message on our forum if you need more GAS.",
+        history: "Operation",
+        deploy: "Deployment",
+        invoke: "Call",
+        debug: "Contract debug",
+        state: "State：",
+        wait: "wait",
+        success: "success",
+        fail: "fail",
+        shortage: "Gas shortage",
+    },
+    deploy: {
+        file: "File",
+        new: "New",
+        loadingHash: "Loading by hash",
+        compileResult: "Compiling result",
+        compile: "Compiling",
+        download: "AVM",
+        copy: "Copy hash",
+        deployContract: "Deploy contract",
+        name: "contract name (needed)",
+        version: "version",
+        author: "author",
+        email: "email",
+        describe: "describe",
+        call: "dynamic call",
+        storage: "need storage",
+        payment: "Accept payment",
+        deployConfirm: "Deploy",
+        confirm: "Confirm",
+        consume: "GAS consume："
+    },
+    invoke: {
+        change: "Change",
+        select: "Select contract",
+        help: "help",
+        href: "https://medium.com/neweconolab/the-construction-method-of-parameters-that-call-contracts-f3964a2cbd9b",
+        scripthash: "Script hash",
+        invoke: "Invoke ",
+        testrun: "Test run",
+        testresult: "test result",
+        result: "result",
+        return: "return",
+        consume: "GAS consume",
+        resultCode: "result code"
+    },
+    debug: {
+        selectTx: "Select Txid",
+        query: "Inquire",
+        help: "help",
+        href: "https://medium.com/neweconolab/the-help-instructions-of-contract-debugging-e1dfd75ccfd1",
+        code: "Contract code",
     }
 };
 
@@ -6947,7 +6849,8 @@ exports.default = {
         testnet: "测试网",
         logout: "退出",
         blockheight: "高度",
-        toggle: "切换导航"
+        toggle: "切换导航",
+        forum: "NEL开发者论坛"
     },
     btn: {
         confirm: "提交",
@@ -6979,7 +6882,7 @@ exports.default = {
         exchanging: "兑换中",
         withdraw: "提取",
         topup: "充值",
-        getGas: "索取Gas",
+        getGas: "索取500 Gas",
         gettingGas: "Gas领取中"
     },
     toast: {
@@ -7044,203 +6947,6 @@ exports.default = {
         errmsg3: "数据异常！请您稍后再进行尝试！",
         successmsg: "操作成功！正在领取中，请稍等。"
     },
-    transfer: {
-        transfer: "转账",
-        title1: "资产",
-        title2: "地址",
-        title3: "金额",
-        title4: "历史记录",
-        msg1: "您的地址不正确",
-        send: "发送",
-        from: "来自",
-        to: "发往",
-        details: "详情",
-        placeholder: "请输入地址或域名",
-        msg2: "您的交易已发送，请稍后查验",
-        msg3: "交易失败",
-        msg4: "您没有足够的utxo进行交易，请等待高度变化后再尝试下笔交易",
-        msg5: "可用",
-        waiting: "等待交易确认",
-        errdomain: "该域名尚未映射地址",
-        timeMsg: "有效期至: ",
-        netfee: "网络费",
-        sysfee: "系统费"
-    },
-    nns: {
-        nns: "NNS",
-        title1: "注册NEO域名",
-        placeholder1: "输入名称",
-        register: "注册",
-        title2: "我的NEO域名",
-        msg1: "活动已结束，谢谢大家的参与。",
-        msg2: '我们将会在NNS在主网上线后的一个月内给予你主网钱包50NNC的奖励！',
-        msg3: "注册你的域名并收集奖励。",
-        err1: "当前域名已经被注册。",
-        text1: "地址解析器",
-        text2: "地址映射",
-        text3: "域名到期时间",
-        text4: "已到期",
-        waiting: "等待NEO区块高度更新后，尝试刷新页面",
-        edit: "编辑",
-        alerttitle: "编辑信息",
-        alerttitle1: "注册Neo域名",
-        alerttitle2: "地址解析器",
-        alerttitle3: "地址映射",
-        alertmessage1: "这是官方地址解析器，你必须先确认此地址解析器才能映射你的地址。",
-        alertmessage2: "请输入正确格式的地址",
-    },
-    setting: {
-        settings: "设置",
-        title1: "我的钱包地址",
-        title2: "我的私钥",
-        title3: "我的钱包文件",
-        msg1: "这些信息非常重要。如果你失去了它，它可能会导致你的损失。",
-        msg2: "保存您的密钥库文件并复制您的钱包地址和您的WIF。不要失去他们。",
-        msg3: "设置密码 ",
-        msg4: "输入你的密码",
-        msg5: "创建钱包",
-        btn1: "查看",
-        btn2: "创建",
-        btn3: "下载"
-    },
-    nnsneo: {
-        auction: "域名竞拍",
-        myneoname: "我的域名管理",
-        bonus: "我的分红",
-        tutorial: "竞拍教程"
-    },
-    auction: {
-        title1: "域名竞拍",
-        title2: "我的竞拍",
-        title3: "竞拍信息",
-        title4: "我的加价",
-        title5: "竞拍进度",
-        title6: "领取域名",
-        title7: "领回竞拍金",
-        entername: "请输入您想要的域名",
-        checkavailable: "此域名可以进行竞拍。",
-        checkbeing: "此域名正在进行竞拍。",
-        checkformat: "域名长度需要在6～32个字节之间，只能是字母和数字。",
-        checkbuyer: "此域名已经被其他人竞拍了。",
-        sendingmsg: "正在发送交易，请耐心等待...",
-        searchmsg: "按域名搜索",
-        status: "状态",
-        lastauctionprice: "当前最高价",
-        currentbidder: "当前竞标人",
-        opentime: "开标时间",
-        fixedperiod: "确定期",
-        randomperiod: "随机期",
-        ended: "已结束",
-        me: "我",
-        other: "他人",
-        buyer: "中标人",
-        hammerprice: "成交价",
-        acutiontitle: "竞拍",
-        domain: "域名",
-        highest: "当前最高价",
-        raisebid: "加价",
-        enterbid: "请输入您的价格",
-        yourbidmsg: "您的累积竞价",
-        mybidmsg: "我的累积竞价 ",
-        mywillbid: "我的累积竞价将会是 ",
-        price: "竞拍价: ",
-        tips1: "注意 : 每次加价的最小值为 0.1 CGAS. 当您的累积竞价小于当前最高价时，该次出价不成功。",
-        isAvailable: "可用",
-        errmsg5: "您当前的账户仅拥有",
-        errmsg1: "您当前的竞拍账户仅拥有",
-        errmsg2: "CGAS.",
-        errmsg4: "请输入正确的格式。",
-        errmsg6: "您的出价低于最高出价的百分之十",
-        nobalance: "余额不足，请充值",
-        goback: "返回",
-        waitmsg1: "未确认",
-        waitmsg2: "您的加价将会在新区块生成之后被确认，请耐心等待...",
-        getdomaintips: "注意 : 当您成功领取域名后，您可以在“我的域名管理”中进行编辑。",
-        waitgetdomain: "您的操作将会在新区块生成之后被确认，请耐心等待...",
-        fee: "手续费 ",
-        remainingsgas: "可以领回的竞拍金 ",
-        timetips1: "注意 : 如果确定期最后一天无人竞拍, 则确定期结束时间为该次竞拍的结束时间。",
-        timetips2: "注意 : 竞拍即将进入随机期, 在随机期竞拍结束时间是不确定的，请尽早出价。",
-        timetips3: "注意 : 在随机期竞拍结束时间是不确定的，请尽早出价。",
-        bidstarttimemsg: "开标时间",
-        endtimemsg: "确定期结束时间",
-        randomtimemsg: "随机期开始时间",
-        maxtimemsg: "随机期最大结束时间",
-        tipsmsg1: "注意：竞拍开始之前，你需要知道2件事:",
-        tipsmsg2: "竞拍所使用的资产是CGAS，并且您需要将CGAS充值进您的“竞拍账户”才能使用。",
-        tipsmsg3: 'CGAS需要在“CGAS兑换”页面中用Gas1:1兑换获得, 然后使用“竞拍账户”中的充值功能，将CGAS充值进您的竞拍账户',
-        titleaccount: "您的竞拍账户",
-        withdraw: "提取",
-        topup: "充值",
-        from: "充值源: ",
-        to: "提取到",
-        topupamount: "充值金额",
-        withdrawamount: "提取金额",
-        amount: "金额",
-        asset: "资产",
-        errmsg3: "是可用的",
-        tipsmsg4: "注意：当你在使用Gas进行充值时，充值进你的“拍卖账户”之前，他会自动转换成CGAS，整个过程需要两个区块的确认时间，请耐心等待...",
-        yourbalance: "您的钱包账户",
-        waiting: "等待",
-        successwithdraw: "提取成功",
-        successtop: "充值成功",
-        successtopup: "充值成功!您的 ",
-        successtopup2: " 个CGAS将会在2个区块被确认后进入您的竞拍账户!",
-        successtopup3: " 个CGAS将会在1个区块被确认后进入您的竞拍账户!",
-        successwithdraw2: " 个CGAS将会在1个区块后退回到您的地址!",
-        failtopup: "充值失败 !你的Gas被转换成了CGAS",
-        fail: "操作失败 !",
-        auctionopen: "开标",
-        domainname: "域名",
-        successbid: "加价成功",
-        failbid: "加价失败",
-        failbid2: "此域名竞拍结束，本次加价未执行",
-        successbid1: "您加价了 ",
-        successbid2: " CGAS ，请等待区块确认。",
-        successgetdomain: "域名领取成功",
-        failgetdomain: "域名领取失败",
-        tips: "注意: ",
-        statustips: "确定期为竞拍第一阶段，时长为3天，此期间所有的出价都有效。当确定期最后一天有人出价时将触发最大时长为2天的随机期。否则竞拍即在确定期结束。",
-        statustips2: "随机期为竞拍第二阶段，最大时长为2天，此期间任意一个出价都有可能触发该域名竞拍的结束从而出价无效，越靠后的出价触发结束的可能性越大，因此请尽早出价以免错失该域名。 ",
-        teststatustips: "确定期为竞拍第一阶段，时长为3天，此期间所有的出价都有效。当确定期最后一天有人出价时将触发最大时长为2天的随机期。否则竞拍即在确定期结束。",
-        teststatustips2: "随机期为竞拍第二阶段，最大时长为2天，此期间任意一个出价都有可能触发该域名竞拍的结束从而出价无效，越靠后的出价触发结束的可能性越大，因此请尽早出价以免错失该域名。 ",
-        toptips: "注意: 当系统提示您充值成功之后，仍需要一个区块的时间来确认这笔操作，请耐心等待。",
-        withdrawtips: "注意: 当系统提示您提取成功之后，仍需要一个区块的时间来确认这笔操作，请耐心等待。",
-        getall: "全部",
-        nodata: "没有查询到相关数据"
-    },
-    exchange: {
-        title: "CGAS兑换",
-        tosgas: "兑换CGAS",
-        togas: "兑换Gas",
-        tips: "注意 : CGAS是一种NEP5资产，与NEO的GAS按照1：1比例绑定，它们之间可自由兑换。兑换需要一个区块的确认时间，请耐心等待。",
-        spend: "我将花费 : ",
-        receive: "我将获得 : ",
-        warnmsg: "余额不足",
-        waittitle: "交易记录",
-        balance: "余额",
-        amount: "金额"
-    },
-    myneoname: {
-        title: "我的域名管理",
-        resolver: "地址解析器",
-        mapping: "地址映射",
-        time: "域名到期时间",
-        owner: "所有者地址",
-        expiring: "即将过期",
-        edittitle: "编辑信息",
-        neoname: "域名",
-        notconfigure: "未配置",
-        expired: "已过期",
-        tips: "注意 : 您需要在成功确认地址解析器之后，才能进行地址映射。"
-    },
-    bonus: {
-        title: "分红记录",
-        mydividend: "我的分红 ：",
-        distribution: "奖金池快照 ：",
-        mytotal: "我持有的NNC总量 ：",
-        snapshot: "快照时间 ："
-    },
     operation: {
         welcome: "欢迎!",
         title: "操作记录",
@@ -7264,11 +6970,110 @@ exports.default = {
         nodata: "没有数据",
         fail: "操作失败",
         waitinggas: "等待系统发送",
-        sentok: "系统已发送"
+        sentok: "系统已发送",
+        list: "上架",
+        delist: "下架",
+        buy: "购买",
+        claimnnc: "提取NNC",
+        requestnnc: "索取NNC",
+        domaintransfer: "转让域名",
+    },
+    transfer: {
+        transfer: "转账",
+        title1: "资产",
+        title2: "地址",
+        title3: "金额",
+        title4: "历史记录",
+        msg1: "您的地址不正确",
+        send: "发送",
+        from: "来自",
+        to: "发往",
+        details: "详情",
+        placeholder: "请输入地址或域名",
+        msg2: "您的交易已发送，请稍后查验",
+        msg3: "交易失败",
+        msg4: "您没有足够的utxo进行交易，请等待高度变化后再尝试下笔交易",
+        msg5: "可用",
+        waiting: "等待交易确认",
+        errdomain: "该域名尚未映射地址",
+        timeMsg: "有效期至: ",
+        netfee: "网络费",
+        sysfee: "系统费"
+    },
+    setting: {
+        settings: "设置",
+        title1: "我的钱包地址",
+        title2: "我的私钥",
+        title3: "我的钱包文件",
+        msg1: "这些信息非常重要。如果你失去了它，它可能会导致你的损失。",
+        msg2: "保存您的密钥库文件并复制您的钱包地址和您的WIF。不要失去他们。",
+        msg3: "设置密码 ",
+        msg4: "输入你的密码",
+        msg5: "创建钱包",
+        btn1: "查看",
+        btn2: "创建",
+        btn3: "下载"
     },
     notify: {
         utxo: "您的UTXO过于分散，将可能造成CGAS兑换失败（GAS也会损失），请先对自己的地址执行一次不小于兑换金额的转账，待转账操作生效后再行兑换",
-        fee: "注意：当您的钱包有足够的Gas时，我们会自动添加一笔 0.00000001 Gas 的手续费，确保交易快速确认"
+        fee: "注意：当您的钱包有足够的Gas时，我们会自动添加一笔 0.001 Gas 的手续费，确保交易快速确认"
+    },
+    taskbar: {
+        getGas: "索取 GAS",
+        getingGas: "排队中",
+        getedGas: "已发放 GAS",
+        getGasMsg: "每个钱包每日可索取一次500gas，需要更多请在论坛留言索取。",
+        history: "操作记录",
+        deploy: "合约部署",
+        invoke: "合约调用",
+        debug: "合约调试",
+        state: "状态：",
+        wait: "等待",
+        success: "成功",
+        fail: "失败",
+        shortage: "Gas不足",
+    },
+    deploy: {
+        file: "文件",
+        new: "新建",
+        loadingHash: "使用hash载入",
+        compileResult: "编译结果",
+        compile: "编译",
+        download: "下载 AVM",
+        copy: "复制合约 hash",
+        deployContract: "部署合约",
+        name: "合约名称（必填）",
+        version: "版本",
+        author: "作者",
+        email: "邮件",
+        describe: "合约描述",
+        call: "动态调用",
+        storage: "创建存储区",
+        payment: "可接受付款",
+        deployConfirm: "确认部署",
+        confirm: "确认",
+        consume: "花费GAS："
+    },
+    invoke: {
+        change: "更换合约",
+        select: "选择合约",
+        scripthash: "参数Script hash",
+        help: "帮助",
+        href: "https://bbs.neldev.net/thread-146.htm",
+        invoke: "调用交易",
+        testrun: "试运行",
+        testresult: "试运行结果",
+        result: "执行结果",
+        return: "方法返回",
+        consume: "GAS消耗",
+        resultCode: "结果返回"
+    },
+    debug: {
+        selectTx: "选择历史交易",
+        query: "查询",
+        help: "帮助",
+        href: "https://bbs.neldev.net/thread-147.htm",
+        code: "合约代码",
     }
 };
 

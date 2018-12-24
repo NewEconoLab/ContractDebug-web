@@ -5,20 +5,23 @@
         <div class="balance">
           <span class="asset">GAS</span>
           <span class="amount">{{balance.toString()}}</span>
-          <v-btn v-if="claimState==='3010'" @onclick="claimGas">索取500 GAS</v-btn>
+          <v-btn v-if="claimState==='3010'" @onclick="claimGas">{{$t('taskbar.getGas')}}</v-btn>
           <v-btn
             v-else-if="claimState==='3011'||claimState==='3000'"
             :type="'disable'"
             @onclick="null"
-          >排队中</v-btn>
-          <v-btn :type="'disable'" v-else-if="claimState==='3012'||claimState==='3003'">已发放 GAS</v-btn>
-          <v-btn :type="'disable'" v-else>Gas不足</v-btn>
+          >{{$t('taskbar.getingGas')}}</v-btn>
+          <v-btn
+            :type="'disable'"
+            v-else-if="claimState==='3012'||claimState==='3003'"
+          >{{$t('taskbar.getedGas')}}</v-btn>
+          <v-btn :type="'disable'" v-else>{{$t('taskbar.shortage')}}</v-btn>
           <v-hint>
             <div class="hint-img">
               <img src="../assets/explain.png" alt>
             </div>
             <div class="hint-content">
-              <p>每个钱包每日可索取一次500gas，需要更多请在论坛留言索取。</p>
+              <p>{{$t('taskbar.getGasMsg')}}</p>
             </div>
           </v-hint>
         </div>
@@ -36,7 +39,7 @@
             <img src="../assets/Timing.png" alt>
             计时器：{{taskNumber}}
           </span>-->
-          <v-btn @onclick="showHistory=true">操作记录</v-btn>
+          <v-btn @onclick="showHistory=true">{{$t('taskbar.history')}}</v-btn>
         </div>
         <div class="tranhistory-box">
           <div class="tranhistory-wrap" v-if="showHistory">
@@ -52,7 +55,9 @@
                 <div class="th-onelist" v-for="task in taskList" :key="task.txid">
                   <div>
                     <div class="th-type">
-                      <div class="th-typename">{{task.taskType===2?"合约部署":"合约调用"}}</div>
+                      <div
+                        class="th-typename"
+                      >{{task.taskType===2?$t('taskbar.deploy'):$t('taskbar.invoke')}}</div>
                       <div class="th-other">
                         <div class="th-number">
                           <span>{{task.simpleTxid}}</span>
@@ -62,19 +67,19 @@
                     <div class="th-block-txid">
                       <span class="th-txid" style="padding-right:10px">{{task.timeStr}}</span>
                       <span class="th-state">
-                        <span>状态：</span>
-                        <span v-if="task.state==0" class>等待</span>
-                        <span v-if="task.state==1" class="green-text">成功</span>
-                        <span v-if="task.state==2" class="red-text">失败</span>
+                        <span>{{$t('taskbar.state')}}</span>
+                        <span v-if="task.state==0" class>{{$t('taskbar.wait')}}</span>
+                        <span v-if="task.state==1" class="green-text">{{$t('taskbar.success')}}</span>
+                        <span v-if="task.state==2" class="red-text">{{$t('taskbar.fail')}}</span>
                       </span>
                     </div>
                   </div>
                   <div v-if="task.state==1" class="btn-right">
                     <div v-if="task.taskType === 2">
-                      <v-btn @onclick="skipPage('invoke',task.message)">合约调用</v-btn>
+                      <v-btn @onclick="skipPage('invoke',task.message)">{{$t('taskbar.invoke')}}</v-btn>
                     </div>
                     <div v-if="task.taskType === 1">
-                      <v-btn @onclick="skipPage('debug',task.message)">合约调试</v-btn>
+                      <v-btn @onclick="skipPage('debug',task.message)">{{$t('taskbar.debug')}}</v-btn>
                     </div>
                   </div>
                 </div>

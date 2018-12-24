@@ -10,15 +10,20 @@
               :value="tx.txid"
             >{{tx.txidstr}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{timeShow(tx.createTime)}}</option>
           </select>
-          <input type="text" placeholder="选择历史交易" class="change-input" v-model="txid">
+          <input
+            type="text"
+            :placeholder="$t('debug.selectTx')"
+            class="change-input"
+            v-model="txid"
+          >
         </div>
       </div>
       <div class="btn-list">
-        <v-btn @onclick="initDebugInfo">查询</v-btn>
+        <v-btn @onclick="initDebugInfo">{{$t('debug.query')}}</v-btn>
       </div>
       <div class="btn-list">
-        <a href="https://bbs.neldev.net/thread-147.htm" target="_blank">
-          <v-btn :type="'warn'">帮助</v-btn>
+        <a :href="$t('debug.href')" target="_blank">
+          <v-btn :type="'warn'">{{$t('debug.help')}}</v-btn>
         </a>
       </div>
     </div>
@@ -62,7 +67,7 @@
           <div class="p-title">
             <div class="title">
               <div>
-                <div>文件</div>
+                <div>{{$t('debug.code')}}</div>
               </div>
             </div>
           </div>

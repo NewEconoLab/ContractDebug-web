@@ -27,7 +27,7 @@
             <textarea id="csharp-code" rows="25" cols="20"></textarea>
           </div>
           <p-foot>
-            <v-btn :type="'primary'" @onclick="compile">{{$t('deploy.compileResult')}}</v-btn>
+            <v-btn :type="'primary'" @onclick="compile">{{$t('deploy.compile')}}</v-btn>
           </p-foot>
         </panel>
       </div>
@@ -55,7 +55,7 @@
           </panel>
 
           <panel>
-            <p-title :title="'部署当前合约'"></p-title>
+            <p-title :title="$t('deploy.deployContract')"></p-title>
             <div class="panel-content">
               <div class="panel-form">
                 <div class="form-lable">{{$t('deploy.name')}}</div>

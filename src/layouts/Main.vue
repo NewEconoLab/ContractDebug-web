@@ -20,16 +20,16 @@
         <div class="logo"></div>
         <ul class="nav navbar-nav navbar-left">
           <li>
-            <router-link to="deploy">合约部署</router-link>
+            <router-link to="deploy">{{$t('taskbar.deploy')}}</router-link>
           </li>
           <li>
-            <router-link to="invoke">调用合约</router-link>
+            <router-link to="invoke">{{$t('taskbar.invoke')}}</router-link>
           </li>
           <li>
-            <router-link to="debug">合约调试</router-link>
+            <router-link to="debug">{{$t('taskbar.debug')}}</router-link>
           </li>
           <li>
-            <a href="https://bbs.neldev.net/" target="_blank">NEL开发者论坛</a>
+            <a href="https://bbs.neldev.net/" target="_blank">{{$t('navbar.forum')}}</a>
           </li>
           <li>
             <a href="https://scan.nel.group/test" target="_blank">{{$t('navbar.explorer')}}</a>
