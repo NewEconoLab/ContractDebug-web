@@ -45,6 +45,7 @@ export default class Invoke extends Vue
         });
         this.editor.setSize("auto", "245px");
         option.readOnly = true;
+        option.lineWrapping = true;
         this.resultEditor = CodeMirror.fromTextArea(host2, option);
         this.resultEditor.setSize("auto", "219.5px");
         this.opneToast = this.$refs[ "toast" ][ "isShow" ];
