@@ -48,7 +48,7 @@
         </div>
         <div class="result-right">
           <p-title :title="$t('invoke.resultCode')"></p-title>
-          <div class="content">
+          <div class="content" id="invoke-result-content">
             <textarea id="invoke-result-code"></textarea>
           </div>
         </div>
@@ -128,6 +128,9 @@
     .result-left,
     .result-right {
       flex: 1;
+      .content {
+        width: 100%;
+      }
     }
     .result-left {
       border-right: 1px solid #3d3d3d;

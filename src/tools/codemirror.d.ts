@@ -875,7 +875,7 @@ declare namespace CodeMirror
 
         /** Whether CodeMirror should scroll or wrap for long lines. Defaults to false (scroll). */
         lineWrapping?: boolean;
-
+        textWrapping?: boolean;
         /** Whether to show line numbers to the left of the editor. */
         lineNumbers?: boolean;
 

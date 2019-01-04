@@ -30,7 +30,7 @@ export default class Invoke extends Vue
         option.theme = "monokai";
         option.matchBrackets = true;
         option.autoCloseBrackets = true;
-        option.lineWrapping = true;
+        // option.lineWrapping = true;
         // option.readOnly = true;
         let codestore = sessionStorage.getItem("invoke-json-code");
         let hashstore = sessionStorage.getItem("invoke-contract-hash");
@@ -43,11 +43,16 @@ export default class Invoke extends Vue
             // 事件触发后执行事件
             sessionStorage.setItem("invoke-json-code", Editor.getValue())
         });
+        // option.textWrapping = true;
         this.editor.setSize("auto", "245px");
         option.readOnly = true;
-        option.lineWrapping = true;
         this.resultEditor = CodeMirror.fromTextArea(host2, option);
-        this.resultEditor.setSize("auto", "219.5px");
+        option.lineWrapping = false;
+        this.resultEditor.setSize((window.innerWidth / 2 - 50) + "px", "219.5px");
+        window.onresize = () =>
+        {
+            this.resultEditor.setSize((window.innerWidth / 2 - 50) + "px", "219.5px");
+        }
         this.opneToast = this.$refs[ "toast" ][ "isShow" ];
     }
     async initContractList()
