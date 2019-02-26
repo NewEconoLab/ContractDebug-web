@@ -212,7 +212,8 @@ export default {
         payment: "可接受付款",
         deployConfirm: "确认部署",
         confirm: "确认",
-        consume: "花费GAS："
+        consume: "花费GAS：",
+        errmsg: "合约文件过大，无法部署"
     },
     invoke: {
         change: "更换合约",

@@ -213,7 +213,8 @@ export default {
         payment: "Accept payment",
         deployConfirm: "Deploy",
         confirm: "Confirm",
-        consume: "GAS consumption："
+        consume: "GAS consumption：",
+        errmsg: "Contract file is too large to deploy"
     },
     invoke: {
         change: "Change",

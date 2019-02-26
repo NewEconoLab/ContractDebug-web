@@ -210,6 +210,17 @@ export default class Contract
         }
     }
 
+    /**
+     * 合约交易体构造并发送
+     * @param description 
+     * @param email 
+     * @param author 
+     * @param version 
+     * @param name 
+     * @param num 
+     * @param script 
+     * @param amount 
+     */
     static async deployContract(description: string, email: string, author: string, version: string, name: string, num: Neo.BigInteger, script: Uint8Array, amount: number)
     {
         const sb = new ThinNeo.ScriptBuilder();
@@ -227,15 +238,19 @@ export default class Contract
         const assets = await tools.coinTool.getassets();
         const gass = assets[ HASH.ID_GAS ];
         const consume = Neo.Fixed8.fromNumber(amount);
+        const newFee = consume.add(Neo.Fixed8.fromNumber(11));  //在原有的基础上加11个gas
 
         const tran = new Transaction()
         tran.setScript(sb.ToArray(), consume);
-        tran.creatInuptAndOutup(gass, consume);
+        tran.creatInuptAndOutup(gass, newFee);
         tran.version = 1;
         const data = await tran.signData();
+        if (data.length > 102400)
+        {
+            throw new Error("TRANSACTION_LARGE");
+        }
         const result = await tools.wwwtool.api_postRawTransaction(data);
         return result;
-
     }
 
     /**

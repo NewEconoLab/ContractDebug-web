@@ -32,6 +32,7 @@ export default class Deploy extends Vue
     inputhash = "";
     inputLoadHash = false;
     opneToast: Function;
+    isHashFee: number = 1;// 是否超过1024个字节，添加11个GAS的手术费，默认0不用,1需要，2不可发布合约
     mounted()
     {
         this.opneToast = this.$refs[ "toast" ][ "isShow" ];
@@ -92,6 +93,7 @@ export default class Deploy extends Vue
         this.download_href = URL.createObjectURL(blob);
         this.download_name = this.conactHash + ".avm";
         sessionStorage.setItem("neo-contract-hash", this.conactHash);
+        this.isHashFee = 1;
     }
 
     /**
@@ -113,36 +115,47 @@ export default class Deploy extends Vue
             this.opneToast('success', "此合约已部属，无法重复部署", 4000);
         } else
         {
-            const result = await tools.contract.deployContract(
-                this.description,
-                this.email,
-                this.author,
-                this.version,
-                this.name,
-                new Neo.BigInteger(num),
-                this.avmhex,
-                amount
-            );
-            services.taskManager.addTask(TaskType.deploy, ConfirmType.tranfer, result.txid, { contract: this.conactHash, name: this.name });
-            if (result.sendrawtransactionresult)
+            try
             {
-                const res = await tools.wwwtool.storageContractFile(
-                    LoginInfo.getCurrentAddress(),
-                    this.conactHash,
-                    this.name,
-                    this.version,
-                    this.author,
-                    this.email,
+                // 发布交易体由这边生成
+                const result = await tools.contract.deployContract(
                     this.description,
-                    this.feePay ? 1 : 0,
-                    this.isStore ? 1 : 0,
-                    this.isCall ? 1 : 0,
-                    result.txid
-                )
-                this.opneToast('success', "合约发布成功", 4000);
-            } else
+                    this.email,
+                    this.author,
+                    this.version,
+                    this.name,
+                    new Neo.BigInteger(num),
+                    this.avmhex,
+                    amount
+                );
+
+                services.taskManager.addTask(TaskType.deploy, ConfirmType.tranfer, result.txid, { contract: this.conactHash, name: this.name });
+                if (result.sendrawtransactionresult)
+                {
+                    const res = await tools.wwwtool.storageContractFile(
+                        LoginInfo.getCurrentAddress(),
+                        this.conactHash,
+                        this.name,
+                        this.version,
+                        this.author,
+                        this.email,
+                        this.description,
+                        this.feePay ? 1 : 0,
+                        this.isStore ? 1 : 0,
+                        this.isCall ? 1 : 0,
+                        result.txid
+                    )
+                    this.opneToast('success', "合约发布成功", 4000);
+                } else
+                {
+                    this.opneToast('error', "合约发布失败", 4000);
+                }
+            } catch (error)
             {
-                this.opneToast('error', "合约发布失败", 4000);
+                if (error == "TRANSACTION_LARGE")
+                {
+                    this.isHashFee = 2;
+                }
             }
         }
     }
@@ -181,6 +194,7 @@ export default class Deploy extends Vue
             this.download_href = URL.createObjectURL(blob);
             this.download_name = this.conactHash + ".avm";
             this.cEditor.setValue(coderesult.cs);
+            this.isHashFee = 1;
             if (conactinfo)
             {
                 this.name = conactinfo.name;
@@ -233,6 +247,7 @@ export default class Deploy extends Vue
                 this.download_href = URL.createObjectURL(blob);
                 this.download_name = this.conactHash + ".avm";
                 this.cEditor.setValue(coderesult.cs);
+                this.isHashFee = 1;
                 if (conactinfo)
                 {
                     this.name = conactinfo.name;

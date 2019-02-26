@@ -26,5 +26,8 @@ export default class Valert extends Vue {
   .panel-title {
     height: 55px;
   }
+  .panel-text {
+    color: #fff;
+  }
 }
 </style>

@@ -53,8 +53,13 @@
               </div>
             </div>
           </panel>
-
-          <panel>
+          <panel v-if="isHashFee === 2">
+            <p-title :title="$t('deploy.deployContract')"></p-title>
+            <div class="panel-content">
+              <div class="panel-text">{{$t('deploy.errmsg')}}</div>
+            </div>
+          </panel>
+          <panel v-if="isHashFee !== 2">
             <p-title :title="$t('deploy.deployContract')"></p-title>
             <div class="panel-content">
               <div class="panel-form">
@@ -114,7 +119,9 @@
                 </label>
               </div>
             </div>
-            <p-foot :title="$t('deploy.consume')+(90+(isCall*500+isStore*400))">
+            <p-foot
+              :title="$t('deploy.consume')+(90+(isCall*500+isStore*400))+'(+11' + this.$t('transfer.netfee') + ')'"
+            >
               <v-btn :type="'primary'" @onclick="deploy">{{$t('deploy.deployConfirm')}}</v-btn>
             </p-foot>
           </panel>
