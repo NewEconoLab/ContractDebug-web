@@ -158,7 +158,7 @@ export default class Deploy extends Vue
                 }
                 else if (error == "You don't have enough utxo;")
                 {
-                    this.isHashFee = 2;
+                    this.opneToast('error', "你的余额不足，无法部署", 4000);
                 }
             }
         }

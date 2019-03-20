@@ -3338,7 +3338,7 @@ var Contract = /** @class */ (function () {
                             tran.creatInuptAndOutup(gass, newFee);
                         }
                         catch (error) {
-                            throw error;
+                            throw "You don't have enough utxo;";
                         }
                         tran.version = 1;
                         return [4 /*yield*/, tran.signData()];

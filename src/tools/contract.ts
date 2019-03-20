@@ -247,7 +247,7 @@ export default class Contract
             tran.creatInuptAndOutup(gass, newFee);
         } catch (error)
         {
-            throw error;
+            throw "You don't have enough utxo;";
         }
         tran.version = 1;
         const data = await tran.signData();
