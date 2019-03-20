@@ -156,6 +156,10 @@ export default class Deploy extends Vue
                 {
                     this.isHashFee = 2;
                 }
+                else if (error == "You don't have enough utxo;")
+                {
+                    this.isHashFee = 2;
+                }
             }
         }
     }

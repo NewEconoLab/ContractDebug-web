@@ -242,7 +242,13 @@ export default class Contract
 
         const tran = new Transaction()
         tran.setScript(sb.ToArray(), consume);
-        tran.creatInuptAndOutup(gass, newFee);
+        try
+        {
+            tran.creatInuptAndOutup(gass, newFee);
+        } catch (error)
+        {
+            throw error;
+        }
         tran.version = 1;
         const data = await tran.signData();
         if (data.length > 102400)
